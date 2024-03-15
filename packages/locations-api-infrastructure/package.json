@@ -1,0 +1,12 @@
+{
+	"name": "@breeze32/locations-api-infrastructure",
+	"version": "1.0.0",
+	"author": "Simon Norman",
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "1.6.0",
+		"@breeze32/shared-infra": "^1.0.3",
+		"@pulumi/pulumi": "^3.109.0",
+		"typescript": "5.4.2"
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"name": "@breeze32/locations-service",
+	"workspaces": ["packages/*"],
+	"version": "1.0.0",
+	"private": true,
+	"author": "Simon Norman",
+	"license": "MIT"
+}
