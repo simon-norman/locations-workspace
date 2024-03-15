@@ -1,8 +1,6 @@
 # NOTE - all dockerfiles should be run with the context (IE where it is looking for files) set as the root
 # directory for the project
 
-ARG PATH_TO_SERVICE=/packages/locations-api
-
 FROM oven/bun:1 as base
 WORKDIR /usr/src/app
 
@@ -11,14 +9,14 @@ WORKDIR /usr/src/app
 FROM base AS install
 RUN mkdir -p /temp/dev
 COPY bun.lockb /temp/dev/
-COPY /$PATH_TO_SERVICE/package.json /temp/dev/
-RUN cd /temp/dev && bun install --frozen-lockfile
+COPY packages/locations-api/package.json /temp/dev/
+RUN cd /temp/dev && bun install
 
 # install with --production (exclude devDependencies)
 RUN mkdir -p /temp/prod
-COPY bun.lockb /temp/dev/
-COPY /$PATH_TO_SERVICE/package.json /temp/prod/
-RUN cd /temp/prod && bun install --frozen-lockfile --production
+COPY bun.lockb /temp/prod/
+COPY packages/locations-api/package.json /temp/prod/
+RUN cd /temp/prod && bun install --production
 
 # copy node_modules from temp directory
 # then copy all (non-ignored) project files into the image
