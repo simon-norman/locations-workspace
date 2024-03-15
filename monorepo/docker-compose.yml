@@ -2,8 +2,7 @@ version: '3.8'
 services:
   locations-api:
     build:
-      target: prerelease
       context: .
-      dockerfile: packages/locations-api/Dockerfile
+      dockerfile: applications/locations-api/Dockerfile
     ports:
       - "3000:3000"
