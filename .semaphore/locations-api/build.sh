@@ -10,10 +10,10 @@ if ! cache has_key $CACHE_KEY; then
     echo "No install image cache found for this branch"
 else
     cache restore $CACHE_KEY
-    docker load -i cached-image.tar
+    docker load -i cached-image.tar || true
 fi
 
-docker buildx build -t "$IMAGE" --cache-from "$IMAGE" --target install -f monorepo/applications/locations-api/Dockerfile ./monorepo
-docker save $IMAGE -o cached-image.tar
+docker build --cache-from "$IMAGE" -t "$IMAGE" --target install -f monorepo/applications/locations-api/Dockerfile ./monorepo
+docker save -o cached-image.tar $IMAGE
 cache store $CACHE_KEY cached-image.tar 
   
