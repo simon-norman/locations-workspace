@@ -9,6 +9,7 @@ echo "Script is running commands in: $SCRIPT_DIR"
 if ! cache has_key $CACHE_KEY; then
     echo "No install image cache found for this branch"
 else
+    echo "Restoring"
     cache restore $CACHE_KEY
     docker load -i cached-image.tar || true
 fi
