@@ -16,4 +16,5 @@ fi
 
 docker build -t "$IMAGE" --target install -f monorepo/applications/locations-api/Dockerfile ./monorepo
 docker save $IMAGE -o cached-image.tar
+cache store $CACHE_KEY cached-image.tar
  
