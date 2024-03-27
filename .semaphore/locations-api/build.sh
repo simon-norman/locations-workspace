@@ -19,3 +19,5 @@ docker build --cache-from "$IMAGE" -t "$IMAGE" -f monorepo/applications/location
 # aws ecr get-login-password --region region | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.region.amazonaws.com
 docker save -o cached-image.tar $IMAGE
 cache store $CACHE_KEY cached-image.tar 
+
+ 
