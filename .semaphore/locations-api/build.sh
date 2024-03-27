@@ -13,7 +13,7 @@ else
     docker load -i cached-image.tar
 fi
 
-docker build -t "$IMAGE" --cache-from "$IMAGE" --target install -f monorepo/applications/locations-api/Dockerfile ./monorepo
+docker build -t "$IMAGE" --cache-from "A$IMAGE" --target install -f monorepo/applications/locations-api/Dockerfile ./monorepo
 docker save $IMAGE -o cached-image.tar
 cache store $CACHE_KEY cached-image.tar 
  
