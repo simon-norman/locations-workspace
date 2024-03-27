@@ -7,9 +7,10 @@ agent:
 blocks:
   - name: 📦 Install dependencies
     task:
-      prologue:
-        commands:
-          - checkout
+      jobs:
+        - name: install
+          commands:
+            -
 promotions:
   - name: locations-api
     pipeline_file: locations-api/build.yml
