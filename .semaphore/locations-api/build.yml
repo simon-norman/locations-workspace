@@ -7,6 +7,8 @@ agent:
 blocks:
   - name: 📦 Install dependencies
     task:
+      secrets:
+        - name: doppler
       env_vars:
         - name: NODE_ENV
           value: ci

@@ -14,6 +14,8 @@ else
     docker load -i cached-image.tar || true
 fi
 
-docker build --cache-from "$IMAGE" -t "$IMAGE" --target install -f monorepo/applications/locations-api/Dockerfile ./monorepo
+docker build --cache-from "$IMAGE" -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
+
+# aws ecr get-login-password --region region | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.region.amazonaws.com
 docker save -o cached-image.tar $IMAGE
 cache store $CACHE_KEY cached-image.tar 
