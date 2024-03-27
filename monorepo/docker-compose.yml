@@ -1,8 +1,9 @@
-version: '3.8'
+version: '2.19'
 services:
   locations-api:
     build:
       context: .
       dockerfile: applications/locations-api/Dockerfile
+      target: release
     ports:
       - "3000:3000"

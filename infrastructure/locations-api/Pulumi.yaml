@@ -1,0 +1,6 @@
+name: main-app-eu-west-2-locations-api
+runtime: nodejs
+description: Locations service public service
+config:
+  aws:region: eu-west-2
+  service-port: 3000
