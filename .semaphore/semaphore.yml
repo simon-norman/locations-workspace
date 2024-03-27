@@ -8,4 +8,5 @@ agent:
 promotions:
   - name: locations-api
     pipeline_file: ./semaphore/locations-api/build.yml
-    auto_promote: true
+    auto_promote:
+      when: ""
