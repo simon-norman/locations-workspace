@@ -20,4 +20,4 @@ docker tag "$IMAGE" "$SEMAPHORE_GIT_BRANCH:build"
 docker save -o cached-image.tar "$SEMAPHORE_GIT_BRANCH:build"
 cache delete $CACHE_KEY
 cache store $CACHE_KEY cached-image.tar
- 
+  
