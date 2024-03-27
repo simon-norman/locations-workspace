@@ -1,0 +1,11 @@
+version: v1.0
+name: Locations repo
+agent:
+  machine:
+    type: e2-standard-2
+    os_image: ubuntu2004
+
+promotions:
+  - name: locations-api
+    pipeline_file: p1.yml
+    auto_promote:
