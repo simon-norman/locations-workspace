@@ -7,9 +7,13 @@ set -e
 
 echo "Script is running commands in: $SCRIPT_DIR"
 
-if ! cache restore $CACHE_KEY; then
+FOO=$(cache has_key $CACHE_KEY)
+echo $FOO
+
+if ! cache has_key $CACHE_KEY; then
     echo "No install image cache found for this branch"
 else
+    cache restore $CACHE_KEY
     docker load -i cached-image.tar
 fi
 
