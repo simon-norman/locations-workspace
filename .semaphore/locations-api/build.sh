@@ -16,7 +16,7 @@ fi
 
 docker history "$SEMAPHORE_GIT_BRANCH:build"
 
-docker build --cache-from "$SEMAPHORE_GIT_BRANCH:build" -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
+docker build --progress=plain --cache-from "$SEMAPHORE_GIT_BRANCH:build" -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
 
 docker history "$IMAGE"
 
