@@ -16,4 +16,4 @@ blocks:
       jobs:
         - name: install
           commands:
-            - .semaphore/locations-api/build.sh
+            - bash .semaphore/locations-api/build.sh
