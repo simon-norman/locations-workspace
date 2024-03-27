@@ -14,7 +14,7 @@ else
     docker load -i cached-image.tar || true
 fi
 
-docker build --cache-from "$SEMAPHORE_GIT_BRANCH:build" -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
+DOCKER_BUILDKIT=1 docker build --cache-from "$SEMAPHORE_GIT_BRANCH:build" -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
 docker tag "$IMAGE" "$SEMAPHORE_GIT_BRANCH:build"
 
 docker save -o cached-image.tar "$SEMAPHORE_GIT_BRANCH:build"
