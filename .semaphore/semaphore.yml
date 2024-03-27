@@ -10,7 +10,7 @@ blocks:
       jobs:
         - name: install
           commands:
-            -
+            - ""
 promotions:
   - name: locations-api
     pipeline_file: locations-api/build.yml
