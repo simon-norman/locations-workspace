@@ -16,7 +16,8 @@ fi
 
 docker build --cache-from "$SEMAPHORE_GIT_BRANCH:build" -t "$IMAGE" --target base -f monorepo/applications/locations-api/Dockerfile ./monorepo
 docker tag "$IMAGE" "$SEMAPHORE_GIT_BRANCH:build"
-# aws ecr get-login-password --region region | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.region.amazonaws.com
+
 docker save -o cached-image.tar "$SEMAPHORE_GIT_BRANCH:build"
 cache delete $CACHE_KEY
 cache store $CACHE_KEY cached-image.tar
+ 
