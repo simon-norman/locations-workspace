@@ -7,9 +7,6 @@ agent:
 blocks:
   - name: 📦 Install dependencies
     # task:
-    #   env_vars:
-    #     - name: NODE_ENV
-    #       value: ci
     #   prologue:
     #     commands:
     #       - checkout
