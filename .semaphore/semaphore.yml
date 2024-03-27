@@ -6,10 +6,10 @@ agent:
     os_image: ubuntu2004
 blocks:
   - name: 📦 Install dependencies
-    # task:
-    #   prologue:
-    #     commands:
-    #       - checkout
+    task:
+      prologue:
+        commands:
+          - checkout
 promotions:
   - name: locations-api
     pipeline_file: locations-api/build.yml
