@@ -4,6 +4,7 @@ SCRIPT_DIR=$(dirname "$0")
 
 set -e
 
+
 echo "Script is running commands in: $SCRIPT_DIR"
 
 if ! cache restore $CACHE_KEY; then
