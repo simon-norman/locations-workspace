@@ -7,6 +7,6 @@ agent:
 
 promotions:
   - name: locations-api
-    pipeline_file: ./semaphore/locations-api/build.yml
+    pipeline_file: locations-api/build.yml
     auto_promote:
-      when: ""
+      when: "result = 'passed'"
