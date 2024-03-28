@@ -5,14 +5,14 @@ agent:
     type: e2-standard-2
     os_image: ubuntu2004
 blocks:
-  - name: 📦 Launch pipelines
+  - name: 📦 Install
     task:
       jobs:
-        - name: launch
+        - name: Install all dependencies
           commands:
-            - ""
-promotions:
-  - name: locations-api
-    pipeline_file: locations-api/build.yml
-    auto_promote:
-      when: "result = 'passed'"
+            - bash .semaphore/install-all-deps.sh
+# promotions:
+#   - name: locations-api
+#     pipeline_file: locations-api/build.yml
+#     auto_promote:
+#       when: "result = 'passed'"
