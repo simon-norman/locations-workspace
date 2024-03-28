@@ -7,10 +7,13 @@ agent:
 blocks:
   - name: 📦 Install
     task:
+      prologue:
+        commands:
+          - checkout
       jobs:
         - name: Install all dependencies
           commands:
-            - bash install-all-deps.sh
+            - bash .semaphore/install-all-deps.sh
 # promotions:
 #   - name: locations-api
 #     pipeline_file: locations-api/build.yml
