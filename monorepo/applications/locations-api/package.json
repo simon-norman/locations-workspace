@@ -1,20 +1,20 @@
 {
-	"name": "@breeze32/locations-api",
-	"version": "1.0.0",
-	"author": "Simon Norman",
-	"license": "MIT",
-	"scripts": {
-		"dev": "bun --watch src/index.ts",
-		"build": "bun build src/index.ts"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.6.0",
-		"typescript": "5.4.2",
-		"@breeze32/services": "workspace:*"
-	},
-	"dependencies": {
-		"@elysiajs/eden": "^0.8.1",
-		"@elysiajs/swagger": "^0.8.5",
-		"elysia": "^0.8.17"
-	}
+  "name": "@breeze32/locations-api",
+  "version": "1.0.0",
+  "author": "Simon Norman",
+  "license": "MIT",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "build": "bun build src/index.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.6.0",
+    "typescript": "5.4.2",
+    "@breeze32/services": "workspace:*"
+  },
+  "dependencies": {
+    "@elysiajs/eden": "^0.8.1",
+    "@elysiajs/swagger": "^0.8.5",
+    "elysia": "^0.8.17"
+  }
 }
