@@ -10,7 +10,7 @@ blocks:
       jobs:
         - name: Install all dependencies
           commands:
-            - bash .semaphore/install-all-deps.sh
+            - bash install-all-deps.sh
 # promotions:
 #   - name: locations-api
 #     pipeline_file: locations-api/build.yml
