@@ -4,6 +4,9 @@ agent:
   machine:
     type: e2-standard-2
     os_image: ubuntu2004
+  containers:
+    - name: main
+      image: 'oven/bun:1'
 blocks:
   - name: 📦 Install
     task:
@@ -13,9 +16,9 @@ blocks:
       jobs:
         - name: Install all dependencies
           commands:
-            - ""
-promotions:
-  - name: locations-api
-    pipeline_file: locations-api/build.yml
-    auto_promote:
-      when: "result = 'passed'"
+            - bash .semaphore/install-all-deps.sh
+# promotions:
+#   - name: locations-api
+#     pipeline_file: locations-api/build.yml
+#     auto_promote:
+#       when: "result = 'passed'"
