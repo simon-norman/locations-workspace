@@ -35,7 +35,6 @@ COPY tsconfig.json tsconfig.json
 COPY applications/locations-api/package.json package.json
 
 # run the app
-RUN echo "foo"
 USER bun
 EXPOSE 3000
 ENTRYPOINT [ "bun", "run", "index.ts" ]
