@@ -11,17 +11,12 @@ if ! cache has_key $CACHE_KEY; then
 else
     echo "Restoring"
     cache restore $CACHE_KEY
-    docker load -i cached-image.tar || true
+    cd depscache
+    cd ..
+    echo "found cache"
 fi
 
-docker history "$SEMAPHORE_GIT_BRANCH:build"
+docker build --progress=plain --cache-from depscache --cache-to=type=local,dest=depscache -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
 
-docker build --progress=plain --cache-from "$SEMAPHORE_GIT_BRANCH:build" -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
-
-docker history "$IMAGE"
-
-docker tag "$IMAGE" "$SEMAPHORE_GIT_BRANCH:build"
-
-docker save -o cached-image.tar "$SEMAPHORE_GIT_BRANCH:build"
 cache delete $CACHE_KEY
-cache store $CACHE_KEY cached-image.tar
+cache store $CACHE_KEY depscache

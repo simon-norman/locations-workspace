@@ -13,9 +13,9 @@ blocks:
       jobs:
         - name: Install all dependencies
           commands:
-            - bash .semaphore/install-all-deps.sh
-# promotions:
-#   - name: locations-api
-#     pipeline_file: locations-api/build.yml
-#     auto_promote:
-#       when: "result = 'passed'"
+            - ""
+promotions:
+  - name: locations-api
+    pipeline_file: locations-api/build.yml
+    auto_promote:
+      when: "result = 'passed'"
