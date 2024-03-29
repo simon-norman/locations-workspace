@@ -6,6 +6,8 @@ set -e
 
 echo "Script is running commands in: $SCRIPT_DIR"
 
+docker --version
+
 if ! cache has_key $CACHE_KEY; then
     echo "No install image cache found for this branch"
 else
