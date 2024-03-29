@@ -18,7 +18,7 @@ else
     # echo "found cache"
 fi
 
-docker buildx build --progress=plain --cache-from=type=local,src=depscache --cache-to=type=local,dest=depscache -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
+DOCKER_BUILDKIT=1 docker buildx build --progress=plain --cache-from=type=local,src=depscache --cache-to=type=local,dest=depscache -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
 
 cache delete $CACHE_KEY
 cache store $CACHE_KEY depscache
