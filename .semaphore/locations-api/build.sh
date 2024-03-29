@@ -11,12 +11,12 @@ if ! cache has_key $CACHE_KEY; then
 else
     echo "Restoring"
     cache restore $CACHE_KEY
-    # cd depscache
-    # cd ..
-    # echo "found cache"
+    cd depscache
+    cd ..
+    echo "found cache"
 fi
 
-docker build --progress=plain --cache-from depscache --cache-to=type=local,dest=depscache -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
+docker buildx build --progress=plain --cache-from depscache --cache-to=type=local,dest=depscache -t "$IMAGE" -f monorepo/applications/locations-api/Dockerfile ./monorepo
 
 cache delete $CACHE_KEY
 cache store $CACHE_KEY depscache
