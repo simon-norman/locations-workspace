@@ -15,4 +15,4 @@ jobs:
         with:
           path: ~/.bun/install/cache
           key: ${{ github.ref_name }}-install-deps
-      - run: bun install --frozen-lockfile
+      - run: cd monorepo && bun install --frozen-lockfile
