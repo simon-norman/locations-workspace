@@ -4,6 +4,7 @@
 FROM oven/bun:1 as base
 WORKDIR /usr/src/app
 
+FROM base as install
 # install all dependencies (including dev) into dev directory and install
 RUN mkdir -p /temp/dev
 COPY package.json /temp/dev
