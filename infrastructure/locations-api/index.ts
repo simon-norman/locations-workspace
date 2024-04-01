@@ -44,7 +44,7 @@ const securityGroup = securityGroupsRef.getOutput(
 
 new aws.PublicFargateService({
 	region: awsRegion,
-	name: "main",
+	name: "locations-api",
 	environment,
 	vpcId,
 	clusterArn,

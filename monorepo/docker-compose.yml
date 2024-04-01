@@ -3,7 +3,6 @@ services:
   locations-api:
     build:
       context: .
-      dockerfile: applications/locations-api/Dockerfile
-      target: release
+      target: locations-api
     ports:
       - "3000:3000"

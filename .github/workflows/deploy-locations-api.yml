@@ -1,0 +1,26 @@
+name: Deploy Locations API to dev
+
+on:
+  workflow_run:
+    workflows: ["Install"]
+    types:
+      - completed
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Cache from
+        uses: docker/build-push-action@v5
+        with:
+          context: monorepo
+          file: ./monorepo/Dockerfile
+          cache-from: type=gha
+          push: false
+          tags: locations-api:latest
+          target: locations-api
+      # - name: Deploy
+      #   run: cd monorepo && doppler run -p ci-cd -c dev -- pulumi up -s
