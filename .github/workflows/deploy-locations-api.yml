@@ -1,7 +1,10 @@
 name: Deploy Locations API to dev
 
 on:
-  push: {}
+  workflow_run:
+    workflows: ["Build install docker image"]
+    types:
+      - completed
 
 jobs:
   deployment:
