@@ -1,11 +1,11 @@
-name: Build Docker image
+name: Build install docker image
  
 on:
   push: {}
  
 jobs:
   build-with-docker:
-    name: Build with Docker
+    name: Install all dependencies
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
