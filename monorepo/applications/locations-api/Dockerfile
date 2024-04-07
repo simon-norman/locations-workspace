@@ -1,3 +1,7 @@
+# syntax = edrevo/dockerfile-plus
+
+INCLUDE+ Dockerfile.install
+
 FROM install as test
 RUN cd /temp/dev/applications/locations-api && bun test
 

@@ -1,17 +1,10 @@
 version: '2.19'
 services:
-  base:
-    image: base
-    build:
-      context: .
-      dockerfile: Dockerfile.base
   install:
     image: install
     build:
       context: .
       dockerfile: Dockerfile.install
-    depends_on:
-      - base
   locations-api:
     build:
       context: .
