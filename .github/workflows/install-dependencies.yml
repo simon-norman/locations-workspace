@@ -1,8 +1,6 @@
 name: Build install docker image
- 
 on:
   push: {}
- 
 jobs:
   build-with-docker:
     name: Install
