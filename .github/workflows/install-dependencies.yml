@@ -17,7 +17,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           push: false
-          tags: base:latest
+          tags: base
       - uses: docker/build-push-action@v5
         with:
           context: monorepo
@@ -25,4 +25,4 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           push: false
-          tags: install:latest
+          tags: install
