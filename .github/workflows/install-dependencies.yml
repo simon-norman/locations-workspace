@@ -8,5 +8,5 @@ jobs:
     name: Install
     runs-on: ubuntu-20.04
     steps:
-      - uses: simon-norman/actions/build-cached@v1
+      - uses: simon-norman/actions/build-cached@main
         name: Install dependencies
