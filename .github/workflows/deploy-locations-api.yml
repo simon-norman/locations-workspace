@@ -14,14 +14,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v3
-      - name: Cache from
+      - name: Build
         uses: docker/build-push-action@v5
         with:
           context: monorepo
-          file: ./monorepo/Dockerfile
+          file: ./monorepo/locations-api/Dockerfile
           cache-from: type=gha
           push: false
           tags: locations-api:latest
-          target: locations-api 
-      # - name: Deploy
-      #   run: cd monorepo && doppler run -p ci-cd -c dev -- pulumi up -s
+          target: locations-api
+      - name: Deploy
+        run: cd infrastructure && doppler run -p ci-cd -c dev -- pulumi up -s dev

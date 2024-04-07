@@ -1,20 +1,15 @@
-# NOTE - all dockerfiles should be run with the context (IE where it is looking for files) set as the root
-# directory for the monorepo folder
+FROM install as test
+RUN cd /temp/dev/applications/locations-api && bun test
 
-FROM oven/bun:1 as base
-WORKDIR /usr/src/app
-RUN mkdir -p ~/.bun/install/cache
-COPY node_modules node_modules
-COPY libs libs
-RUN cd libs
-COPY package.json bun.lockb tsconfig.json libs .
-RUN cd libs
-COPY applications/locations-api/package.json applications/locations-api/package.json
-RUN bun install --frozen-lockfile --production
-
+FROM base AS release
+COPY --from=install /temp/prod/node_modules node_modules
+COPY --from=install /temp/prod/node_modules/@breeze32/services node_modules/@breeze32/services
+RUN cd node_modules/@breeze32
 COPY applications/locations-api/src .
+COPY tsconfig.json tsconfig.json
 COPY applications/locations-api/package.json package.json
 
+# run the app
 USER bun
 EXPOSE 3000
 ENTRYPOINT [ "bun", "run", "index.ts" ]
