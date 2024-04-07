@@ -13,14 +13,6 @@ jobs:
       - uses: docker/build-push-action@v5
         with:
           context: monorepo
-          file: ./monorepo/Dockerfile.base
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          push: false
-          tags: base
-      - uses: docker/build-push-action@v5
-        with:
-          context: monorepo
           file: ./monorepo/Dockerfile.install
           cache-from: type=gha
           cache-to: type=gha,mode=max
