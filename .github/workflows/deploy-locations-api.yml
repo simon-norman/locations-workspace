@@ -23,5 +23,7 @@ jobs:
           push: false
           tags: locations-api:latest
           target: release
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
       - name: Deploy
         run: cd infrastructure && doppler run -p ci-cd -c dev -- pulumi up -s dev
