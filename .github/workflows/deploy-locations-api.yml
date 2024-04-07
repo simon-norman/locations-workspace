@@ -22,6 +22,6 @@ jobs:
           cache-from: type=gha
           push: false
           tags: locations-api:latest
-          target: locations-api
+          target: release
       - name: Deploy
         run: cd infrastructure && doppler run -p ci-cd -c dev -- pulumi up -s dev
