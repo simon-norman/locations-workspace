@@ -2,6 +2,10 @@ name: Deploy Locations API to dev one
 
 on: workflow_dispatch
 
+permissions:
+    id-token: write
+    contents: read
+
 jobs:
   deployment:
     runs-on: ubuntu-latest
