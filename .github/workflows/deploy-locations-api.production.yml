@@ -10,7 +10,7 @@ jobs:
       - uses: simon-norman/actions/check-branch@main
         name: Check branch
         with:
-          allowed_branch: master
+          allowed_branch: main
       - uses: simon-norman/actions/deploy@main
         name: Deploy
         with:
