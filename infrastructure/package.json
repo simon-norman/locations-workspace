@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "1.6.0",
-		"@breeze32/shared-infra": "1.0.4",
+		"@breeze32/shared-infra": "1.0.5",
 		"@pulumi/pulumi": "^3.109.0",
 		"typescript": "5.4.2"
 	}
