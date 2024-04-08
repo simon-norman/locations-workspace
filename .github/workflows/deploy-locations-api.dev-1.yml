@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev-1
     steps:
+      - run: echo "access_key_id"
+      - run: echo ${{ secrets.AWS_ACCESS_KEY_ID }}
+      - run: echo "access_key"
+      - run: echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Build
         uses: simon-norman/actions/build-cached@v1
         with:
