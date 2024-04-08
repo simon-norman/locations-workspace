@@ -14,3 +14,7 @@ jobs:
           file: ./monorepo/applications/locations-api/Dockerfile
           tag: locations-api-dev-1:latest
           aws_region: eu-west-2
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
