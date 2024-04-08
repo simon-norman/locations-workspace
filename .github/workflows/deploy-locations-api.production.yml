@@ -11,7 +11,7 @@ jobs:
         name: Check branch
         with:
           allowed_branch: 'master'
-      - uses: simon-norman/actions/deploy@main
+      - uses: simon-norman/actions/deploy@v1
         name: Deploy
         with:
           env: production

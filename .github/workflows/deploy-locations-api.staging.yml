@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     steps:
-      - uses: simon-norman/actions/deploy@main
+      - uses: simon-norman/actions/deploy@v1
         name: Deploy
         with:
           env: staging

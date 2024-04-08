@@ -1,19 +1,16 @@
 name: Deploy Locations API to dev two
 
-on:
-  workflow_run:
-    workflows: ["Build install docker image"]
-    types:
-      - completed
+on: workflow_dispatch
 
 jobs:
   deployment:
     runs-on: ubuntu-latest
     environment: dev-2
     steps:
-      - uses: simon-norman/actions/deploy@main
+      - uses: simon-norman/actions/deploy@v1
         name: Deploy
         with:
           env: dev-2
           file: ./monorepo/applications/locations-api/Dockerfile
           tag: locations-api-dev-2:latest
+          aws_region: eu-west-2
