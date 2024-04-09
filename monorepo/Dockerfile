@@ -23,6 +23,8 @@ FROM install as test_locations_api
 RUN cd /temp/dev/applications/locations-api && bun test
 
 FROM base AS release_locations_api
+ARG ENV=local
+ENV NODE_ENV=${ENV}
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=install /temp/prod/node_modules/@breeze32/services node_modules/@breeze32/services
 RUN cd node_modules/@breeze32

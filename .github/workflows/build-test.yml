@@ -1,0 +1,49 @@
+name: Build and test
+
+on: workflow_dispatch
+  inputs:
+    service:
+      type: choice
+      description: Choose service
+      options:
+       - locations-api
+
+permissions:
+    id-token: write
+    contents: read
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Convert service input format
+       id: underscore_service      
+       run: |
+          # Use shell parameter expansion or tools like sed to replace hyphens with underscores
+          converted_value="${{ github.event.inputs.service }}"
+
+          converted_value="${converted_value//-/_}" # Replaces all hyphens with underscores
+          
+          # Set the converted value as an output of this step
+          echo "converted_value=$converted_value" >> $GITHUB_ENV
+          echo "::set-output name=converted_value::$converted_value"
+      - uses: simon-norman/actions/build-cached@v1
+        name: Build service
+          with:
+            target: test_${{ steps.underscore_service.outputs.converted_value }}
+            tag: ${{ inputs.service }}:build
+          
+
+
+  context:
+    description: 'Path to Docker build context from the repo root'
+    required: false
+    default: monorepo
+  file:
+    description: 'Path to Docker file (incl file name) from the repository root'
+    required: false
+    default: ./monorepo/Dockerfile
+  tag:
+    description: 'Docker tag (e.g. service:latest)'
+    required: false
+    default: install
