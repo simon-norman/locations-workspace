@@ -1,16 +1,8 @@
-version: '2.19'
+version: '2.26'
 services:
-  install:
-    image: install
-    build:
-      context: .
-      dockerfile: Dockerfile.install
   locations-api:
     build:
       context: .
-      dockerfile: applications/locations-api/Dockerfile
-      target: release
-    depends_on:
-      - install
+      target: release_locations_api
     ports:
       - "3000:3000"

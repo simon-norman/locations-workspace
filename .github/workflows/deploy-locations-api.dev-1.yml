@@ -15,9 +15,10 @@ jobs:
         name: Deploy
         with:
           environment: dev-1
-          file: ./monorepo/applications/locations-api/Dockerfile
+          file: ./monorepo/Dockerfile
           tag: locations-api-dev-1:latest
           aws_region: eu-west-2
+          build_target: release_locations_api
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           app_name: locations-api
