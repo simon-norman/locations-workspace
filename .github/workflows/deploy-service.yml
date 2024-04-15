@@ -46,8 +46,7 @@ jobs:
        uses: "kota65535/github-openvpn-connect-action@v2"
        with:
           config_file: ./vpn.ovpn
-     - name: Run VPN
-       id: underscore_service      
+     - name: Run VPN  
        run: |
           nslookup 10.0.0.2 10.0.0.2
     #  - uses: simon-norman/actions/deploy@v1
