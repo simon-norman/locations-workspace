@@ -41,7 +41,7 @@ jobs:
      - name: Extract VPN config
        run: |
           echo "$VPN_CONFIG" > ./encodedvpn.txt
-          base64 --decode -i ./encodedvpn.txt -o ./vpn.ovpn
+          base64 --decode -i ./encodedvpn.txt > ./vpn.ovpn
        env:
         VPN_CONFIG: ${{secrets.AWS_VPN_CONFIG}}
      - name: Connect to VPN
