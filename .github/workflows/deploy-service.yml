@@ -40,8 +40,10 @@ jobs:
           sudo apt install -y openvpn openvpn-systemd-resolved
      - name: Extract VPN config
        run: |
-          ${{ secrets.AWS_VPN_CONFIG }} > ./encodedvpn.txt
+          'echo "$SSH_KEY" > ./encodedvpn.txt'
           base64 --decode -i ./encodedvpn.txt -o ./vpn.ovpn
+       env:
+        VPN_CONFIG: ${{secrets.AWS_VPN_CONFIG}}
      - name: Connect to VPN
        uses: "kota65535/github-openvpn-connect-action@v2"
        with:
