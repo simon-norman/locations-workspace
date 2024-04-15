@@ -55,7 +55,7 @@ jobs:
      - name: Run VPN  
        timeout-minutes: 1
        run: |
-          hostname="dev-1-eu-west-2-db-main-app.cfsuok6qw1sp.eu-west-2.rds.amazonaws.com"
+          hostname="dev-1-eu-west-2-db-main-app.dfsuok6qw1sp.eu-west-2.rds.amazonaws.com"
           success=0
           while [ $success -eq 0 ]; do
               if nslookup "$hostname" > /dev/null 2>&1; then
