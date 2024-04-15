@@ -53,8 +53,19 @@ jobs:
      - name: Connect VPN
        run: sudo openvpn --config ./vpn.ovpn --daemon --log openvpn.log --writepid openvpn.pid
      - name: Run VPN  
+       timeout-minutes: 1
        run: |
-          nslookup 10.0.0.2 10.0.0.2
+          hostname="dev-1-eu-west-2-db-main-app.cfsuok6qw1sp.eu-west-2.rds.amazonaws.com"
+          success=0
+          while [ $success -eq 0 ]; do
+              if nslookup "$hostname" > /dev/null 2>&1; then
+                  echo "Lookup succeeded for ${hostname}"
+                  success=1  # Exit the loop on success
+              else
+                  echo "Lookup failed for ${hostname}, retrying in 5 seconds..."
+                  sleep 5
+              fi
+          done
     #  - uses: simon-norman/actions/deploy@v1
     #    name: Deploy
     #    with:
