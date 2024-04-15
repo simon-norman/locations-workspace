@@ -34,7 +34,13 @@ jobs:
           echo "::set-output name=converted_value::$converted_value"
      - name: Checkout
        uses: actions/checkout@v3
+     - name: Cache VPN
+       uses: actions/cache@v4
+       with:
+        path: openvpn-install
+        key: ${{ runner.os }}-openvpn
      - name: Install OpenVPN
+       if: steps.cache-primes.outputs.cache-hit != 'true'
        run: |
           sudo apt update
           sudo apt install -y openvpn openvpn-systemd-resolved
@@ -44,12 +50,8 @@ jobs:
           base64 --decode -i ./encodedvpn.txt > ./vpn.ovpn
        env:
         VPN_CONFIG: ${{secrets.AWS_VPN_CONFIG}}
-     - name: Connect to VPN
-       uses: "kota65535/github-openvpn-connect-action@v2"
-       with:
-          config_file: ./vpn.ovpn
      - name: Connect VPN
-       run: sudo openvpn --config "./vpn.ovpn" --daemon
+       run: sudo openvpn --config ./vpn.ovpn --daemon --log openvpn.log --writepid openvpn.pid
      - name: Run VPN  
        run: |
           nslookup 10.0.0.2 10.0.0.2
