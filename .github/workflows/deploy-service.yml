@@ -48,6 +48,10 @@ jobs:
        uses: "kota65535/github-openvpn-connect-action@v2"
        with:
           config_file: ./vpn.ovpn
+     - name: Connect VPN
+       run: sudo openvpn --config "./vpn.ovpn" --daemon
+     - name: Connect VPN
+       run: sudo openvpn --config ".github/vpn/config.ovpn" --log "vpn.log" --daemon
      - name: Run VPN  
        run: |
           nslookup 10.0.0.2 10.0.0.2
