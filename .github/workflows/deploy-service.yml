@@ -32,6 +32,24 @@ jobs:
           # Set the converted value as an output of this step
           echo "converted_value=$converted_value" >> $GITHUB_ENV
           echo "::set-output name=converted_value::$converted_value"
+     - name: Checkout
+       uses: actions/checkout@v3
+     - name: Install OpenVPN
+       run: |
+          sudo apt update
+          sudo apt install -y openvpn openvpn-systemd-resolved
+     - name: Extract VPN config
+       run: |
+          ${{ secrets.AWS_VPN_CONFIG }} > ./encodedvpn.txt
+          base64 --decode -i ./encodedvpn.txt -o ./vpn.ovpn
+     - name: Connect to VPN
+       uses: "kota65535/github-openvpn-connect-action@v2"
+       with:
+          config_file: ./vpn.ovpn
+     - name: Run VPN
+       id: underscore_service      
+       run: |
+          nslookup 10.0.0.2 10.0.0.2
      - uses: simon-norman/actions/deploy@v1
        name: Deploy
        with:
