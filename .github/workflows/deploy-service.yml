@@ -55,17 +55,18 @@ jobs:
      - name: Run VPN  
        timeout-minutes: 1
        run: |
-          hostname="dev-1-eu-west-2-db-main-app.dfsuok6qw1sp.eu-west-2.rds.amazonaws.com"
-          success=0
-          while [ $success -eq 0 ]; do
-              if nslookup "$hostname" > /dev/null 2>&1; then
-                  echo "Lookup succeeded for ${hostname}"
-                  success=1  # Exit the loop on success
-              else
-                  echo "Lookup failed for ${hostname}, retrying in 5 seconds..."
-                  sleep 5
-              fi
-          done
+        hostname="10.0.32.112"
+        success=0
+        while [ $success -eq 0 ]; do
+            # Using ping with a count of 1 to test connectivity
+            if ping -c 1 "$hostname" > /dev/null 2>&1; then
+                echo "Ping succeeded for ${hostname}"
+                success=1  # Exit the loop on success
+            else
+                echo "Ping failed for ${hostname}, retrying in 5 seconds..."
+                sleep 5
+            fi
+        done
     #  - uses: simon-norman/actions/deploy@v1
     #    name: Deploy
     #    with:
