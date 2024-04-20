@@ -34,16 +34,16 @@ jobs:
           echo "::set-output name=converted_value::$converted_value"
      - name: Checkout
        uses: actions/checkout@v3
-     - name: Cache VPN
-       uses: actions/cache@v4
-       id: cache-vpn-client
-       with:
-        path: |
-          /usr/sbin/openvpn
-          /usr/share/openvpn
-        key: ${{ runner.os }}-openvpn
+    #  - name: Cache VPN
+    #    uses: actions/cache@v4
+    #    id: cache-vpn-client
+    #    with:
+    #     path: |
+    #       /usr/sbin/openvpn
+    #       /usr/share/openvpn
+    #     key: ${{ runner.os }}-openvpn
      - name: Install OpenVPN
-       if: steps.cache-vpn-client.outputs.cache-hit != 'true'
+      #  if: steps.cache-vpn-client.outputs.cache-hit != 'true'
        run: |
           sudo apt update
           sudo apt install -y openvpn
