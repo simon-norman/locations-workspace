@@ -36,8 +36,8 @@ jobs:
        uses: actions/checkout@v3
      - name: chown /usr/sbin/openvpn
        run: |
-        sudo chown $(whoami) /usr/sbin/openvpn
-        sudo chown $(whoami) /usr/share/openvpn
+        sudo chown $(whoami) /usr/sbin
+        sudo chown $(whoami) /usr/share
      - name: Cache VPN
        uses: actions/cache@v4
        id: cache-vpn-client
