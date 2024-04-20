@@ -40,7 +40,7 @@ jobs:
      - name: echo service
        run: |
         echo "FOOOOOO"
-        echo {{ steps.underscore_service.outputs.converted_value }}
+        echo ${{ steps.underscore_service.outputs.converted_value }}
     #  - uses: simon-norman/actions/deploy@v1
     #    name: Deploy
     #    with:
