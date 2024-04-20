@@ -38,14 +38,18 @@ jobs:
        run: |
         sudo chown $(whoami) /usr/sbin
         sudo chown $(whoami) /usr/share
+        sudo chown $(whoami) /usr/local/share
+        sudo chown $(whoami) /usr/local/sbin
      - name: Cache VPN
        uses: actions/cache@v4
        id: cache-vpn-client
        with:
         path: |
           /usr/sbin/openvpn
+          /usr/local/sbin/openvpn
+          /usr/local/share/openvpn
           /usr/share/openvpn
-        key: ${{ runner.os }}-openvpnclient
+        key: ${{ runner.os }}-openvpncli
      - name: Install OpenVPN
        if: steps.cache-vpn-client.outputs.cache-hit != 'true'
        run: |
