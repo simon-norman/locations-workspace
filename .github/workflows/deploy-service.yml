@@ -32,52 +32,26 @@ jobs:
           # Set the converted value as an output of this step
           echo "converted_value=$converted_value" >> $GITHUB_ENV
           echo "::set-output name=converted_value::$converted_value"
-     - name: Checkout
-       uses: actions/checkout@v3
-     - name: chown /usr/sbin/openvpn
-       run: |
-        sudo chown $(whoami) /usr/sbin
-        sudo chown $(whoami) /usr/share
-        sudo chown $(whoami) /usr/local/share
-        sudo chown $(whoami) /usr/local/sbin
-     - name: Cache VPN
-       uses: actions/cache@v4
-       id: cache-vpn-client
+     - name: Convert service input format
+       id: underscore_service  
+       uses: simon-norman/actions/format-snake-case@v1
        with:
-        path: |
-          /usr/sbin/openvpn
-          /usr/local/sbin/openvpn
-          /usr/local/share/openvpn
-          /usr/share/openvpn
-        key: ${{ runner.os }}-openvpncli
-     - name: Install OpenVPN
-       if: steps.cache-vpn-client.outputs.cache-hit != 'true'
-       run: |
-          sudo apt update
-          sudo apt install -y openvpn
-     - name: Extract VPN config
-       run: |
-          echo "$VPN_CONFIG" > ./encodedvpn.txt
-          base64 --decode -i ./encodedvpn.txt > ./vpn.ovpn
+         text: ${{ inputs.service }}
        env:
         VPN_CONFIG: ${{secrets.AWS_VPN_CONFIG}}
+     - name: Checkout
+       uses: actions/checkout@v3
      - name: Connect VPN
-       run: sudo openvpn --config ./vpn.ovpn --daemon --log openvpn.log --writepid openvpn.pid
-     - name: Check VPN connection  
-       timeout-minutes: 1
+       uses: simon-norman/actions/connect-vpn@v1
+       with:
+         vpn_config: $VPN_CONFIG
+         ip_to_check_connection: "10.0.32.112"
+       env:
+        VPN_CONFIG: ${{secrets.AWS_VPN_CONFIG}}
+     - name: echo service
        run: |
-        hostname="10.0.32.112"
-        success=0
-        while [ $success -eq 0 ]; do
-            # Using ping with a count of 1 to test VPN connection
-            if ping -c 1 "$hostname" > /dev/null 2>&1; then
-                echo "Ping succeeded ${hostname}"
-                success=1  # Exit the loop on success
-            else
-                echo "Ping failed connecting to ${hostname}, retrying in 5 seconds..."
-                sleep 5
-            fi
-        done
+        echo "FOOOOOO"
+        echo {{ steps.underscore_service.outputs.converted_value }}
     #  - uses: simon-norman/actions/deploy@v1
     #    name: Deploy
     #    with:
@@ -91,3 +65,5 @@ jobs:
     #     app_name: ${{ inputs.service }}
     #    env:
     #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+       #  - uses: simon-norman/actions/deploy@v1
+  
