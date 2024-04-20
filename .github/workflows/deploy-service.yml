@@ -71,7 +71,7 @@ jobs:
         while [ $success -eq 0 ]; do
             # Using ping with a count of 1 to test VPN connection
             if ping -c 1 "$hostname" > /dev/null 2>&1; then
-                echo "Ping succeeded for ${hostname}"
+                echo "Ping succeeded ${hostname}"
                 success=1  # Exit the loop on success
             else
                 echo "Ping failed connecting to ${hostname}, retrying in 5 seconds..."
