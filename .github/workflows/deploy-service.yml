@@ -39,7 +39,6 @@ jobs:
        id: cache-vpn-client
        with:
         path: |
-          /lib/systemd/system
           /usr/sbin/openvpn
           /usr/share/openvpn
         key: ${{ runner.os }}-openvpn
@@ -47,7 +46,7 @@ jobs:
        if: steps.cache-vpn-client.outputs.cache-hit != 'true'
        run: |
           sudo apt update
-          sudo apt install -y openvpn openvpn-systemd-resolved
+          sudo apt install -y openvpn
      - name: Extract VPN config
        run: |
           echo "$VPN_CONFIG" > ./encodedvpn.txt
