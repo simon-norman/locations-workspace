@@ -22,17 +22,6 @@ jobs:
     environment: ${{ inputs.environment }}
     steps:
      - name: Convert service input format
-       id: underscore_service      
-       run: |
-          # Use shell parameter expansion or tools like sed to replace hyphens with underscores
-          converted_value="${{ github.event.inputs.service }}"
-
-          converted_value="${converted_value//-/_}" # Replaces all hyphens with underscores
-          
-          # Set the converted value as an output of this step
-          echo "converted_value=$converted_value" >> $GITHUB_ENV
-          echo "::set-output name=converted_value::$converted_value"
-     - name: Convert service input format
        id: underscore_service  
        uses: simon-norman/actions/format-snake-case@v1
        with:
