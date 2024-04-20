@@ -66,7 +66,7 @@ jobs:
                 echo "Ping succeeded for ${hostname}"
                 success=1  # Exit the loop on success
             else
-                echo "Ping failed ${hostname}, retrying in 5 seconds..."
+                echo "Ping failed connecting to ${hostname}, retrying in 5 seconds..."
                 sleep 5
             fi
         done
