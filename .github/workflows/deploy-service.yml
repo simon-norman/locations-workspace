@@ -34,13 +34,17 @@ jobs:
           echo "::set-output name=converted_value::$converted_value"
      - name: Checkout
        uses: actions/checkout@v3
-    #  - name: Cache VPN
-    #    uses: actions/cache@v4
-    #    with:
-    #     path: openvpn-install
-    #     key: ${{ runner.os }}-openvpn
+     - name: Cache VPN
+       uses: actions/cache@v4
+       id: cache-vpn-client
+       with:
+        path: |
+          /lib/systemd/system
+          /usr/sbin/openvpn
+          /usr/share/openvpn
+        key: ${{ runner.os }}-openvpn
      - name: Install OpenVPN
-      #  if: steps.cache-primes.outputs.cache-hit != 'true'
+       if: steps.cache-vpn-client.outputs.cache-hit != 'true'
        run: |
           sudo apt update
           sudo apt install -y openvpn openvpn-systemd-resolved
@@ -52,13 +56,13 @@ jobs:
         VPN_CONFIG: ${{secrets.AWS_VPN_CONFIG}}
      - name: Connect VPN
        run: sudo openvpn --config ./vpn.ovpn --daemon --log openvpn.log --writepid openvpn.pid
-     - name: Run VPN  
+     - name: Check VPN connection  
        timeout-minutes: 1
        run: |
         hostname="10.0.32.112"
         success=0
         while [ $success -eq 0 ]; do
-            # Using ping with a count of 1 to test connectivity
+            # Using ping with a count of 1 to test VPN connection
             if ping -c 1 "$hostname" > /dev/null 2>&1; then
                 echo "Ping succeeded for ${hostname}"
                 success=1  # Exit the loop on success
