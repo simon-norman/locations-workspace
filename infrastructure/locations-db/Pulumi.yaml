@@ -1,0 +1,6 @@
+name: main-app-eu-west-2-locations-db
+runtime: nodejs
+description: Locations database
+config:
+  availability_zone: eu-west-2a
+  aws:region: eu-west-2
