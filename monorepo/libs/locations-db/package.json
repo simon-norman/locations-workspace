@@ -1,0 +1,10 @@
+{
+	"name": "@breeze32/locations-db",
+	"version": "1.0.0",
+	"author": "Simon Norman",
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "1.6.0",
+		"typescript": "5.4.2"
+	}
+}
