@@ -21,15 +21,17 @@ const postgresDb = new aws.RdsPrismaPostgresDb({
 	name: "locations-db-instance",
 	environment,
 	vpcId,
-	databaseName: "locations-db",
+	databaseName: "locations",
 	availabilityZone,
 	securityGroupIds: [vpnSecurityGroupId],
 	subnetIds: isolatedSubnetIds,
+	migrationScriptPath: "./migration-script.sh",
 	roles: [
 		{
 			name: "locations-api",
 			grants: [
 				{
+					grantName: "alltables",
 					database: "locations",
 					objectType: "table",
 					objects: [],
@@ -43,5 +45,6 @@ const postgresDb = new aws.RdsPrismaPostgresDb({
 
 export const dbAddress = postgresDb.db.address;
 export const dbEndpoint = postgresDb.db.endpoint;
+export const dbInstanceId = postgresDb.db.identifier;
 export const dbRoleNames = postgresDb.roles.map((role) => role.role.name);
 export const arn = postgresDb.db.arn;

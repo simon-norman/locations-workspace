@@ -42,6 +42,19 @@ const securityGroup = securityGroupsRef.getOutput(
 	"inboundAlbSecurityGroupOutboundAll",
 );
 
+const dbStackRef = new pulumi.StackReference(
+	`simon-norman/main-app-eu-west-2-locations-db/${environment}`,
+);
+const dbRoleNames = dbStackRef.getOutput("dbRoleNames");
+
+const expectedRoleName = `${environment}-${awsRegion}-role-locations-api`;
+
+const roleName = dbRoleNames.apply((names) =>
+	names.find((name: string) => name === expectedRoleName),
+);
+
+const dbInstanceId = dbStackRef.getOutput("dbInstanceId");
+
 new aws.PublicFargateService({
 	region: awsRegion,
 	name: "locations-api",
@@ -62,4 +75,8 @@ new aws.PublicFargateService({
 		privateSubnetIds.apply((ids) => ids[0]),
 		privateSubnetIds.apply((ids) => ids[1]),
 	],
+	db: {
+		dbRoleName: roleName,
+		awsDbInstanceId: dbInstanceId,
+	},
 });
