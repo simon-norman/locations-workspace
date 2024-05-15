@@ -1,4 +1,4 @@
-import { aws } from "@breeze32/shared-infra";
+import { aws, helpers } from "@breeze32/shared-infra";
 import * as pulumi from "@pulumi/pulumi";
 
 const awsConfig = new pulumi.Config("aws");
@@ -8,9 +8,14 @@ const config = new pulumi.Config();
 const environment = config.require("environment");
 const availabilityZone = config.require("availability_zone");
 
-const vpcStackRef = new pulumi.StackReference(
-	`simon-norman/main-app-eu-west-2-vpc/${environment}`,
-);
+const productName = "main-app";
+
+const vpcStackRef = helpers.getStackRef({
+	environment,
+	name: "vpc",
+	region: awsRegion,
+	productName,
+});
 const vpcId = vpcStackRef.getOutput("vpcId");
 
 const vpnSecurityGroupId = vpcStackRef.getOutput("vpnSecurityGroupId");

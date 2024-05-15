@@ -1,4 +1,4 @@
-import { aws } from "@breeze32/shared-infra";
+import { aws, helpers } from "@breeze32/shared-infra";
 import * as pulumi from "@pulumi/pulumi";
 
 const awsConfig = new pulumi.Config("aws");
@@ -7,44 +7,65 @@ const awsRegion = awsConfig.require("region");
 const config = new pulumi.Config();
 const environment = config.require("environment");
 
-const vpcStackRef = new pulumi.StackReference(
-	`simon-norman/main-app-eu-west-2-vpc/${environment}`,
-);
+const productName = "main-app";
+
+const vpcStackRef = helpers.getStackRef({
+	environment,
+	name: "vpc",
+	region: awsRegion,
+	productName: "main-app",
+});
 const vpcId = vpcStackRef.getOutput("vpcId");
-const privateSubnetIds = vpcStackRef.getOutput("privateSubnetIds");
+// const privateSubnetIds = vpcStackRef.getOutput("privateSubnetIds");
+const isolatedSubnetIds = vpcStackRef.getOutput("isolatedSubnetIds");
 
 const clusterRef = new pulumi.StackReference(
 	`simon-norman/main-app-eu-west-2-ec2-cluster/${environment}`,
 );
 const clusterArn = clusterRef.getOutput("arn");
 
-const loadBalancerRef = new pulumi.StackReference(
-	`simon-norman/main-app-eu-west-2-public-load-balancer/${environment}`,
-);
+const loadBalancerRef = helpers.getStackRef({
+	environment,
+	name: "public-load-balancer",
+	region: awsRegion,
+	productName: "main-app",
+});
 const loadBalancerArn = loadBalancerRef.getOutput("arn");
 const loadBalancerDnsName = loadBalancerRef.getOutput("dnsName");
 const listenerArn = loadBalancerRef.getOutput("listenerArn");
 
-const envHostedZoneRef = new pulumi.StackReference(
-	`simon-norman/main-app-eu-west-2-environment-hosted-zone/${environment}`,
-);
+const envHostedZoneRef = helpers.getStackRef({
+	environment,
+	name: "environment-hosted-zone",
+	region: awsRegion,
+	productName,
+});
 const environmentHostedZoneId = envHostedZoneRef.getOutput("zoneId");
 
-const httpsCertificateRef = new pulumi.StackReference(
-	`simon-norman/main-app-eu-west-2-https-certificate/${environment}`,
-);
+const httpsCertificateRef = helpers.getStackRef({
+	environment,
+	name: "https-certificate",
+	region: awsRegion,
+	productName,
+});
 const httpsCertificateArn = httpsCertificateRef.getOutput("arn");
 
-const securityGroupsRef = new pulumi.StackReference(
-	`simon-norman/main-app-eu-west-2-security-groups/${environment}`,
-);
+const securityGroupsRef = helpers.getStackRef({
+	environment,
+	name: "security-groups",
+	region: awsRegion,
+	productName,
+});
 const securityGroup = securityGroupsRef.getOutput(
 	"inboundAlbSecurityGroupOutboundAll",
 );
 
-const dbStackRef = new pulumi.StackReference(
-	`simon-norman/main-app-eu-west-2-locations-db/${environment}`,
-);
+const dbStackRef = helpers.getStackRef({
+	environment,
+	name: "locations-db",
+	region: awsRegion,
+	productName,
+});
 const dbRoleNames = dbStackRef.getOutput("dbRoleNames");
 
 const expectedRoleName = `${environment}-${awsRegion}-role-locations-api`;
@@ -72,8 +93,8 @@ new aws.PublicFargateService({
 	httpsCertificateArn,
 	securityGroups: [securityGroup.apply((group) => group.id)],
 	subnets: [
-		privateSubnetIds.apply((ids) => ids[0]),
-		privateSubnetIds.apply((ids) => ids[1]),
+		isolatedSubnetIds.apply((ids) => ids[0]),
+		isolatedSubnetIds.apply((ids) => ids[1]),
 	],
 	db: {
 		dbRoleName: roleName,
