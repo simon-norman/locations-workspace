@@ -19,7 +19,8 @@ const vpcStackRef = helpers.getStackRef({
 const vpcId = vpcStackRef.getOutput("vpcId");
 
 const vpnSecurityGroupId = vpcStackRef.getOutput("vpnSecurityGroupId");
-const isolatedSubnetIds = vpcStackRef.getOutput("isolatedSubnetIds");
+// const isolatedSubnetIds = vpcStackRef.getOutput("isolatedSubnetIds");
+const publicSubnetIds = vpcStackRef.getOutput("publicSubnetIds");
 
 const postgresDb = new aws.RdsPrismaPostgresDb({
 	region: awsRegion,
@@ -28,8 +29,9 @@ const postgresDb = new aws.RdsPrismaPostgresDb({
 	vpcId,
 	databaseName: "locations",
 	availabilityZone,
+	publiclyAccessible: true,
 	securityGroupIds: [vpnSecurityGroupId],
-	subnetIds: isolatedSubnetIds,
+	subnetIds: publicSubnetIds,
 	migrationScriptPath: "./migration-script.sh",
 	roles: [
 		{

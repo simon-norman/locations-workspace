@@ -17,7 +17,6 @@ const vpcStackRef = helpers.getStackRef({
 });
 const vpcId = vpcStackRef.getOutput("vpcId");
 // const privateSubnetIds = vpcStackRef.getOutput("privateSubnetIds");
-const isolatedSubnetIds = vpcStackRef.getOutput("isolatedSubnetIds");
 
 const clusterRef = new pulumi.StackReference(
 	`simon-norman/main-app-eu-west-2-ec2-cluster/${environment}`,
@@ -91,11 +90,14 @@ new aws.PublicFargateService({
 	serviceDockerfilePath: "../../monorepo/Dockerfile",
 	serviceDockerContext: "../../monorepo",
 	httpsCertificateArn,
-	securityGroups: [securityGroup.apply((group) => group.id)],
-	subnets: [
-		isolatedSubnetIds.apply((ids) => ids[0]),
-		isolatedSubnetIds.apply((ids) => ids[1]),
-	],
+	networkConfig: {
+		type: aws.FargateNetworkType.public,
+		// subnets: [
+		//   privateSubnetIds.apply((ids) => ids[0]),
+		//   privateSubnetIds.apply((ids) => ids[1]),
+		// ],
+		// securityGroups: [securityGroup.apply((group) => group.id)],
+	},
 	db: {
 		dbRoleName: roleName,
 		awsDbInstanceId: dbInstanceId,
