@@ -34,8 +34,21 @@ const postgresDb = new aws.RdsPrismaPostgresDb({
 	subnetIds: publicSubnetIds,
 	migrationScriptPath: "./migration-script.sh",
 	roles: [
+		// {
+		// 	name: "locations-api",
+		// 	grants: [
+		// 		{
+		// 			grantName: "alltables",
+		// 			database: "locations",
+		// 			objectType: "table",
+		// 			objects: [],
+		// 			privileges: ["SELECT", "INSERT", "UPDATE", "DELETE"],
+		// 			schema: "public",
+		// 		},
+		// 	],
+		// },
 		{
-			name: "locations-api",
+			name: "simon",
 			grants: [
 				{
 					grantName: "alltables",

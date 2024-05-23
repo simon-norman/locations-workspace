@@ -1,17 +1,18 @@
 {
-	"name": "@breeze32/locations-db",
-	"version": "1.0.0",
-	"author": "Simon Norman",
-	"license": "MIT",
-	"dependencies": {
-		"@breeze32/ts-backend-utilities": "^1.0.3",
-		"@prisma/client": "^5.13.0",
-		"@zenstackhq/runtime": "^2.0.1"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.6.0",
-		"prisma": "^5.13.0",
-		"typescript": "5.4.2",
-		"zenstack": "^2.0.1"
-	}
+  "name": "@breeze32/locations-db",
+  "version": "1.0.0",
+  "author": "Simon Norman",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/rds-signer": "^3.577.0",
+    "@breeze32/ts-backend-utilities": "^1.0.3",
+    "@prisma/client": "^5.13.0",
+    "@zenstackhq/runtime": "^2.0.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.6.0",
+    "prisma": "^5.13.0",
+    "typescript": "5.4.2",
+    "zenstack": "^2.0.1"
+  }
 }

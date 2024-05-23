@@ -17,6 +17,7 @@ const vpcStackRef = helpers.getStackRef({
 });
 const vpcId = vpcStackRef.getOutput("vpcId");
 // const privateSubnetIds = vpcStackRef.getOutput("privateSubnetIds");
+const publicSubnetIds = vpcStackRef.getOutput("publicSubnetIds");
 
 const clusterRef = new pulumi.StackReference(
 	`simon-norman/main-app-eu-west-2-ec2-cluster/${environment}`,
@@ -40,14 +41,6 @@ const envHostedZoneRef = helpers.getStackRef({
 	productName,
 });
 const environmentHostedZoneId = envHostedZoneRef.getOutput("zoneId");
-
-const httpsCertificateRef = helpers.getStackRef({
-	environment,
-	name: "https-certificate",
-	region: awsRegion,
-	productName,
-});
-const httpsCertificateArn = httpsCertificateRef.getOutput("arn");
 
 const securityGroupsRef = helpers.getStackRef({
 	environment,
@@ -89,15 +82,12 @@ new aws.PublicFargateService({
 	loadBalancerDnsName,
 	serviceDockerfilePath: "../../monorepo/Dockerfile",
 	serviceDockerContext: "../../monorepo",
-	httpsCertificateArn,
-	networkConfig: {
-		type: aws.FargateNetworkType.public,
-		// subnets: [
-		//   privateSubnetIds.apply((ids) => ids[0]),
-		//   privateSubnetIds.apply((ids) => ids[1]),
-		// ],
-		// securityGroups: [securityGroup.apply((group) => group.id)],
-	},
+	subnets: [
+		publicSubnetIds.apply((ids) => ids[0]),
+		publicSubnetIds.apply((ids) => ids[1]),
+	],
+	securityGroups: [securityGroup.apply((group) => group.id)],
+	assignPublicIp: true,
 	db: {
 		dbRoleName: roleName,
 		awsDbInstanceId: dbInstanceId,
