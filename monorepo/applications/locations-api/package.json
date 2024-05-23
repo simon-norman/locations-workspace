@@ -10,7 +10,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.6.0",
 		"typescript": "5.4.2",
-		"@breeze32/services": "workspace:*"
+		"@breeze32/services": "workspace:*",
+		"@breeze32/locations-db": "workspace:*"
 	},
 	"dependencies": {
 		"@aws-sdk/client-secrets-manager": "^3.549.0",

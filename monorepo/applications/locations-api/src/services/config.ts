@@ -3,33 +3,31 @@ import {
 	ListSecretsCommand,
 	SecretsManagerClient,
 } from "@aws-sdk/client-secrets-manager";
-import { Type as T } from "@sinclair/typebox";
+import { type Static, Type as T } from "@sinclair/typebox";
 import { Value } from "@sinclair/typebox/value";
 
 export const config = {};
 
 const expectedConfig = T.Object({
 	TOKEN: T.String(),
+	// LOCATIONS_DB_URL: T.String(),
 });
 
 const awsSecretClient = new SecretsManagerClient({ region: "eu-west-2" });
 
+export let loadedConfig: Static<typeof expectedConfig>;
+
 export const loadConfig = async () => {
+	if (loadedConfig) return;
+
 	let rawConfig = config;
 	if (process.env.NODE_ENV === "local") {
 		rawConfig = loadConfigLocally();
 	} else {
 		rawConfig = await loadConfigFromAwsSecrets();
 	}
-	console.log("CONFIG", rawConfig);
 
-	const configErrors = [...Value.Errors(expectedConfig, rawConfig)];
-
-	if (configErrors.length) {
-		throw new Error("Config validation failed", { cause: configErrors });
-	}
-
-	return config;
+	loadedConfig = Value.Decode(expectedConfig, rawConfig);
 };
 
 const loadConfigFromAwsSecrets = async () => {
