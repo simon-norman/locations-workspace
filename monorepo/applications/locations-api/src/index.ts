@@ -3,12 +3,16 @@ import { foo } from "@breeze32/services";
 import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { routes } from "./routes";
-import { loadConfig } from "./services/config";
+import { config, loadConfig, loadedConfig } from "./services/config";
 
 const runApp = async () => {
 	await loadConfig();
 
-	await loadLocationsDb();
+	loadLocationsDb({
+		password: loadedConfig.LOCATIONS_DB_PASSWORD,
+		endpoint: loadedConfig.LOCATIONS_DB_ENDPOINT,
+		username: "locations_api",
+	});
 
 	new Elysia()
 		.get("/health", () => foo())

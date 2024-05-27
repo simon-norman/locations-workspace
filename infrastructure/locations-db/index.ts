@@ -18,9 +18,13 @@ const vpcStackRef = helpers.getStackRef({
 });
 const vpcId = vpcStackRef.getOutput("vpcId");
 
-const vpnSecurityGroupId = vpcStackRef.getOutput("vpnSecurityGroupId");
+// const vpnSecurityGroupId = vpcStackRef.getOutput("vpnSecurityGroupId");
 // const isolatedSubnetIds = vpcStackRef.getOutput("isolatedSubnetIds");
 const publicSubnetIds = vpcStackRef.getOutput("publicSubnetIds");
+
+const dbPassword = config.requireSecret("db_password");
+
+dbPassword.apply((password) => console.log("pword", password));
 
 const postgresDb = new aws.RdsPrismaPostgresDb({
 	region: awsRegion,
@@ -30,25 +34,13 @@ const postgresDb = new aws.RdsPrismaPostgresDb({
 	databaseName: "locations",
 	availabilityZone,
 	publiclyAccessible: true,
-	securityGroupIds: [vpnSecurityGroupId],
+	securityGroupIds: [],
 	subnetIds: publicSubnetIds,
 	migrationScriptPath: "./migration-script.sh",
 	roles: [
-		// {
-		// 	name: "locations-api",
-		// 	grants: [
-		// 		{
-		// 			grantName: "alltables",
-		// 			database: "locations",
-		// 			objectType: "table",
-		// 			objects: [],
-		// 			privileges: ["SELECT", "INSERT", "UPDATE", "DELETE"],
-		// 			schema: "public",
-		// 		},
-		// 	],
-		// },
 		{
-			name: "simon",
+			password: dbPassword,
+			name: "locations_api",
 			grants: [
 				{
 					grantName: "alltables",

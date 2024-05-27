@@ -67,6 +67,7 @@ const roleName = dbRoleNames.apply((names) =>
 );
 
 const dbInstanceId = dbStackRef.getOutput("dbInstanceId");
+const dbEndpoint = dbStackRef.getOutput("dbEndpoint");
 
 new aws.PublicFargateService({
 	region: awsRegion,
@@ -82,6 +83,12 @@ new aws.PublicFargateService({
 	loadBalancerDnsName,
 	serviceDockerfilePath: "../../monorepo/Dockerfile",
 	serviceDockerContext: "../../monorepo",
+	serviceEnvironmentVariables: [
+		{
+			name: "LOCATIONS_DB_ENDPOINT",
+			value: dbEndpoint,
+		},
+	],
 	subnets: [
 		publicSubnetIds.apply((ids) => ids[0]),
 		publicSubnetIds.apply((ids) => ids[1]),

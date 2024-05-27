@@ -10,7 +10,8 @@ export const config = {};
 
 const expectedConfig = T.Object({
 	TOKEN: T.String(),
-	// LOCATIONS_DB_URL: T.String(),
+	LOCATIONS_DB_PASSWORD: T.String(),
+	LOCATIONS_DB_ENDPOINT: T.String(),
 });
 
 const awsSecretClient = new SecretsManagerClient({ region: "eu-west-2" });
@@ -27,11 +28,22 @@ export const loadConfig = async () => {
 		rawConfig = await loadConfigFromAwsSecrets();
 	}
 
+	rawConfig = {
+		...rawConfig,
+		...loadUnsecretConfig(),
+	};
+
 	loadedConfig = Value.Decode(expectedConfig, rawConfig);
 };
 
 const loadConfigFromAwsSecrets = async () => {
 	return getAwsSecretValue(`locations-api-${process.env.NODE_ENV}/doppler`);
+};
+
+const loadUnsecretConfig = () => {
+	return {
+		LOCATIONS_DB_ENDPOINT: process.env.LOCATIONS_DB_ENDPOINT,
+	};
 };
 
 const getAwsSecretValue = async (

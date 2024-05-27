@@ -23,7 +23,7 @@ locations-api-down:
 .PHONY: locations-api-down
 
 locations-db-up:
-	@cd ./locations-db && $(DOPPLER_CMD) pulumi up -r -s $(STACK)
+	@cd ./locations-db && $(DOPPLER_CMD) bash deploy-db.sh $(STACK)
 .PHONY: locations-db-up
 
 locations-db-refresh:
