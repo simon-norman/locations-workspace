@@ -1,0 +1,6 @@
+name: main-app-eu-west-2-locations-ingest
+runtime: nodejs
+description: Locations ingest service
+config:
+  aws:region: eu-west-2
+  service-port: 3000

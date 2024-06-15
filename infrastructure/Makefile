@@ -33,3 +33,15 @@ locations-db-refresh:
 locations-db-down:
 	@cd ./locations-db && $(DOPPLER_CMD) pulumi down -r -s $(STACK)
 .PHONY: locations-db-down
+
+locations-ingest-up:
+	@cd ./locations-ingest && $(DOPPLER_CMD) pulumi up -r -s $(STACK)
+.PHONY: locations-ingest-up
+
+locations-ingest-refresh:
+	@cd ./locations-ingest && $(DOPPLER_CMD) pulumi refresh -s $(STACK)
+.PHONY: locations-ingest-up
+
+locations-ingest-down:
+	@cd ./locations-ingest && $(DOPPLER_CMD) pulumi down -r -s $(STACK)
+.PHONY: locations-ingest-down
