@@ -1,3 +1,4 @@
+import { loadLocationsDb } from "@breeze32/locations-db";
 import type { LocationIngest } from "@breeze32/types";
 import type { SQSEvent, SQSHandler, SQSRecord } from "aws-lambda";
 import { handlerRegistry } from "./handlers/handler-registry";
@@ -25,3 +26,6 @@ export const handler: SQSHandler = async (event: SQSEvent) => {
 		})),
 	};
 };
+
+// @ts-ignore
+loadLocationsDb({});

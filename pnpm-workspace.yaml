@@ -1,0 +1,3 @@
+packages:
+  - 'monorepo/libs/*'
+  - 'monorepo/applications/*'
