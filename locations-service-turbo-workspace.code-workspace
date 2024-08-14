@@ -9,8 +9,8 @@
 			"path": "infrastructure"
 		},
 		{
-			"name": "monorepo",
-			"path": "monorepo"
+			"name": "app",
+			"path": "app"
 		},
 		{
 			"path": ".github"

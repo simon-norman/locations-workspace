@@ -10,32 +10,23 @@ if [ -z "$REPO_ROOT" ]; then
   exit 1
 fi
 
-# Define variables
-CODE_DIR="$REPO_ROOT/monorepo/applications/locations-ingest"
 BUILD_DIR="$REPO_ROOT/infrastructure/locations-ingest/build"
 DIST_FILE="$BUILD_DIR/locations_ingest_lambda.zip"
 
 # Create a clean distribution directory
 echo "Creating distribution directory..."
 rm -rf $BUILD_DIR
-mkdir $BUILD_DIR
-mkdir $BUILD_DIR/node_modules
+turbo prune @breeze32/locations-ingest --out-dir $BUILD_DIR
 
-cd $REPO_ROOT/monorepo
-# pnpm --filter=<deployed project name> deploy <target directory>
-cd libs/locations-db
-bunx zenstack generate
-cd $REPO_ROOT/monorepo
-bun install --production
+cd $BUILD_DIR
+pnpm install
+cd $BUILD_DIR/app/libs/locations-db
+pnpm exec zenstack generate
+cd $BUILD_DIR
+cd ..
 
-cp -RL node_modules $BUILD_DIR
-
-# COPY applications/locations-ingest/src .
-# COPY tsconfig.json tsconfig.json
-# COPY applications/locations-ingest/package.json package.json
-
-cp -R $CODE_DIR/* $BUILD_DIR
+node esbuild.mjs
 
 # Zip the distribution directory
 echo "Creating zip file..."
-zip -r $DIST_FILE *
+zip -r $DIST_FILE $BUILD_DIR/dist

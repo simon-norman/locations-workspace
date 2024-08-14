@@ -46,10 +46,12 @@ new aws.QueuedLambdaFunction({
 	serviceDockerContext: "../../monorepo",
 	serviceEnvironmentVariables: [
 		{
-			name: "LOCATIONS_DB_ENDPOINT",
+			name: "LOCATIONS_DB_URL",
 			value: dbEndpoint,
 		},
 	],
+	handler: "index.handler",
 	subnets: publicSubnetIds.apply((ids) => ids),
 	securityGroups: [securityGroup.apply((group) => group.id)],
+	zipFilePath: "./build/locations_ingest_lambda.zip",
 });

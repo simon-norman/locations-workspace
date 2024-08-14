@@ -77,7 +77,7 @@ new aws.PublicFargateService({
 	serviceDockerContext: "../../monorepo",
 	serviceEnvironmentVariables: [
 		{
-			name: "LOCATIONS_DB_ENDPOINT",
+			name: "LOCATIONS_DB_URL",
 			value: dbEndpoint,
 		},
 	],

@@ -1,28 +1,13 @@
 {
-	"name": "@breeze32/locations-ingest",
-	"version": "1.0.0",
-	"author": "Simon Norman",
-	"license": "MIT",
-	"scripts": {
-		"dev": "NODE_ENV=local doppler run -p locations-ingest -c dev_personal -- bun --watch src/index.ts",
-		"build": "bun build src/index.ts"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.6.0",
-		"@types/aws-lambda": "^8.10.138",
-		"typescript": "5.4.2"
-	},
-	"dependencies": {
-		"@aws-sdk/client-secrets-manager": "^3.549.0",
-		"@aws-sdk/client-sqs": "^3.583.0",
-		"@breeze32/locations-db": "workspace:*",
-		"@breeze32/services": "workspace:*",
-		"@breeze32/ts-backend-utilities": "^1.9.0",
-		"@breeze32/types": "workspace:*",
-		"@elysiajs/eden": "^0.8.1",
-		"@elysiajs/swagger": "^0.8.5",
-		"@sinclair/typebox": "^0.32.20",
-		"@types/bun": "^1.0.12",
-		"elysia": "^0.8.17"
-	}
+  "name": "@breeze32/locations-service",
+  "version": "1.0.0",
+  "author": "Simon Norman",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "1.6.0",
+    "turbo": "^2.0.12",
+    "typescript": "5.4.2"
+  },
+  "private": true,
+  "packageManager": "pnpm@8.6.10"
 }

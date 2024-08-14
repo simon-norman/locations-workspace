@@ -1,3 +1,4 @@
 packages:
-  - 'monorepo/libs/*'
-  - 'monorepo/applications/*'
+  - 'app/libs/*'
+  - 'app/applications/*'
+  - 'infrastructure'

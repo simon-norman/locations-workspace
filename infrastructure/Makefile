@@ -35,6 +35,7 @@ locations-db-down:
 .PHONY: locations-db-down
 
 locations-ingest-up:
+	# @cd ./locations-ingest && bash lambda-build.sh
 	@cd ./locations-ingest && $(DOPPLER_CMD) pulumi up -r -s $(STACK)
 .PHONY: locations-ingest-up
 
