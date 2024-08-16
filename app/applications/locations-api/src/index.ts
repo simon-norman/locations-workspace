@@ -10,7 +10,7 @@ const runApp = async () => {
 
 	loadLocationsDb({
 		password: loadedConfig.LOCATIONS_DB_PASSWORD,
-		endpoint: loadedConfig.LOCATIONS_DB_URL,
+		endpoint: loadedConfig.LOCATIONS_DB_ENDPOINT,
 		username: "locations_api",
 	});
 

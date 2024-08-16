@@ -3,7 +3,7 @@ import { type Static, Type as T } from "@sinclair/typebox";
 
 const expectedConfig = T.Object({
 	LOCATIONS_DB_PASSWORD: T.String(),
-	LOCATIONS_DB_URL: T.String(),
+	LOCATIONS_DB_ENDPOINT: T.String(),
 });
 
 type LoadedConfig = Static<typeof expectedConfig>;
@@ -15,7 +15,7 @@ export const loadConfig = async () => {
 		DeploymentType.lambda,
 		"locations-ingest",
 		expectedConfig,
-		["LOCATIONS_DB_URL"],
+		["LOCATIONS_DB_ENDPOINT"],
 		"eu-west-2",
 	).load();
 };
