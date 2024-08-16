@@ -29,4 +29,4 @@ node esbuild.mjs
 
 # Zip the distribution directory
 echo "Creating zip file..."
-zip -r $DIST_FILE $BUILD_DIR/dist
+zip -j -r $DIST_FILE $BUILD_DIR/dist
