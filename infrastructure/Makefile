@@ -3,11 +3,13 @@ DOPPLER_CMD := doppler run -p simon-norman -c dev_personal --
 all_infra_up:
 	@$(MAKE) locations-db-up STACK=$(STACK)
 	@$(MAKE) locations-api-up STACK=$(STACK)
+	@$(MAKE) locations-ingest-up STACK=$(STACK)
 .PHONY: all_infra_up
 
 all_infra_down:
 	@$(MAKE) locations-api-down STACK=$(STACK)
 	@$(MAKE) locations-db-down STACK=$(STACK)
+	@$(MAKE) locations-ingest-down STACK=$(STACK)
 .PHONY: all_infra_down
 
 locations-api-up:

@@ -6,6 +6,7 @@ datasource db {
 generator client {
     provider = "prisma-client-js"
     output   = "./client"
+    binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 abstract model Base {
@@ -18,6 +19,8 @@ abstract model Base {
 
     @@deny('read', deleted)
     @@deny('delete', !deleted)
+    @@allow('read', !deleted)
+    @@allow('create,update', true)
 }
 
 model Location extends Base {

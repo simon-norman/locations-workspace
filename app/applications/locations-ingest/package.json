@@ -20,7 +20,7 @@
 		"@aws-sdk/client-sqs": "^3.583.0",
 		"@breeze32/locations-db": "workspace:*",
 		"@breeze32/services": "workspace:*",
-		"@breeze32/ts-backend-utilities": "^1.9.0",
+		"@breeze32/ts-backend-utilities": "^1.9.3",
 		"@breeze32/types": "workspace:*",
 		"@elysiajs/eden": "^0.8.1",
 		"@elysiajs/swagger": "^0.8.5",

@@ -9,7 +9,7 @@ export const handler: SQSHandler = async (event: SQSEvent) => {
 	loadLocationsDb({
 		password: loadedConfig.LOCATIONS_DB_PASSWORD,
 		endpoint: loadedConfig.LOCATIONS_DB_ENDPOINT,
-		username: "locations_ingest",
+		username: "locations_api",
 	});
 
 	const failedRecords: SQSRecord[] = [];
@@ -21,7 +21,6 @@ export const handler: SQSHandler = async (event: SQSEvent) => {
 			const mappedHandler = handlerRegistry.get(data.type);
 
 			if (!mappedHandler) throw new Error("No handler found");
-
 			await mappedHandler(data.body);
 		} catch {
 			failedRecords.push(record);

@@ -15,8 +15,8 @@ const vpcStackRef = helpers.getStackRef({
 	region: awsRegion,
 	productName: "main-app",
 });
-// const privateSubnetIds = vpcStackRef.getOutput("privateSubnetIds");
-const publicSubnetIds = vpcStackRef.getOutput("publicSubnetIds");
+
+const privateSubnetIds = vpcStackRef.getOutput("privateSubnetIds");
 
 const securityGroupsRef = helpers.getStackRef({
 	environment,
@@ -46,12 +46,16 @@ new aws.QueuedLambdaFunction({
 	serviceDockerContext: "../../monorepo",
 	serviceEnvironmentVariables: [
 		{
-			name: "LOCATIONS_DB_URL",
+			name: "LOCATIONS_DB_ENDPOINT",
 			value: dbEndpoint,
+		},
+		{
+			name: "PRISMA_QUERY_ENGINE_LIBRARY",
+			value: "/var/task/libquery_engine-rhel-openssl-3.0.x.so.node",
 		},
 	],
 	handler: "index.handler",
-	subnets: publicSubnetIds.apply((ids) => ids),
+	subnets: privateSubnetIds.apply((ids) => ids),
 	securityGroups: [securityGroup.apply((group) => group.id)],
 	zipFilePath: "./build/locations_ingest_lambda.zip",
 });

@@ -24,8 +24,6 @@ const publicSubnetIds = vpcStackRef.getOutput("publicSubnetIds");
 
 const dbPassword = config.requireSecret("db_password");
 
-dbPassword.apply((password) => console.log("pword", password));
-
 const postgresDb = new aws.RdsPrismaPostgresDb({
 	region: awsRegion,
 	name: "locations-db-instance",

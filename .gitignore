@@ -64,3 +64,5 @@ out
 .vscode-test
 
 **/*.zip
+
+local

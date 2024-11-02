@@ -25,6 +25,8 @@ pnpm exec zenstack generate
 cd $BUILD_DIR
 cd ..
 
+mkdir './build/dist'
+
 node esbuild.mjs
 
 # Zip the distribution directory
