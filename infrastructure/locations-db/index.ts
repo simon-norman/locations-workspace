@@ -35,6 +35,7 @@ const postgresDb = new aws.RdsPrismaPostgresDb({
 	securityGroupIds: [],
 	subnetIds: publicSubnetIds,
 	migrationScriptPath: "./migration-script.sh",
+	datadog: true,
 	roles: [
 		{
 			password: dbPassword,

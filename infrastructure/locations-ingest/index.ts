@@ -6,6 +6,7 @@ const awsRegion = awsConfig.require("region");
 
 const config = new pulumi.Config();
 const environment = config.require("environment");
+const version = config.require("version");
 
 const productName = "main-app";
 
@@ -58,4 +59,7 @@ new aws.QueuedLambdaFunction({
 	subnets: privateSubnetIds.apply((ids) => ids),
 	securityGroups: [securityGroup.apply((group) => group.id)],
 	zipFilePath: "./build/locations_ingest_lambda.zip",
+	datadog: {
+		version,
+	},
 });

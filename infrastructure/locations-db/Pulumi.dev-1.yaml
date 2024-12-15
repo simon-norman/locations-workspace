@@ -1,4 +1,4 @@
 config:
   main-app-eu-west-2-locations-db:db_password:
-    secure: AAABAG0RsYE66i3+jX3dR4gAflAcD1/NRWAoqFQWFZVtP7C3QJhzhLAYie0yRdWM90EMbbgnb7p41zJqlmrpxlLWMn2UWa5j8Ded
+    secure: AAABAOqW/o5XedxaqlAsgcz/5OJWCxEGdLK+1X/B4w5hnqj2qix1+PzSKJXmhYDfZkDTYq1T844kU23ZPZEW93q8vlBV3S1QPifq
   main-app-eu-west-2-locations-db:environment: dev-1

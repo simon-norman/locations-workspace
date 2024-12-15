@@ -1,4 +1,5 @@
 DOPPLER_CMD := doppler run -p simon-norman -c dev_personal --
+VERSION := $(shell git rev-parse HEAD)
 
 all_infra_up:
 	@$(MAKE) locations-db-up STACK=$(STACK)
@@ -38,7 +39,7 @@ locations-db-down:
 
 locations-ingest-up:
 	@cd ./locations-ingest && bash lambda-build.sh
-	@cd ./locations-ingest && $(DOPPLER_CMD) pulumi up -r -s $(STACK)
+	@cd ./locations-ingest && $(DOPPLER_CMD) pulumi up -r -s $(STACK) --config="version=$(VERSION)"
 .PHONY: locations-ingest-up
 
 locations-ingest-refresh:

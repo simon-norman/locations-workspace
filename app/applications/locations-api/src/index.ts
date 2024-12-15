@@ -1,9 +1,13 @@
 import { loadLocationsDb } from "@breeze32/locations-db";
-import { foo } from "@breeze32/services";
-import { swagger } from "@elysiajs/swagger";
-import { Elysia } from "elysia";
-import { routes } from "./routes";
-import { config, loadConfig, loadedConfig } from "./services/config";
+import { getLoggerOptions } from "@breeze32/ts-backend-utilities";
+import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
+import fastify from "fastify";
+import { routes } from "./inputs";
+import { loadConfig, loadedConfig } from "./services/config";
+
+const app = fastify({
+	logger: getLoggerOptions(),
+}).withTypeProvider<TypeBoxTypeProvider>();
 
 const runApp = async () => {
 	await loadConfig();
@@ -14,11 +18,12 @@ const runApp = async () => {
 		username: "locations_api",
 	});
 
-	new Elysia()
-		.get("/health", () => foo())
-		.use(swagger())
-		.use(routes)
-		.listen(3000, () => console.log("Server listening"));
+	await app.register(routes);
+
+	await app.listen({
+		port: 3000,
+		host: "0.0.0.0",
+	});
 };
 
 runApp();

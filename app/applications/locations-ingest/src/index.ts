@@ -1,8 +1,18 @@
 import { loadLocationsDb } from "@breeze32/locations-db";
 import type { LocationIngest } from "@breeze32/types";
 import type { SQSEvent, SQSHandler, SQSRecord } from "aws-lambda";
+import "datadog-lambda-js";
+import pino from "pino";
 import { handlerRegistry } from "./handlers/handler-registry";
 import { loadConfig, loadedConfig } from "./services/config";
+
+const logger = pino({
+	formatters: {
+		level: (label) => {
+			return { level: label.toUpperCase() };
+		},
+	},
+});
 
 export const handler: SQSHandler = async (event: SQSEvent) => {
 	await loadConfig();
@@ -22,7 +32,25 @@ export const handler: SQSHandler = async (event: SQSEvent) => {
 
 			if (!mappedHandler) throw new Error("No handler found");
 			await mappedHandler(data.body);
-		} catch {
+		} catch (error: any) {
+			logger.error(
+				{
+					stack: error.stack,
+					errorType: "TypeError",
+					status: "ERROR",
+					errorMessage: error.message,
+					message: error.message,
+					kind: "Exception",
+					ddseverity: "error",
+					error: {
+						stack: error.stack,
+						kind: "Exception",
+						ddseverity: "error",
+						message: error.message,
+					},
+				},
+				error.message,
+			);
 			failedRecords.push(record);
 		}
 	}

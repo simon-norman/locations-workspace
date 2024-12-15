@@ -13,6 +13,14 @@
 			"path": "app"
 		},
 		{
+			"name": "locations-api",
+			"path": "app/applications/locations-api"
+		},
+		{
+			"name": "locations-ingest",
+			"path": "app/applications/locations-ingest"
+		},
+		{
 			"path": ".github"
 		}
 	],

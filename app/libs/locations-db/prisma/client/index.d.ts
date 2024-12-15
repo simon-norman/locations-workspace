@@ -17,6 +17,8 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * Model Location
  * @@deny('read', deleted)
  * @@deny('delete', !deleted)
+ * @@allow('read', !deleted)
+ * @@allow('create,update', true)
  */
 export type Location = $Result.DefaultSelection<Prisma.$LocationPayload>
 
