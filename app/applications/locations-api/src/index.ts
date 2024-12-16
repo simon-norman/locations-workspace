@@ -1,28 +1,45 @@
 import { loadLocationsDb } from "@breeze32/locations-db";
-import { getLoggerOptions } from "@breeze32/ts-backend-utilities";
-import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
-import fastify from "fastify";
+import { ErrorCodes } from "@breeze32/services/error-codes/error-codes";
+import { BackendError, getLoggerOptions } from "@breeze32/ts-backend-utilities";
+import { api } from "./api";
 import { routes } from "./inputs";
-import { loadConfig, loadedConfig } from "./services/config";
-
-const app = fastify({
-	logger: getLoggerOptions(),
-}).withTypeProvider<TypeBoxTypeProvider>();
 
 const runApp = async () => {
-	await loadConfig();
-
+	await api.loadConfig();
+	if (!api.config?.loadedConfig) {
+		return BackendError.throw("Config not loaded", {
+			code: ErrorCodes.CONFIG_NOT_LOADED,
+			publicMessage: "Config not loaded",
+		});
+	}
+	const config = api.config.loadedConfig;
 	loadLocationsDb({
-		password: loadedConfig.LOCATIONS_DB_PASSWORD,
-		endpoint: loadedConfig.LOCATIONS_DB_ENDPOINT,
+		password: config.LOCATIONS_DB_PASSWORD,
+		endpoint: config.LOCATIONS_DB_ENDPOINT,
 		username: "locations_api",
 	});
 
-	await app.register(routes);
-
-	await app.listen({
-		port: 3000,
-		host: "0.0.0.0",
+	await api.start({
+		authConfig: {
+			publicKey: config.AUTH_PUBLIC_KEY,
+		},
+		routes,
+		cors: {
+			allowedOrigins: [`http://localhost:${api.opts.portNumber}`],
+			methods: "all",
+			allowedHeaders: [
+				"Authorization",
+				"Content-Type",
+				"Accept",
+				"Origin",
+				"X-Requested-With",
+				"Cache-Control",
+				"If-Match",
+				"If-None-Match",
+				"If-Modified-Since",
+				"If-Unmodified-Since",
+			],
+		},
 	});
 };
 

@@ -1,5 +1,5 @@
 import { locationsDb } from "@breeze32/locations-db";
-import type { FastifyTypebox } from "../../../types/fastify-typebox";
+import type { FastifyTypebox } from "@breeze32/ts-backend-utilities";
 import { postLocationBody } from "./validation";
 
 export const postLocationRoute = async (fastify: FastifyTypebox) => {

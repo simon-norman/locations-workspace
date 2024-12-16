@@ -5,6 +5,6 @@ export const postLocationBody = t.Object({
 	name: defaultString,
 	coordinates: t.Object({
 		latitude: defaultNumeric,
-		longitude: t.Number(defaultNumeric),
+		longitude: defaultNumeric,
 	}),
 });
