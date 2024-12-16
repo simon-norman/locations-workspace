@@ -41,5 +41,29 @@
 			"editor.tabSize": 4
 		},
 		"editor.detectIndentation": false
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"type": "node",
+				"request": "launch",
+				"name": "Run locations api",
+				"runtimeExecutable": "/usr/bin/env",
+				"runtimeArgs": [
+					"NODE_ENV=local",
+					"doppler",
+					"run",
+					"-p",
+					"locations-api",
+					"-c",
+					"dev_personal",
+					"--",
+					"${workspaceFolder}/app/applications/locations-api/node_modules/.bin/tsx",
+					"${workspaceFolder}/app/applications/locations-api/src/index.ts"
+				],
+				"console": "integratedTerminal"
+			}
+		]
 	}
 }
