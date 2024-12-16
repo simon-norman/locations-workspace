@@ -1,13 +1,5 @@
 version: '2.26'
 services:
-  locations-api:
-    build:
-      context: .
-      target: release_locations_api
-    depends_on: 
-      - locations-db
-    ports:
-      - "3000:3000"
   locations-db:
     image: postgres:15
     volumes:

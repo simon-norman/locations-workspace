@@ -28,12 +28,12 @@ importers:
         version: link:../../libs/services
       '@breeze32/ts-backend-utilities':
         specifier: ^1.9.0
-        version: 1.9.0(@prisma/client@5.18.0)(@zenstackhq/runtime@2.4.1)
+        version: 1.9.0(@prisma/client@6.0.1)(@zenstackhq/runtime@2.10.1)
       '@fastify/type-provider-typebox':
         specifier: ^5.1.0
         version: 5.1.0(@sinclair/typebox@0.32.35)
       '@sinclair/typebox':
-        specifier: ^0.32.35
+        specifier: 0.32.35
         version: 0.32.35
       fastify:
         specifier: ^5.1.0
@@ -42,6 +42,9 @@ importers:
       '@biomejs/biome':
         specifier: 1.6.0
         version: 1.6.0
+      tsx:
+        specifier: ^4.19.2
+        version: 4.19.2
       typescript:
         specifier: 5.4.2
         version: 5.4.2
@@ -68,19 +71,19 @@ importers:
         version: link:../../libs/types
       '@elysiajs/eden':
         specifier: ^0.8.1
-        version: 0.8.1(@sinclair/typebox@0.32.20)(elysia@0.8.17)
+        version: 0.8.1(@sinclair/typebox@0.32.35)(elysia@0.8.17)
       '@elysiajs/swagger':
         specifier: ^0.8.5
         version: 0.8.5(elysia@0.8.17)
       '@sinclair/typebox':
-        specifier: ^0.32.20
-        version: 0.32.20
+        specifier: ^0.32.35
+        version: 0.32.35
       datadog-lambda-js:
         specifier: ^9.115.0
         version: 9.115.0
       elysia:
         specifier: ^0.8.17
-        version: 0.8.17(@sinclair/typebox@0.32.20)(typescript@5.4.2)
+        version: 0.8.17(@sinclair/typebox@0.32.35)(typescript@5.4.2)
       pino:
         specifier: ^9.5.0
         version: 9.5.0
@@ -2808,6 +2811,20 @@ packages:
       - aws-crt
     dev: false
 
+  /@breeze32/ts-backend-utilities@1.9.0(@prisma/client@6.0.1)(@zenstackhq/runtime@2.10.1):
+    resolution: {integrity: sha512-lXlGo6pABwr0M4u93QL9Op3unvdDpRY7NnvH/Ci4TwM5aE6+I7H/H49JYIP3YvBiftuhkQgj5mtsoNQYkuHZBA==}
+    peerDependencies:
+      '@prisma/client': '*'
+      '@zenstackhq/runtime': '*'
+    dependencies:
+      '@aws-sdk/client-secrets-manager': 3.629.0
+      '@prisma/client': 6.0.1
+      '@sinclair/typebox': 0.32.35
+      '@zenstackhq/runtime': 2.10.1(@prisma/client@6.0.1)
+    transitivePeerDependencies:
+      - aws-crt
+    dev: false
+
   /@breeze32/ts-backend-utilities@1.9.3(@prisma/client@6.0.1)(@zenstackhq/runtime@2.10.1):
     resolution: {integrity: sha512-ifv1susk2Sbp/PNsn5vqw6EmsoEgtVDPeQceEd7D4K/rAHzXUkG/I1hiG/ZJy0GllFLPhbsEkTB4Y/l8rDnl4g==}
     peerDependencies:
@@ -2859,12 +2876,26 @@ packages:
       superjson: 2.2.1
     dev: false
 
+  /@elysiajs/eden@0.8.1(@sinclair/typebox@0.32.35)(elysia@0.8.17):
+    resolution: {integrity: sha512-YzvcIANyzdxWqaXBYjVN/Y9hqaIDQwF3jc7rUMqVLVo+zOd3eTn8zruNEWcumA6n+rJujqqMYanrOD3pUolOtg==}
+    peerDependencies:
+      '@sinclair/typebox': '*'
+      elysia: '>= 0.8.0'
+    peerDependenciesMeta:
+      '@sinclair/typebox':
+        optional: true
+    dependencies:
+      '@sinclair/typebox': 0.32.35
+      elysia: 0.8.17(@sinclair/typebox@0.32.35)(typescript@5.4.2)
+      superjson: 2.2.1
+    dev: false
+
   /@elysiajs/swagger@0.8.5(elysia@0.8.17):
     resolution: {integrity: sha512-8u4poCU62z8lgWuf4Edp84j6ZOdVLGMuFfbd85T/s7bEKUYHUdhbdd9lH5HFf8EKoJTmhpd+OyO4TxOF+vmOcA==}
     peerDependencies:
       elysia: '>= 0.8.0'
     dependencies:
-      elysia: 0.8.17(@sinclair/typebox@0.32.20)(typescript@5.4.2)
+      elysia: 0.8.17(@sinclair/typebox@0.32.35)(typescript@5.4.2)
       lodash.clonedeep: 4.5.0
       openapi-types: 12.1.3
     dev: false
@@ -6138,6 +6169,29 @@ packages:
       typescript: 5.4.2
     dev: false
 
+  /elysia@0.8.17(@sinclair/typebox@0.32.35)(typescript@5.4.2):
+    resolution: {integrity: sha512-hqKHKUxbvlDHnobudtna5nBoGiZ4oa0xdnhynLAJF3+6gTYHAcQ/8/IyxUx5Az5Uy0zTuNiv7m2bIFu7xeMiWg==}
+    peerDependencies:
+      '@sinclair/typebox': '>= 0.31.0'
+      openapi-types: '>= 12.0.0'
+      typescript: '>= 5.0.0'
+    peerDependenciesMeta:
+      '@sinclair/typebox':
+        optional: true
+      openapi-types:
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@sinclair/typebox': 0.32.35
+      cookie: 0.6.0
+      eventemitter3: 5.0.1
+      fast-decode-uri-component: 1.0.1
+      fast-querystring: 1.1.2
+      memoirist: 0.1.10
+      typescript: 5.4.2
+    dev: false
+
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: true
@@ -6740,6 +6794,12 @@ packages:
       call-bind: 1.0.7
       es-errors: 1.3.0
       get-intrinsic: 1.2.4
+
+  /get-tsconfig@4.8.1:
+    resolution: {integrity: sha512-k9PN+cFBmaLWtVz29SkUoqU5O0slLuHJXt/2P+tMVFT+phsSGXGkp9t3rQIqdz0e+06EHNGs3oM6ZX1s2zHxRg==}
+    dependencies:
+      resolve-pkg-maps: 1.0.0
+    dev: true
 
   /glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -8542,6 +8602,10 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /resolve-pkg-maps@1.0.0:
+    resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
+    dev: true
+
   /resolve@1.22.8:
     resolution: {integrity: sha512-oKWePCxqpd6FlLvGV1VU0x7bkPmmCNolxzjMf4NczoDnQcIWrAF+cPtZn5i6n+RfD2d9i0tzpKnG6Yk168yIyw==}
     hasBin: true
@@ -9253,6 +9317,17 @@ packages:
       - supports-color
       - tsx
       - yaml
+    dev: true
+
+  /tsx@4.19.2:
+    resolution: {integrity: sha512-pOUl6Vo2LUq/bSa8S5q7b91cgNSjctn9ugq/+Mvow99qW6x/UZYwzxy/3NmqoT66eHYfCVvFvACC58UBPFf28g==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+    dependencies:
+      esbuild: 0.23.0
+      get-tsconfig: 4.8.1
+    optionalDependencies:
+      fsevents: 2.3.3
     dev: true
 
   /tuf-js@2.2.1:

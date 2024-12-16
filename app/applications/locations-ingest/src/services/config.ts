@@ -4,18 +4,18 @@ import { type Static, Type as T } from "@sinclair/typebox";
 const expectedConfig = T.Object({
 	LOCATIONS_DB_PASSWORD: T.String(),
 	LOCATIONS_DB_ENDPOINT: T.String(),
+	LOCATIONS_DB_USERNAME: T.String(),
 });
 
-type LoadedConfig = Static<typeof expectedConfig>;
+const config = new Config({
+	deploymentType: DeploymentType.lambda,
+	serviceName: "locations-ingest",
+	expectedConfig,
+	region: "eu-west-2",
+});
 
-export let loadedConfig: LoadedConfig;
+export let loadedConfig: Static<typeof expectedConfig>;
 
 export const loadConfig = async () => {
-	loadedConfig = await new Config<LoadedConfig>(
-		DeploymentType.lambda,
-		"locations-ingest",
-		expectedConfig,
-		["LOCATIONS_DB_ENDPOINT"],
-		"eu-west-2",
-	).load();
+	loadedConfig = await config.load();
 };

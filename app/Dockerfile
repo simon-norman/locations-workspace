@@ -34,18 +34,6 @@ COPY applications/locations-api/src .
 COPY tsconfig.json tsconfig.json
 COPY applications/locations-api/package.json package.json
 
-
-FROM base AS release_locations_ingest
-ARG ENV=local
-ENV NODE_ENV=${ENV}
-COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=install /temp/prod/node_modules/@breeze32/services node_modules/@breeze32/services
-COPY --from=install /temp/prod/node_modules/@breeze32/types node_modules/@breeze32/types
-COPY --from=install /temp/prod/node_modules/@breeze32/locations-db node_modules/@breeze32/locations-db
-COPY applications/locations-ingest/src .
-COPY tsconfig.json tsconfig.json
-COPY applications/locations-ingest/package.json package.json
-
 # run the app
 USER bun
 EXPOSE 3000

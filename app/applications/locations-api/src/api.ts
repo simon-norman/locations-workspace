@@ -8,7 +8,6 @@ export const api = new FastifyApi({
 		deploymentType: DeploymentType.fargate,
 		serviceName: "locations-api",
 		expectedConfig,
-		unsecretKeys: ["LOCATIONS_DB_ENDPOINT", "AUTH_PUBLIC_KEY"],
 		region: "eu-west-2",
 	},
 });

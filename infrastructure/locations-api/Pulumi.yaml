@@ -4,3 +4,4 @@ description: Locations service public service
 config:
   aws:region: eu-west-2
   service-port: 3000
+  db-username: locations-ingest

@@ -37,22 +37,17 @@ jobs:
          ip_to_check_connection: "10.0.32.112"
        env:
         VPN_CONFIG: ${{secrets.AWS_VPN_CONFIG}}
-     - name: echo service
-       run: |
-        echo "FOOOOOO"
-        echo ${{ steps.underscore_service.outputs.formatted_value }}
-    #  - uses: simon-norman/actions/deploy@v1
-    #    name: Deploy
-    #    with:
-    #     environment: ${{ inputs.environment }}
-    #     file: ./monorepo/Dockerfile
-    #     tag: ${{ inputs.service }}-${{ inputs.environment }}:latest
-    #     aws_region: eu-west-2
-    #     build_target: release_${{ steps.underscore_service.outputs.converted_value }}
-    #     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #     aws_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #     app_name: ${{ inputs.service }}
-    #    env:
-    #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-       #  - uses: simon-norman/actions/deploy@v1
+     - uses: simon-norman/actions/deploy@v1
+       name: Deploy
+       with:
+        environment: ${{ inputs.environment }}
+        file: ./monorepo/Dockerfile
+        tag: ${{ inputs.service }}-${{ inputs.environment }}:latest
+        aws_region: eu-west-2
+        build_target: release_${{ steps.underscore_service.outputs.converted_value }}
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        app_name: ${{ inputs.service }}
+       env:
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
   
