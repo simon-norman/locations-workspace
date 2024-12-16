@@ -1,6 +1,6 @@
 import { loadLocationsDb } from "@breeze32/locations-db";
 import { ErrorCodes } from "@breeze32/services/error-codes/error-codes";
-import { BackendError, getLoggerOptions } from "@breeze32/ts-backend-utilities";
+import { BackendError } from "@breeze32/ts-backend-utilities";
 import { api } from "./api";
 import { routes } from "./inputs";
 

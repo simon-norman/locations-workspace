@@ -2,10 +2,10 @@
   "name": "@breeze32/locations-api",
   "version": "1.0.0",
   "author": "Simon Norman",
-  "type": "module",
   "license": "MIT",
   "devDependencies": {
     "@biomejs/biome": "1.6.0",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "5.4.2"
   },

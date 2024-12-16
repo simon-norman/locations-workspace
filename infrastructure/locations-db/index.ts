@@ -22,7 +22,13 @@ const vpcId = vpcStackRef.getOutput("vpcId");
 // const isolatedSubnetIds = vpcStackRef.getOutput("isolatedSubnetIds");
 const publicSubnetIds = vpcStackRef.getOutput("publicSubnetIds");
 
-const dbPassword = config.requireSecret("db_password");
+const locationsApiDbPassword = config.requireSecret(
+	"locations_api_db_password",
+);
+
+const locationsIngestDbPassword = config.requireSecret(
+	"locations_ingest_db_password",
+);
 
 const postgresDb = new aws.RdsPrismaPostgresDb({
 	region: awsRegion,
@@ -38,8 +44,22 @@ const postgresDb = new aws.RdsPrismaPostgresDb({
 	datadog: true,
 	roles: [
 		{
-			password: dbPassword,
+			password: locationsApiDbPassword,
 			name: "locations_api",
+			grants: [
+				{
+					grantName: "alltables",
+					database: "locations",
+					objectType: "table",
+					objects: [],
+					privileges: ["SELECT", "INSERT", "UPDATE", "DELETE"],
+					schema: "public",
+				},
+			],
+		},
+		{
+			password: locationsIngestDbPassword,
+			name: "locations_ingest",
 			grants: [
 				{
 					grantName: "alltables",
