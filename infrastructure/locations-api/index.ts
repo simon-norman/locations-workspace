@@ -34,8 +34,6 @@ const loadBalancerArn = loadBalancerRef.getOutput("arn");
 const loadBalancerDnsName = loadBalancerRef.getOutput("dnsName");
 const listenerArn = loadBalancerRef.getOutput("listenerArn");
 
-const dbUsername = config.require("db-username");
-
 const envHostedZoneRef = helpers.getStackRef({
 	environment,
 	name: "environment-hosted-zone",
@@ -81,14 +79,6 @@ new aws.PublicFargateService({
 		{
 			name: "LOCATIONS_DB_ENDPOINT",
 			value: dbEndpoint,
-		},
-		{
-			name: "LOCATIONS_DB_USERNAME",
-			value: dbUsername,
-		},
-		{
-			name: "PRISMA_QUERY_ENGINE_LIBRARY",
-			value: "/app/libquery_engine-rhel-openssl-3.0.x.so.node",
 		},
 	],
 	subnets: [

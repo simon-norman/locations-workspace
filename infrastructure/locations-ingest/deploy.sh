@@ -13,6 +13,7 @@ fi
 
 BUILD_DIR="$REPO_ROOT/infrastructure/locations-ingest/build"
 APP_DIR="$REPO_ROOT/app/applications/locations-ingest"
+DIST_FILE="$BUILD_DIR/locations_ingest_lambda.zip"
 
 # Create a clean distribution directory
 echo "Creating distribution directory..."
@@ -34,4 +35,4 @@ echo "Creating zip file..."
 
 
 cd $REPO_ROOT/infrastructure/locations-ingest
-pulumi up -r -s $STACK --config="version=$VERSION"
+pulumi up -s $STACK --config="version=$VERSION"

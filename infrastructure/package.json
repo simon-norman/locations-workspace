@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "1.6.0",
-		"@breeze32/shared-infra": "^1.0.7",
+		"@breeze32/shared-infra": "^1.0.9",
 		"@pulumi/pulumi": "^3.129.0",
 		"esbuild": "^0.23.0",
 		"esbuild-node-externals": "^1.15.0",

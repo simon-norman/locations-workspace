@@ -50,10 +50,6 @@ new aws.QueuedLambdaFunction({
 			name: "LOCATIONS_DB_ENDPOINT",
 			value: dbEndpoint,
 		},
-		{
-			name: "PRISMA_QUERY_ENGINE_LIBRARY",
-			value: "/var/task/libquery_engine-rhel-openssl-3.0.x.so.node",
-		},
 	],
 	handler: "index.handler",
 	subnets: privateSubnetIds.apply((ids) => [ids[0]]),

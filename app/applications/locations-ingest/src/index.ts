@@ -19,7 +19,7 @@ export const handler: SQSHandler = async (event: SQSEvent) => {
 	loadLocationsDb({
 		password: loadedConfig.LOCATIONS_DB_PASSWORD,
 		endpoint: loadedConfig.LOCATIONS_DB_ENDPOINT,
-		username: "locations_api",
+		username: loadedConfig.LOCATIONS_DB_USERNAME,
 	});
 
 	const failedRecords: SQSRecord[] = [];

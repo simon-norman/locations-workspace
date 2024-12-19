@@ -7,6 +7,7 @@ const args = process.argv.slice(2);
 
 const serviceName = args[0];
 const inclLocationsDb = args[1] === "true";
+const infraServiceName = args[2] ?? serviceName;
 
 const REPO_ROOT = execSync("git rev-parse --show-toplevel", {
 	encoding: "utf-8",
@@ -44,7 +45,7 @@ if (inclLocationsDb) {
 					`${REPO_ROOT}/app/libs/locations-db/node_modules/prisma/libquery_engine-rhel-openssl-3.0.x.so.node`,
 				],
 				to: [
-					`${REPO_ROOT}/infrastructure/${serviceName}/build/dist/libquery_engine-rhel-openssl-3.0.x.so.node`,
+					`${REPO_ROOT}/infrastructure/${infraServiceName}/build/dist/libquery_engine-rhel-openssl-3.0.x.so.node`,
 				],
 			},
 			watch: true,
@@ -58,6 +59,6 @@ await esbuild.build({
 	minify: true,
 	sourcemap: true,
 	platform: "node",
-	outdir: `${REPO_ROOT}/infrastructure/${serviceName}/build/dist`,
+	outdir: `${REPO_ROOT}/infrastructure/${infraServiceName}/build/dist`,
 	plugins,
 });

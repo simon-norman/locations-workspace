@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Exit immediately if a command exits with a non-zero status.
 set -e
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
@@ -12,29 +11,27 @@ if [ -z "$REPO_ROOT" ]; then
   exit 1
 fi
 
-BUILD_DIR="$REPO_ROOT/infrastructure/locations-ingest/build"
-DIST_FILE="$BUILD_DIR/locations_ingest_lambda.zip"
+BUILD_DIR="$REPO_ROOT/infrastructure/locations-lambda-api/build"
+APP_DIR="$REPO_ROOT/app/applications/locations-api"
 
 # Create a clean distribution directory
 echo "Creating distribution directory..."
 rm -rf $BUILD_DIR
-turbo prune @breeze32/locations-ingest --out-dir $BUILD_DIR
 
-cd $BUILD_DIR
+cd $APP_DIR
 pnpm install
-cd $BUILD_DIR/app/libs/locations-db
+cd $REPO_ROOT/app/libs/locations-db
 pnpm exec zenstack generate
-cd $BUILD_DIR
-cd ..
 
-mkdir './build/dist'
+mkdir -p $BUILD_DIR/dist
 
-node esbuild.mjs
+cd $REPO_ROOT/infrastructure/shared
+node esbuild.mjs locations-api true locations-lambda-api
 
 # Zip the distribution directory
 echo "Creating zip file..."
 (cd $BUILD_DIR/dist && zip -r9 $DIST_FILE .)
 
 
-cd $REPO_ROOT/infrastructure/locations-ingest
+cd $REPO_ROOT/infrastructure/locations-lambda-api
 pulumi up -r -s $STACK --config="version=$VERSION"
