@@ -1,3 +1,2 @@
 config:
-  main-app-eu-west-2-locations-ingest:environment: dev-1
-  main-app-eu-west-2-locations-ingest:version: e5abb54375d878b1eb602b8252688cf17c5f9cff
+  main-app-eu-west-2-locations-lambda-api:environment: dev-1

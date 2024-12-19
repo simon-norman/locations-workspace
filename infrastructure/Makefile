@@ -14,7 +14,7 @@ all_infra_down:
 .PHONY: all_infra_down
 
 locations-api-up:
-	@cd ./locations-api && $(DOPPLER_CMD) pulumi up -r -s $(STACK)
+	@cd ./locations-api && bash deploy.sh
 .PHONY: locations-api-up
 
 locations-api-refresh:
@@ -38,8 +38,7 @@ locations-db-down:
 .PHONY: locations-db-down
 
 locations-ingest-up:
-	@cd ./locations-ingest && bash lambda-build.sh
-	@cd ./locations-ingest && $(DOPPLER_CMD) pulumi up -r -s $(STACK) --config="version=$(VERSION)"
+	@cd ./locations-ingest && bash deploy.sh
 .PHONY: locations-ingest-up
 
 locations-ingest-refresh:
@@ -49,3 +48,4 @@ locations-ingest-refresh:
 locations-ingest-down:
 	@cd ./locations-ingest && $(DOPPLER_CMD) pulumi down -r -s $(STACK)
 .PHONY: locations-ingest-down
+

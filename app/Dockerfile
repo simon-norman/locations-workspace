@@ -1,4 +1,4 @@
-FROM oven/bun:1 as base
+FROM node:20-slim as base
 WORKDIR /usr/src/app
 
 # install all dependencies (including dev) into dev directory and install
@@ -8,7 +8,7 @@ COPY package.json /temp/dev
 COPY libs /temp/dev/libs
 COPY applications /temp/dev/applications
 COPY tsconfig.json tsconfig.json
-RUN cd /temp/dev && bun install
+RUN cd /temp/dev && pnpm install
 RUN cd /temp/dev/libs/locations-db && bunx zenstack generate
 
 # now install with --production (exclude devDependencies)

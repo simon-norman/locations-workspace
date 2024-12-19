@@ -86,6 +86,10 @@ new aws.PublicFargateService({
 			name: "LOCATIONS_DB_USERNAME",
 			value: dbUsername,
 		},
+		{
+			name: "PRISMA_QUERY_ENGINE_LIBRARY",
+			value: "/app/libquery_engine-rhel-openssl-3.0.x.so.node",
+		},
 	],
 	subnets: [
 		publicSubnetIds.apply((ids) => ids[0]),
