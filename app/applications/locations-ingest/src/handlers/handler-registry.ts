@@ -1,5 +1,5 @@
 import { LocationIngest, Message } from "@breeze32/types";
-import { newLocationHandler } from "./new-location/handler";
+import { newLocationHandler } from "./locations/new-location";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 type Handler = (record: any) => Promise<void>;

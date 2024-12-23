@@ -13,7 +13,11 @@ type LocationsDbParams = {
 export const loadLocationsDb = (params: LocationsDbParams) => {
 	if (prisma) return;
 
-	const dbUrl = `postgresql://${params.username}:${params.password}@${params.endpoint}/locations?sslmode=require`;
+	const dbUrl = `postgresql://${params.username}:${params.password}@${
+		params.endpoint
+	}/locations-db?sslmode=${
+		process.env.NODE_ENV === "local" ? "prefer" : "require"
+	}`;
 
 	prisma = new PrismaClient({
 		datasources: {

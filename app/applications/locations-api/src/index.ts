@@ -16,12 +16,13 @@ const runApp = async () => {
 	loadLocationsDb({
 		password: config.LOCATIONS_DB_PASSWORD,
 		endpoint: config.LOCATIONS_DB_ENDPOINT,
-		username: "locations_api",
+		username: config.LOCATIONS_DB_USERNAME,
 	});
 
 	await api.start({
 		authConfig: {
-			publicKey: config.AUTH_PUBLIC_KEY,
+			publicKey: Buffer.from(config.AUTH_PUBLIC_KEY, "base64").toString(),
+			applicationId: config.AUTH_APPLICATION_ID,
 		},
 		routes,
 		cors: {
