@@ -29,6 +29,9 @@ importers:
       '@breeze32/ts-backend-utilities':
         specifier: ^1.9.4
         version: 1.9.4(@prisma/client@5.13.0)(@sinclair/typebox@0.32.35)(@zenstackhq/runtime@2.10.2)
+      '@fastify/aws-lambda':
+        specifier: ^5.0.0
+        version: 5.0.0
       '@fastify/type-provider-typebox':
         specifier: ^5.1.0
         version: 5.1.0(@sinclair/typebox@0.32.35)
@@ -2936,6 +2939,10 @@ packages:
       ajv: 8.17.1
       ajv-formats: 3.0.1(ajv@8.17.1)
       fast-uri: 3.0.3
+    dev: false
+
+  /@fastify/aws-lambda@5.0.0:
+    resolution: {integrity: sha512-yroOd+VkuNd+OsbcyT0NVgLWMsfsp1S2Uef7y5UomLMlrB5/vxi+BPwMz9hn0EZSHzNk2w4TFwMvu14iC6zX8g==}
     dev: false
 
   /@fastify/cors@10.0.1:

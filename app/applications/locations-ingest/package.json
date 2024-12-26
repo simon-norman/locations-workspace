@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "author": "Simon Norman",
   "license": "MIT",
-  "scripts": {
-    "dev": "NODE_ENV=local doppler run -p locations-ingest -c dev_personal -- bun --watch src/index.ts",
-    "build": "bun build src/index.ts",
-    "build:prod": "rm -rf dist && esbuild ./src/* --bundle --minify --sourcemap --platform=node --target=node16.14 --outdir=../../../dist"
-  },
   "devDependencies": {
     "@biomejs/biome": "1.6.0",
     "@types/aws-lambda": "8.10.138",

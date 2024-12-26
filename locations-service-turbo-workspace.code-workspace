@@ -51,13 +51,12 @@
 				"name": "Run locations api",
 				"runtimeExecutable": "/usr/bin/env",
 				"runtimeArgs": [
-					"NODE_ENV=local",
 					"doppler",
 					"run",
 					"-p",
 					"locations-api",
 					"-c",
-					"dev_personal",
+					"local_personal",
 					"--",
 					"${workspaceFolder}/app/applications/locations-api/node_modules/.bin/tsx",
 					"${workspaceFolder}/app/applications/locations-api/src/index.ts"

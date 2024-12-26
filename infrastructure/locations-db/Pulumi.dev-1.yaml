@@ -3,6 +3,6 @@ config:
     secure: AAABAOqW/o5XedxaqlAsgcz/5OJWCxEGdLK+1X/B4w5hnqj2qix1+PzSKJXmhYDfZkDTYq1T844kU23ZPZEW93q8vlBV3S1QPifq
   main-app-eu-west-2-locations-db:environment: dev-1
   main-app-eu-west-2-locations-db:locations_api_db_password:
-    secure: AAABAA4tGFqcnz9lG/OlSUOtIGISVjBpqkQdLQOiiRcNnCXmOkibpl+V3zjo6OcbWb1wGkBF98ExQVMpfM8Pu/pl709kbl7MvVWA
+    secure: AAABAA33yLVO07FHN8RNgudJlUyxQITEU8kLNYj0wL0ruA2LURGscelRwbAdlO/asx9pmbzk2UojSvVRTO5j3eLDvVIsaH28HbVR
   main-app-eu-west-2-locations-db:locations_ingest_db_password:
-    secure: AAABAI7JpIpf7Kc5BqWhbc6iaVaqZxA0DZDFGpq3f6eq1Fb7Hl5nBWwNVxoYSNatvsTNJ3jLrVgCL00NGJjEFRmZTSl65noy5SqEa+SJSUuVdw==
+    secure: AAABADU93Km7fqDW4zi1vHoajyPVKxDtCAzvmhRyZug+2iymD8NezIvYmur6xEqKDp9XRxOoSuv8uCfo9LwLDabCH/JCKHcl9rU/eZ1fO4VYPA==
