@@ -17,8 +17,6 @@
     "@breeze32/services": "workspace:*",
     "@breeze32/ts-backend-utilities": "1.9.7",
     "@breeze32/types": "workspace:*",
-    "@elysiajs/eden": "0.8.1",
-    "@elysiajs/swagger": "0.8.5",
     "@sinclair/typebox": "0.32.35",
     "datadog-lambda-js": "9.115.0",
     "pino": "9.5.0"

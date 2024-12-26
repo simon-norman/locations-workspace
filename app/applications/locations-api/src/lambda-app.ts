@@ -2,8 +2,6 @@ import awsLambdaFastify from "@fastify/aws-lambda";
 import type { FastifyInstance } from "fastify";
 import { runApp } from "./run-app";
 
-runApp({ runAsServer: false });
-
 let proxy: ReturnType<typeof awsLambdaFastify>;
 
 export const lambdaHandler = async (event: any, context: any) => {

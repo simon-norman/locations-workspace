@@ -1,6 +1,6 @@
-name: main-app-eu-west-2-locations-lambda-api
+name: main-app-eu-west-2-locations-service
 runtime: nodejs
-description: Locations lambda api
+description: Locations service
 config:
   aws:region: eu-west-2
   service-port: 3000

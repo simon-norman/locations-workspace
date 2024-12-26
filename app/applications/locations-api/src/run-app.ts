@@ -30,7 +30,6 @@ export const runApp = async (opts?: Opts) => {
 			publicKey: Buffer.from(config.AUTH_PUBLIC_KEY, "base64").toString(),
 			applicationId: config.AUTH_APPLICATION_ID,
 		},
-
 		routes,
 		cors: {
 			allowedOrigins: [`http://localhost:${api.opts.portNumber}`],

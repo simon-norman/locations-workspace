@@ -38,24 +38,44 @@ const dbStackRef = helpers.getStackRef({
 
 const dbEndpoint = dbStackRef.getOutput("dbEndpoint");
 
-new aws.QueuedLambdaFunction({
-	region: awsRegion,
-	name: "locations-ingest",
+const envHostedZoneRef = helpers.getStackRef({
 	environment,
-	serviceDockerfileTarget: "release_locations_ingest",
-	serviceDockerfilePath: "../../monorepo/Dockerfile",
-	serviceDockerContext: "../../monorepo",
+	name: "environment-hosted-zone",
+	region: awsRegion,
+	productName,
+});
+const environmentHostedZoneId = envHostedZoneRef.getOutput("zoneId");
+
+const httpsCertificateRef = helpers.getStackRef({
+	environment,
+	name: "https-certificate",
+	region: awsRegion,
+	productName,
+});
+
+const certificateArn = httpsCertificateRef.getOutput("arn");
+
+new aws.ApiGatewayLambdaFunction({
+	region: awsRegion,
+	name: "locations-api",
+	environment,
 	serviceEnvironmentVariables: [
 		{
 			name: "LOCATIONS_DB_ENDPOINT",
 			value: dbEndpoint,
 		},
+		{
+			name: "PRISMA_QUERY_ENGINE_LIBRARY",
+			value: "/var/task/libquery_engine-rhel-openssl-3.0.x.so.node",
+		},
 	],
-	handler: "index.handler",
+	handler: "lambda-app.lambdaHandler",
 	subnets: privateSubnetIds.apply((ids) => [ids[0]]),
 	securityGroups: [securityGroup.apply((group) => group.id)],
-	zipFilePath: "./build/locations_ingest_lambda.zip",
+	zipFilePath: "./build/locations_api_lambda.zip",
 	datadog: {
 		version,
 	},
+	hostedZoneId: environmentHostedZoneId,
+	certificateArn,
 });

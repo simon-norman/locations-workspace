@@ -49,3 +49,15 @@ locations-ingest-down:
 	@cd ./locations-ingest && $(BASE_DOPPLER_CMD) pulumi down -r -s $(STACK)
 .PHONY: locations-ingest-down
 
+locations-service-up:
+	@cd ./locations-service && $(BASE_DOPPLER_CMD) bash deploy.sh $(STACK) $(VERSION)
+.PHONY: locations-service-up
+
+locations-service-refresh:
+	@cd ./locations-service && $(BASE_DOPPLER_CMD) pulumi refresh -s $(STACK)
+.PHONY: locations-service-up
+
+locations-service-down:
+	@cd ./locations-service && $(BASE_DOPPLER_CMD) pulumi down -r -s $(STACK)
+.PHONY: locations-service-down
+

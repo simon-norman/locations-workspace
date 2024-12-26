@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "1.6.0",
-		"@breeze32/shared-infra": "^1.0.9",
+		"@breeze32/shared-infra": "^1.0.10",
 		"@pulumi/pulumi": "^3.129.0",
 		"esbuild": "^0.23.0",
 		"esbuild-node-externals": "^1.15.0",
@@ -13,5 +13,9 @@
 		"typescript": "5.4.2"
 	},
 	"private": true,
-	"packageManager": "pnpm@8.6.10"
+	"packageManager": "pnpm@8.6.10",
+	"dependencies": {
+		"@fastify/swagger": "^9.4.0",
+		"@fastify/swagger-ui": "^5.2.0"
+	}
 }

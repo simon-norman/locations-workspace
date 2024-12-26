@@ -42,9 +42,6 @@ new aws.QueuedLambdaFunction({
 	region: awsRegion,
 	name: "locations-ingest",
 	environment,
-	serviceDockerfileTarget: "release_locations_ingest",
-	serviceDockerfilePath: "../../monorepo/Dockerfile",
-	serviceDockerContext: "../../monorepo",
 	serviceEnvironmentVariables: [
 		{
 			name: "LOCATIONS_DB_ENDPOINT",

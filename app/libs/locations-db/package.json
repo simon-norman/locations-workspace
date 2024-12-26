@@ -11,8 +11,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.6.0",
-    "prisma": "^5.13.0",
+    "prisma": "5.13.0",
     "typescript": "5.4.2",
-    "zenstack": "^2.0.1"
+    "zenstack": "2.0.1"
   }
 }

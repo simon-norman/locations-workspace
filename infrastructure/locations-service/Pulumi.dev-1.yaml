@@ -1,0 +1,3 @@
+config:
+  main-app-eu-west-2-locations-service:environment: dev-1
+  main-app-eu-west-2-locations-service:version: 9335bcf03cff3f087dfcec3d27b551e9199bef5c

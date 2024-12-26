@@ -8,6 +8,7 @@ const args = process.argv.slice(2);
 const serviceName = args[0];
 const inclLocationsDb = args[1] === "true";
 const infraServiceName = args[2] ?? serviceName;
+const serviceModuleName = args[3] ?? "index";
 
 const REPO_ROOT = execSync("git rev-parse --show-toplevel", {
 	encoding: "utf-8",
@@ -54,11 +55,28 @@ if (inclLocationsDb) {
 }
 
 await esbuild.build({
-	entryPoints: [`${REPO_ROOT}/app/applications/${serviceName}/src/index.ts`],
+	entryPoints: [
+		`${REPO_ROOT}/app/applications/${serviceName}/src/${serviceModuleName}.ts`,
+	],
 	bundle: true,
 	minify: true,
 	sourcemap: true,
 	platform: "node",
 	outdir: `${REPO_ROOT}/infrastructure/${infraServiceName}/build/dist`,
 	plugins,
+	// have to make external and install separately as esbuild doesn't seem to be able
+	// to handle the imports inside them (e.g. to svgs and html files inside those libraries)
+	external: ["@fastify/swagger", "@fastify/swagger-ui"],
+	loader: {
+		".json": "json",
+		".svg": "file", // This will inline SVGs as base64
+		".png": "dataurl", // Same for other assets
+		".jpg": "dataurl",
+		".gif": "dataurl",
+		".css": "text", // If you need to import CSS as text
+		".txt": "text", // Text files
+		".html": "text", // HTML files
+		".yaml": "text", // YAML files
+		".yml": "text", // YML files
+	},
 });
