@@ -66,3 +66,5 @@ out
 **/*.zip
 
 local
+
+**/.DS_Store
