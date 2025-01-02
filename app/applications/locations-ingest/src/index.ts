@@ -1,10 +1,11 @@
 import { loadLocationsDb } from "@breeze32/locations-db";
-import type { LocationIngest } from "@breeze32/types";
+import { BackendError } from "@breeze32/ts-backend-utilities";
+import { type LocationIngest, Message } from "@breeze32/types";
 import type { SQSEvent, SQSHandler, SQSRecord } from "aws-lambda";
-import "datadog-lambda-js";
 import pino from "pino";
-import { handlerRegistry } from "./handlers/handler-registry";
+import { newLocationHandler } from "./handlers/locations/new-location";
 import { loadConfig, loadedConfig } from "./services/config";
+import { ErrorCodes } from "./services/error-codes";
 
 const logger = pino({
 	formatters: {
@@ -28,29 +29,16 @@ export const handler: SQSHandler = async (event: SQSEvent) => {
 
 		try {
 			const data: LocationIngest.NewLocationMessage = JSON.parse(body);
-			const mappedHandler = handlerRegistry.get(data.type);
-
-			if (!mappedHandler) throw new Error("No handler found");
-			await mappedHandler(data.body);
+			if (data.type === Message.Types.newLocation) {
+				await newLocationHandler(data.body);
+			} else {
+				BackendError.throw("No handler found", {
+					code: ErrorCodes.NO_HANDLER,
+					publicMessage: "No handler found",
+				});
+			}
 		} catch (error: any) {
-			logger.error(
-				{
-					stack: error.stack,
-					errorType: "TypeError",
-					status: "ERROR",
-					errorMessage: error.message,
-					message: error.message,
-					kind: "Exception",
-					ddseverity: "error",
-					error: {
-						stack: error.stack,
-						kind: "Exception",
-						ddseverity: "error",
-						message: error.message,
-					},
-				},
-				error.message,
-			);
+			logger.error(error, error.message);
 			failedRecords.push(record);
 		}
 	}

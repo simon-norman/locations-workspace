@@ -30,6 +30,10 @@ const locationsIngestDbPassword = config.requireSecret(
 	"locations_ingest_db_password",
 );
 
+const testEnvironmentSetupDbPassword = pulumi.output(
+	process.env.TEST_ENVRIONMENT_SETUP_DB_PASSWORD as string,
+);
+
 const postgresDb = new aws.RdsPrismaPostgresDb({
 	region: awsRegion,
 	name: "locations-db-instance",
@@ -60,6 +64,20 @@ const postgresDb = new aws.RdsPrismaPostgresDb({
 		{
 			password: locationsIngestDbPassword,
 			name: "locations_ingest",
+			grants: [
+				{
+					grantName: "alltables",
+					database: "locations",
+					objectType: "table",
+					objects: [],
+					privileges: ["SELECT", "INSERT", "UPDATE", "DELETE"],
+					schema: "public",
+				},
+			],
+		},
+		{
+			password: testEnvironmentSetupDbPassword,
+			name: "test_environment_setup",
 			grants: [
 				{
 					grantName: "alltables",

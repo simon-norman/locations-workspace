@@ -127,7 +127,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/simonnorman/personal/locations-service-turbo/app/libs/locations-db/prisma/client",
+      "value": "/Users/simonnorman/personal/locations-workspace/app/libs/locations-db/prisma/client",
       "fromEnvVar": null
     },
     "config": {

@@ -15,7 +15,7 @@ export const loadLocationsDb = (params: LocationsDbParams) => {
 
 	const dbUrl = `postgresql://${params.username}:${params.password}@${
 		params.endpoint
-	}/locations-db?sslmode=${
+	}/locations?sslmode=${
 		process.env.NODE_ENV === "local" ? "prefer" : "require"
 	}`;
 
