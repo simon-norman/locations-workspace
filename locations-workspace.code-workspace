@@ -21,6 +21,10 @@
 			"path": "app/applications/locations-ingest"
 		},
 		{
+			"name": "scripts",
+			"path": "app/applications/scripts"
+		},
+		{
 			"path": ".github"
 		}
 	],
@@ -65,5 +69,4 @@
 			}
 		]
 	}
-    
 }

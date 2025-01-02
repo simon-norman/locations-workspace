@@ -1,4 +1,5 @@
 import { locationsDb } from "@breeze32/locations-db";
+import { BreweryService } from "@breeze32/services";
 import type { FastifyTypebox } from "@breeze32/ts-backend-utilities";
 import { authMiddleWare } from "@breeze32/ts-backend-utilities";
 import { Type as t } from "@sinclair/typebox";
@@ -17,8 +18,12 @@ export const getLocationRoute = async (fastify: FastifyTypebox) => {
 			const location = await locationsDb.location.findUnique({
 				where: { id: request.params.locationId },
 			});
+
+			const breweries = await new BreweryService().getBreweries();
+			const firstBrewery = breweries[0];
 			return {
 				address: location?.address,
+				breweryName: firstBrewery.name,
 			};
 		},
 	});

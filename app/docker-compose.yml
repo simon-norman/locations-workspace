@@ -1,11 +1,11 @@
 version: '2.26'
 services:
-  locations-db:
+  locations:
     image: postgres:15
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: locations-db
+      POSTGRES_DB: locations
       POSTGRES_USER: local
       POSTGRES_PASSWORD: local
     ports:
