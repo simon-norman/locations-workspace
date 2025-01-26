@@ -10,24 +10,24 @@ const version = config.require("version");
 
 const productName = "main-app";
 
-const vpcStackRef = helpers.getStackRef({
-	environment,
-	name: "vpc",
-	region: awsRegion,
-	productName: "main-app",
-});
+// const vpcStackRef = helpers.getStackRef({
+// 	environment,
+// 	name: "vpc",
+// 	region: awsRegion,
+// 	productName: "main-app",
+// });
 
-const privateSubnetIds = vpcStackRef.getOutput("privateSubnetIds");
+// const privateSubnetIds = vpcStackRef.getOutput("privateSubnetIds");
 
-const securityGroupsRef = helpers.getStackRef({
-	environment,
-	name: "security-groups",
-	region: awsRegion,
-	productName,
-});
-const securityGroup = securityGroupsRef.getOutput(
-	"inboundNoneSecurityGroupOutboundAll",
-);
+// const securityGroupsRef = helpers.getStackRef({
+// 	environment,
+// 	name: "security-groups",
+// 	region: awsRegion,
+// 	productName,
+// });
+// const securityGroup = securityGroupsRef.getOutput(
+// 	"inboundNoneSecurityGroupOutboundAll",
+// );
 
 const dbStackRef = helpers.getStackRef({
 	environment,
@@ -70,8 +70,8 @@ new aws.ApiGatewayLambdaFunction({
 		},
 	],
 	handler: "lambda-app.lambdaHandler",
-	subnets: privateSubnetIds.apply((ids) => [ids[0]]),
-	securityGroups: [securityGroup.apply((group) => group.id)],
+	// subnets: privateSubnetIds.apply((ids) => [ids[0]]),
+	// securityGroups: [securityGroup.apply((group) => group.id)],
 	zipFilePath: "./build/locations_api_lambda.zip",
 	datadog: {
 		version,

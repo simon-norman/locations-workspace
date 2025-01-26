@@ -6,4 +6,6 @@ export const expectedConfig = T.Object({
 	AUTH_PUBLIC_KEY: T.String(),
 	LOCATIONS_DB_USERNAME: T.String(),
 	AUTH_APPLICATION_ID: T.String(),
+	STRIPE_KEY: T.String(),
+	CPO_BASE_URL: T.String(),
 });

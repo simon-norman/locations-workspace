@@ -1,8 +1,6 @@
 import { DeploymentType, FastifyApi } from "@breeze32/ts-backend-utilities";
 import { expectedConfig } from "./services/config";
 
-console.log(process.env);
-
 export const api = new FastifyApi({
 	appName: "locations-api",
 	portNumber: 3000,

@@ -29,6 +29,14 @@ mkdir -p $BUILD_DIR/dist
 cd $REPO_ROOT/infrastructure/shared
 node esbuild.mjs locations-ingest true
 
+# Install fastify swagger and swagger-ui separately
+# esbuild doesn't seem to be able
+# to handle the imports inside them (e.g. to svgs and html files inside those libraries)
+echo "Installing external packages..."
+cd $BUILD_DIR/dist
+echo '{}' > package.json
+npm install @fastify/swagger @fastify/swagger-ui
+
 # Zip the distribution directory
 echo "Creating zip file..."
 (cd $BUILD_DIR/dist && zip -r9 $DIST_FILE .)

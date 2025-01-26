@@ -1,9 +1,11 @@
 import { loadLocationsDb } from "@breeze32/locations-db";
 import { ErrorCodes } from "@breeze32/services/error-codes/error-codes";
 import { BackendError } from "@breeze32/ts-backend-utilities";
-import type { FastifyInstance } from "fastify/types/instance";
+import Stripe from "stripe";
 import { api } from "./api";
 import { routes } from "./inputs";
+import { Cpo } from "./services/cpo";
+import { setDeps } from "./services/deps";
 
 type Opts = {
 	runAsServer?: boolean;
@@ -17,12 +19,18 @@ export const runApp = async (opts?: Opts) => {
 			publicMessage: "Config not loaded",
 		});
 	}
+
 	const config = api.config.loadedConfig;
 	loadLocationsDb({
 		password: config.LOCATIONS_DB_PASSWORD,
 		endpoint: config.LOCATIONS_DB_ENDPOINT,
 		username: config.LOCATIONS_DB_USERNAME,
 	});
+
+	const payments = new Stripe(config.STRIPE_KEY);
+	const cpo = new Cpo({ config: { baseURL: config.CPO_BASE_URL } });
+
+	setDeps({ cpo, payments });
 
 	return api.start({
 		runAsServer: opts?.runAsServer,
