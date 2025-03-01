@@ -3,8 +3,6 @@ import {
 	defaultString,
 } from "@breeze32/ts-backend-utilities";
 import { Type as t } from "@sinclair/typebox";
-import { deps } from "src/services/deps";
-import { stripeDefaultMeta } from "src/services/payments";
 
 export const patchCommandBody = t.Object({
 	locationId: defaultString,

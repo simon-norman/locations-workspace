@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
-import { getLocationRoute } from "./locations/get-location";
-import { postLocationRoute } from "./locations/post-location";
+import { getLocationRoute } from "./get-location";
+import { postLocationRoute } from "./post-location";
 
 export const locationRoutes = async (fastify: FastifyInstance) => {
 	await fastify.register(postLocationRoute);
