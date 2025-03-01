@@ -6,3 +6,7 @@ LOCAL_CMD := NODE_ENV=local $(DOPPLER_CMD)
 run-dev:
 	$(LOCAL_CMD) npx tsx watch ./src/index.ts
 .PHONY: run-dev
+
+prepare:
+	pnpm exec tsx ./generator.ts
+.PHONY: prepare

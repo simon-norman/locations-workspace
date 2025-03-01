@@ -1,3 +1,5 @@
+include ../../../shared/Makefile
+
 DOPPLER_CMD := doppler run -p locations-db -c local_personal --
 
 migrate_dev:

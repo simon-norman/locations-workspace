@@ -1,3 +1,5 @@
+include ../shared/Makefile
+
 BASE_DOPPLER_CMD := doppler run -p ci-cd -c dev_personal --
 VERSION := $(shell git rev-parse HEAD)
 
