@@ -3,6 +3,7 @@
   "version": "1.0.16",
   "author": "Simon Norman",
   "license": "MIT",
+  "main": "dist/index.js",
   "devDependencies": {
     "@biomejs/biome": "1.6.0",
     "tsup": "8.2.4",
