@@ -41,6 +41,7 @@ const postgresDb = new aws.RdsPrismaPostgresDb({
 	vpcId,
 	databaseName: "locations",
 	availabilityZone,
+	baseEnvironment: environment.split("-")[0],
 	publiclyAccessible: true,
 	securityGroupIds: [],
 	subnetIds: publicSubnetIds,
