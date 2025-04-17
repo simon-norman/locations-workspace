@@ -1,65 +1,37 @@
-include ../shared/Makefile
+ROOT_DIR := $(shell git rev-parse --show-toplevel)
 
-BASE_DOPPLER_CMD := doppler run -p ci-cd -c dev_personal --
+include $(ROOT_DIR)/shared/Makefile
+
 VERSION := $(shell git rev-parse HEAD)
 
+
+define get_doppler_config
+$(shell echo $(STACK) | cut -d'-' -f1)
+endef
+
+define run_with_doppler
+	doppler run -p $(DOPPLER_PERSONAL_PROJECT_NAME) -c $(call get_doppler_config) -- doppler run -p $(1) -c $(call get_doppler_config) -- $(2)
+endef
+
 all_infra_up:
-	@$(MAKE) locations-db-up STACK=$(STACK)
-	@$(MAKE) locations-api-up STACK=$(STACK)
-	@$(MAKE) locations-ingest-up STACK=$(STACK)
+	@$(MAKE) up SERVICE=test-environment-setup STACK=$(STACK)
 .PHONY: all_infra_up
 
 all_infra_down:
-	@$(MAKE) locations-api-down STACK=$(STACK)
-	@$(MAKE) locations-db-down STACK=$(STACK)
-	@$(MAKE) locations-ingest-down STACK=$(STACK)
+	@$(MAKE) down SERVICE=test-environment-setup STACK=$(STACK)
 .PHONY: all_infra_down
 
-locations-api-up:
-	@cd ./locations-api && $(BASE_DOPPLER_CMD) bash deploy.sh $(STACK) $(VERSION)
-.PHONY: locations-api-up
+up:
+	@cd $(ROOT_DIR)/infrastructure/$(SERVICE) && \
+	$(call run_with_doppler,$(if $(DOPPLER_PROJECT),$(DOPPLER_PROJECT),$(SERVICE)),bash deploy.sh $(STACK) $(VERSION))
+.PHONY: up
 
-locations-api-refresh:
-	@cd ./locations-api && $(BASE_DOPPLER_CMD) pulumi refresh -s $(STACK)
-.PHONY: locations-api-up
+refresh:
+	@cd $(ROOT_DIR)/infrastructure/$(SERVICE) && \
+	$(call run_with_doppler,$(if $(DOPPLER_PROJECT),$(DOPPLER_PROJECT),$(SERVICE)),pulumi refresh -s $(STACK))
+.PHONY: refresh
 
-locations-api-down:
-	@cd ./locations-api && $(BASE_DOPPLER_CMD) pulumi down -r -s $(STACK)
-.PHONY: locations-api-down
-
-locations-db-up:
-	@cd ./locations-db && $(BASE_DOPPLER_CMD) doppler run -p locations-db -c dev_personal -- bash deploy.sh $(STACK)
-.PHONY: locations-db-up
-
-locations-db-refresh:
-	@cd ./locations-db && $(BASE_DOPPLER_CMD) pulumi refresh -s $(STACK)
-.PHONY: locations-db-up
-
-locations-db-down:
-	@cd ./locations-db && $(BASE_DOPPLER_CMD) pulumi down -r -s $(STACK)
-.PHONY: locations-db-down
-
-locations-ingest-up:
-	@cd ./locations-ingest && $(BASE_DOPPLER_CMD) bash deploy.sh $(STACK) $(VERSION)
-.PHONY: locations-ingest-up
-
-locations-ingest-refresh:
-	@cd ./locations-ingest && $(BASE_DOPPLER_CMD) pulumi refresh -s $(STACK)
-.PHONY: locations-ingest-up
-
-locations-ingest-down:
-	@cd ./locations-ingest && $(BASE_DOPPLER_CMD) pulumi down -r -s $(STACK)
-.PHONY: locations-ingest-down
-
-locations-service-up:
-	@cd ./locations-service && $(BASE_DOPPLER_CMD) bash deploy.sh $(STACK) $(VERSION)
-.PHONY: locations-service-up
-
-locations-service-refresh:
-	@cd ./locations-service && $(BASE_DOPPLER_CMD) pulumi refresh -s $(STACK)
-.PHONY: locations-service-up
-
-locations-service-down:
-	@cd ./locations-service && $(BASE_DOPPLER_CMD) pulumi down -r -s $(STACK)
-.PHONY: locations-service-down
-
+down:
+	@cd $(ROOT_DIR)/infrastructure\/$(SERVICE) && \
+	$(call run_with_doppler,$(if $(DOPPLER_PROJECT),$(DOPPLER_PROJECT),$(SERVICE)),pulumi down -r -s $(STACK))
+.PHONY: down

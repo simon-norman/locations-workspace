@@ -1,3 +1,8 @@
+ROOT_DIR := $(shell git rev-parse --show-toplevel)
+
+include $(ROOT_DIR)/.env
+export
+
 install:
 	pnpm install
 .PHONY: install
@@ -6,8 +11,20 @@ update-internal:
 	pnpm update "@breeze32/*" --latest
 .PHONY: update-internal-packages
 
-publish:
-	pnpm version $(VERSION)
-	pnpm exec tsup
-	pnpm publish --access public --no-git-checks
-.PHONY: publish
+define run_app_with_doppler
+	doppler run -p $(DOPPLER_PERSONAL_PROJECT_NAME) -c local -- doppler run -p $(1) -c local_personal -- $(2)
+endef
+
+prepare:
+	@echo "Nothing to prepare!"
+.PHONY: prepare
+
+start-containers:
+	@echo "Starting containers..."
+	@cd $(ROOT_DIR)/app && docker compose up
+.PHONY: start-containers
+
+stop-containers:
+	@echo "Stopping containers..."
+	@cd $(ROOT_DIR)/app && docker compose down
+.PHONY: start-containers
