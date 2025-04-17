@@ -42,6 +42,7 @@ new aws.QueuedLambdaFunction({
 	region: awsRegion,
 	name: "locations-ingest",
 	environment,
+	baseEnvironment: environment.split("-")[0],
 	serviceEnvironmentVariables: [
 		{
 			name: "LOCATIONS_DB_ENDPOINT",

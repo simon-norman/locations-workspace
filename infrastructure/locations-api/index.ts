@@ -75,6 +75,7 @@ new aws.PublicFargateService({
 	loadBalancerDnsName,
 	serviceDockerfilePath: "../../monorepo/Dockerfile",
 	serviceDockerContext: "../../monorepo",
+	baseEnvironment: environment.split("-")[0],
 	serviceEnvironmentVariables: [
 		{
 			name: "LOCATIONS_DB_ENDPOINT",

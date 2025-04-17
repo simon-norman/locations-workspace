@@ -59,6 +59,7 @@ new aws.ApiGatewayLambdaFunction({
 	region: awsRegion,
 	name: "locations-api",
 	environment,
+	baseEnvironment: environment.split("-")[0],
 	serviceEnvironmentVariables: [
 		{
 			name: "LOCATIONS_DB_ENDPOINT",
