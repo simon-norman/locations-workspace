@@ -81,6 +81,13 @@ new aws.PublicFargateService({
 			name: "LOCATIONS_DB_ENDPOINT",
 			value: dbEndpoint,
 		},
+		{
+			name: "CPO_BASE_URL",
+			value: `https://${helpers.buildHostName({
+				environment,
+				name: "mock-api",
+			})}/cpo`,
+		},
 	],
 	subnets: [
 		publicSubnetIds.apply((ids) => ids[0]),

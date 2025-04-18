@@ -11,6 +11,14 @@ update-internal:
 	pnpm update "@breeze32/*" --latest
 .PHONY: update-internal-packages
 
+push:
+	cd $(ROOT_DIR) && \
+		git add . && \
+		git commit -m $(COMMIT) && \
+		git push
+		git add .
+.PHONY: push
+
 define run_app_with_doppler
 	doppler run -p $(DOPPLER_PERSONAL_PROJECT_NAME) -c local -- doppler run -p $(1) -c local_personal -- $(2)
 endef

@@ -69,6 +69,13 @@ new aws.ApiGatewayLambdaFunction({
 			name: "PRISMA_QUERY_ENGINE_LIBRARY",
 			value: "/var/task/libquery_engine-rhel-openssl-3.0.x.so.node",
 		},
+		{
+			name: "CPO_BASE_URL",
+			value: `https://${helpers.buildHostName({
+				environment,
+				name: "mock-api",
+			})}/cpo`,
+		},
 	],
 	handler: "lambda-app.lambdaHandler",
 	// subnets: privateSubnetIds.apply((ids) => [ids[0]]),
