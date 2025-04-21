@@ -18,7 +18,7 @@ prepare:
 
 publish:
 	-$(MAKE) prepare
-	-$(MAKE) push COMMIT=$(COMMIT)
 	pnpm version $(VERSION)
+	-$(MAKE) push COMMIT=$(COMMIT)
 	pnpm publish --access public
 .PHONY: publish
