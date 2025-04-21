@@ -6,6 +6,8 @@ export default class PostCommand extends Command {
 		const { locationsSdk } = initClient({
       endpoint: "https://locations-api.breeze32.dev",
       username: "admin",
-      password
+      clientConfig: {
+        
+      }
 	}
 }

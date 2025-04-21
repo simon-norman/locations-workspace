@@ -1,6 +1,6 @@
 {
   "name": "@breeze32/locations-clients",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "author": "Simon Norman",
   "license": "MIT",
   "main": "dist/index.js",
