@@ -13,6 +13,9 @@ type Opts = {
 
 export const runApp = async (opts?: Opts) => {
 	await api.loadConfig();
+
+	api.customLog.log({ msg: "Config loaded", level: "info" });
+
 	if (!api.config?.loadedConfig) {
 		return BackendError.throw("Config not loaded", {
 			code: ErrorCodes.CONFIG_NOT_LOADED,
@@ -21,15 +24,21 @@ export const runApp = async (opts?: Opts) => {
 	}
 
 	const config = api.config.loadedConfig;
+	api.customLog.log({ msg: "Loading database...", level: "info" });
+
 	loadLocationsDb({
 		password: config.LOCATIONS_DB_PASSWORD,
 		endpoint: config.LOCATIONS_DB_ENDPOINT,
 		username: config.LOCATIONS_DB_USERNAME,
 	});
 
+	api.customLog.log({ msg: "Loading Stripe...", level: "info" });
 	const payments = new Stripe(config.STRIPE_KEY);
+
+	api.customLog.log({ msg: "Loading CPO...", level: "info" });
 	const cpo = new Cpo({ config: { baseURL: config.CPO_BASE_URL } });
 
+	api.customLog.log({ msg: "Setting dependencies...", level: "info" });
 	setDeps({ cpo, payments });
 
 	return api.start({

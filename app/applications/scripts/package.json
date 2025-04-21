@@ -5,17 +5,30 @@
   "license": "MIT",
   "devDependencies": {
     "@biomejs/biome": "1.6.0",
+    "@types/node": "^18",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "5.4.2"
   },
   "dependencies": {
     "@breeze32/locations-db": "workspace:*",
     "@breeze32/services": "workspace:*",
+    "@breeze32/locations-clients": "workspace:*",
     "@breeze32/ts-backend-utilities": "1.11.3",
     "@fastify/aws-lambda": "5.0.0",
     "@fastify/type-provider-typebox": "5.1.0",
+    "@oclif/core": "^4.2.10",
     "@sinclair/typebox": "0.32.35",
     "fastify": "5.1.0",
     "pino-pretty": "^13.0.0"
+  },
+  "bin": {
+    "scripts": "./bin/run.js"
+  },
+  "oclif": {
+    "bin": "scripts",
+    "commands": "./dist/commands",
+    "dirname": "scripts",
+    "topicSeparator": ":"
   }
 }

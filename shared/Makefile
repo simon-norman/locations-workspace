@@ -36,3 +36,9 @@ stop-containers:
 	@echo "Stopping containers..."
 	@cd $(ROOT_DIR)/app && docker compose down
 .PHONY: start-containers
+
+publish:
+	-$(MAKE) push COMMIT=$(COMMIT)
+	pnpm version $(VERSION)
+	pnpm publish --access public
+.PHONY: publish

@@ -11,7 +11,7 @@
   "dependencies": {
     "@breeze32/locations-db": "workspace:*",
     "@breeze32/services": "workspace:*",
-    "@breeze32/ts-backend-utilities": "1.17.0",
+    "@breeze32/ts-backend-utilities": "1.17.14",
     "@fastify/aws-lambda": "5.0.0",
     "@fastify/type-provider-typebox": "5.1.0",
     "@sinclair/typebox": "0.32.35",
