@@ -5,6 +5,11 @@ export const expectedConfig = T.Object({
 	LOCATIONS_DB_PASSWORD: T.String(),
 	LOCATIONS_DB_ENDPOINT: T.String(),
 	LOCATIONS_DB_USERNAME: T.String(),
+	PERSONAL_INTERNAL_CLIENT_ID: T.String(),
+	PERSONAL_INTERNAL_CLIENT_SECRET: T.String(),
+	INTERNAL_AUTH_HOST: T.String(),
+	INTERNAL_AUTH_APPLICATION_ID: T.String(),
+	LOCATIONS_API_URL: T.String(),
 });
 
 const config = new Config({

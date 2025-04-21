@@ -1,5 +1,5 @@
 import { loadLocationsDb, locationsDb } from "@breeze32/locations-db";
-import { loadConfig, loadedConfig } from "./services/config";
+import { loadConfig, loadedConfig } from "../services/config";
 
 const insertTestLocations = async () => {
 	await loadConfig();
