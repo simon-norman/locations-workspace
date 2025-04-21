@@ -25,6 +25,22 @@
 			"path": "app/applications/scripts"
 		},
 		{
+			"name": "clients",
+			"path": "app/libs/clients"
+		},
+		{
+			"name": "locations-db",
+			"path": "app/libs/types"
+		},
+		{
+			"name": "services",
+			"path": "app/libs/services"
+		},
+		{
+			"name": "types",
+			"path": "app/libs/types"
+		},
+		{
 			"path": ".github"
 		}
 	],

@@ -1,8 +1,6 @@
-include ../../../shared/Makefile
+ROOT_DIR := $(shell git rev-parse --show-toplevel)
+include $(ROOT_DIR)/shared/Makefile
 
-DOPPLER_CMD := doppler run -p locations-api -c local_personal --
-LOCAL_CMD := NODE_ENV=local $(DOPPLER_CMD) 
-
-run-dev:
-	$(LOCAL_CMD) npx tsx watch ./src/index.ts
-.PHONY: run-dev
+run-script:
+	$(call run_app_with_doppler,$(SERVICE),)
+.PHONY: run-script

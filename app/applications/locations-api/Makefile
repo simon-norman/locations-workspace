@@ -1,8 +1,10 @@
-include ../../../shared/Makefile
+ROOT_DIR := $(shell git rev-parse --show-toplevel)
+include $(ROOT_DIR)/shared/Makefile
 
-DOPPLER_CMD := doppler run -p locations-api -c local_personal --
-LOCAL_CMD := NODE_ENV=local $(DOPPLER_CMD) 
+prepare:
+	@make migrate_local_locations_db
+.PHONY: prepare
 
-run-dev:
-	$(LOCAL_CMD) npx tsx watch ./src/index.ts
-.PHONY: run-dev
+run-local:
+	SERVICE=locations-api $(MAKE) run-local-app
+.PHONY: run-local

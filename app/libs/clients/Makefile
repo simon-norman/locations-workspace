@@ -1,12 +1,24 @@
-include ../../../shared/Makefile
-
-DOPPLER_CMD := doppler run -p locations-api -c local_personal --
-LOCAL_CMD := NODE_ENV=local $(DOPPLER_CMD) 
-
-run-dev:
-	$(LOCAL_CMD) npx tsx watch ./src/index.ts
-.PHONY: run-dev
+ROOT_DIR := $(shell git rev-parse --show-toplevel)
+include $(ROOT_DIR)/shared/Makefile
 
 prepare:
+	@echo "Generating locations-api client..."
+	@if ! $(MAKE) -s check-service PORT=3000 > /dev/null 2>&1; then \
+		echo "Starting service on port 3000..."; \
+		cd $(ROOT_DIR)/app/applications/locations-api && $(MAKE) run-local PORT=3000 & \
+		$(MAKE) wait-for-service; \
+	fi
+	
+	@echo "Running generator..."
 	pnpm exec tsx ./generator.ts
+	
+	@echo "Building with tsup..."
+	pnpm exec tsup
 .PHONY: prepare
+
+publish:
+	-$(MAKE) prepare
+	-$(MAKE) push COMMIT=$(COMMIT)
+	pnpm version $(VERSION)
+	pnpm publish --access public
+.PHONY: publish

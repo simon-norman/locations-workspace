@@ -38,7 +38,46 @@ stop-containers:
 .PHONY: start-containers
 
 publish:
+	tsup
 	-$(MAKE) push COMMIT=$(COMMIT)
 	pnpm version $(VERSION)
 	pnpm publish --access public
 .PHONY: publish
+
+run-local-app:
+	@cd $(ROOT_DIR)/app/applications/$(SERVICE) && \
+	$(call run_app_with_doppler,$(SERVICE),pnpm exec tsx watch ./src/index.ts)
+.PHONY: up-project
+
+migrate_local_locations_db:
+	@cd $(ROOT_DIR)/app/libs/locations-db && \
+	$(call run_app_with_doppler,locations-db,pnpm exec zenstack generate) && \
+	$(call run_app_with_doppler,locations-db,pnpm exec prisma migrate dev)
+.PHONY: migrate_local_locations_db
+
+check-service:
+	@echo "Checking if service is already running on port $(PORT)..."
+	@if curl -s http://localhost:$(PORT)/health > /dev/null 2>&1; then \
+		echo "Service is already running on port $(PORT)"; \
+		exit 0; \
+	else \
+		echo "Service is not running on port $(PORT)"; \
+		exit 1; \
+	fi
+.PHONY: check-service
+
+wait-for-service:
+	@echo "Waiting for service to be ready on port $(PORT)..."
+	@for i in {1..30}; do \
+		if curl -s http://localhost:$(PORT)/health > /dev/null 2>&1; then \
+			echo "Service is ready on port $(PORT)!"; \
+			exit 0; \
+		fi; \
+		if [ $$i -eq 30 ]; then \
+			echo "Service failed to start on port $(PORT) after 30 seconds"; \
+			exit 1; \
+		fi; \
+		echo "Waiting... ($$i/30)"; \
+		sleep 1; \
+	done
+.PHONY: wait-for-service

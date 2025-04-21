@@ -1,8 +1,10 @@
-include ../../../shared/Makefile
+ROOT_DIR := $(shell git rev-parse --show-toplevel)
+include $(ROOT_DIR)/shared/Makefile
 
-DOPPLER_CMD := doppler run -p locations-ingest -c local_personal --
-LOCAL_CMD := NODE_ENV=local $(DOPPLER_CMD) 
+prepare:
+	@make migrate_local_locations_db
+.PHONY: prepare
 
-run-dev:
-	echo "Not yet implemented as using SQS in prod"
-.PHONY: run-dev
+run-local:
+	SERVICE=locations-ingest $(MAKE) run-local-app
+.PHONY: run-local
