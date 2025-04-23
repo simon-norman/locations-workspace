@@ -4,10 +4,10 @@
   "author": "Simon Norman",
   "license": "MIT",
   "dependencies": {
-    "@aws-sdk/rds-signer": "^3.577.0",
-    "@breeze32/ts-backend-utilities": "^1.0.3",
-    "@prisma/client": "^5.13.0",
-    "@zenstackhq/runtime": "^2.0.1"
+    "@aws-sdk/rds-signer": "3.577.0",
+    "@breeze32/ts-backend-utilities": "1.0.3",
+    "@prisma/client": "5.13.0",
+    "@zenstackhq/runtime": "2.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "1.6.0",

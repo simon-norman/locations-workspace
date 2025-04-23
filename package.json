@@ -5,9 +5,9 @@
   "license": "MIT",
   "devDependencies": {
     "@biomejs/biome": "1.6.0",
-    "husky": "^9.1.7",
-    "npm-package-json-lint": "^8.0.0",
-    "turbo": "^2.0.12",
+    "husky": "9.1.7",
+    "npm-package-json-lint": "8.0.0",
+    "turbo": "2.0.12",
     "typescript": "5.4.2"
   },
   "private": true,
