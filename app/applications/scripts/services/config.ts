@@ -9,7 +9,7 @@ export const expectedConfig = T.Object({
 	PERSONAL_INTERNAL_CLIENT_SECRET: T.String(),
 	INTERNAL_AUTH_HOST: T.String(),
 	INTERNAL_AUTH_APPLICATION_ID: T.String(),
-	LOCATIONS_API_URL: T.String(),
+	ENV: T.String(),
 });
 
 const config = new Config({

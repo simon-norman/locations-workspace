@@ -1,4 +1,17 @@
 {
+	"extensions": {
+		"recommendations": [
+			"biomejs.biome",
+			"me-dutour-mathieu.vscode-github-actions",
+			"firsttris.vscode-jest-runner",
+			"ms-playwright.playwright",
+			"renesaarsoo.sql-formatter-vsc",
+			"simonsiefke.svg-preview",
+			"styled-components.vscode-styled-components",
+			"zenstack.zenstack",
+			"esbenp.prettier-vscode"
+		]
+	},
 	"folders": [
 		{
 			"name": "root",
@@ -82,6 +95,37 @@
 					"${workspaceFolder}/app/applications/locations-api/src/index.ts"
 				],
 				"console": "integratedTerminal"
+			},
+			{
+				"type": "node",
+				"request": "launch",
+				"name": "Debug Script via Make",
+				"skipFiles": ["<node_internals>/**"],
+				"cwd": "${workspaceFolder}/app/applications/scripts",
+				"runtimeExecutable": "make",
+				"runtimeArgs": [
+					"run-script",
+					"ENV=${input:env}",
+					"SCRIPT=${input:script}"
+				],
+				"console": "integratedTerminal",
+				"sourceMaps": true,
+				"envFile": "${workspaceFolder}/.env",
+				"env": {
+					"NODE_ENV": "local"
+				}
+			}
+		],
+		"inputs": [
+			{
+				"id": "env",
+				"type": "promptString",
+				"description": "Environment"
+			},
+			{
+				"id": "script",
+				"type": "promptString",
+				"description": "Script command to run"
 			}
 		]
 	}

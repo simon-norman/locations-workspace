@@ -1,9 +1,14 @@
 import { initClient } from "@breeze32/locations-clients";
+import { helpers } from "@breeze32/shared-infra";
 import { Command } from "@oclif/core";
 import { loadConfig, loadedConfig } from "../services/config";
 
 export default class PostCommand extends Command {
 	public async run() {
+		const locationsApiUrl = helpers.buildHostName({
+			environment: loadedConfig.ENV,
+			name: "locations-api",
+		});
 		await loadConfig();
 		const { locationsSdk } = initClient({
 			auth: {
@@ -13,15 +18,20 @@ export default class PostCommand extends Command {
 				applicationId: loadedConfig.INTERNAL_AUTH_APPLICATION_ID,
 			},
 			clientConfig: {
-				baseURL: loadedConfig.LOCATIONS_API_URL,
+				baseURL: `https://${locationsApiUrl}`,
 			},
 		});
 
-		const response = await locationsSdk.postCommandsStart({
-			body: {
-				locationId: "test-location",
-			},
-		});
+		const response = await locationsSdk
+			.postCommandsStart({
+				body: {
+					locationId: "test-location",
+				},
+				throwOnError: true,
+			})
+			.catch((error) => {
+				console.log("Error: ", error);
+			});
 
 		this.log("Response: ", response);
 	}

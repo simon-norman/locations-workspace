@@ -1,22 +1,22 @@
 {
-	"name": "@breeze32/locations-service",
-	"version": "1.0.0",
-	"author": "Simon Norman",
-	"license": "MIT",
-	"devDependencies": {
-		"@biomejs/biome": "1.6.0",
-		"@breeze32/shared-infra": "^1.0.47",
-		"@pulumi/pulumi": "^3.129.0",
-		"@types/node": "^22.10.2",
-		"esbuild": "^0.23.0",
-		"esbuild-node-externals": "^1.15.0",
-		"esbuild-plugin-copy": "^2.1.1",
-		"typescript": "5.4.2"
-	},
-	"private": true,
-	"packageManager": "pnpm@8.6.10",
-	"dependencies": {
-		"@fastify/swagger": "^9.4.0",
-		"@fastify/swagger-ui": "^5.2.0"
-	}
+  "name": "@breeze32/locations-service",
+  "version": "1.0.0",
+  "author": "Simon Norman",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "1.6.0",
+    "@breeze32/shared-infra": "1.0.47",
+    "@pulumi/pulumi": "3.129.0",
+    "@types/node": "22.10.2",
+    "esbuild": "0.23.0",
+    "esbuild-node-externals": "1.15.0",
+    "esbuild-plugin-copy": "2.1.1",
+    "typescript": "5.4.2"
+  },
+  "private": true,
+  "packageManager": "pnpm@8.6.10",
+  "dependencies": {
+    "@fastify/swagger": "9.4.0",
+    "@fastify/swagger-ui": "5.2.0"
+  }
 }
