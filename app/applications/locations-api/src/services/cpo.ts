@@ -4,7 +4,7 @@ export class Cpo extends BaseClient {
 	async startCharge(chargerId: string) {
 		await this.request({
 			method: "POST",
-			url: "/commands/start",
+			url: "/start",
 			data: { chargerId },
 		});
 	}

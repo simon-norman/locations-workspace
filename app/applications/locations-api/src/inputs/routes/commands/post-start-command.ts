@@ -22,6 +22,10 @@ export const postStartCommand = async (fastify: FastifyTypebox) => {
 				amount: 500,
 				currency: "gbp",
 				confirm: true,
+				automatic_payment_methods: {
+					enabled: true,
+					allow_redirects: "never",
+				},
 			});
 
 			await deps.cpo.startCharge(req.body.locationId);

@@ -44,6 +44,8 @@ export const runApp = async (opts?: Opts) => {
 	return api.start({
 		runAsServer: opts?.runAsServer,
 		authConfig: {
+			// REMEMBER if using the public key from fusion auth you have to base64 encode the whole pem file using
+			// the typescript utilities script (IE in that repo, in scripts), and set that as the AUTH_PUBLIC_KEY
 			publicKey: Buffer.from(config.AUTH_PUBLIC_KEY, "base64").toString(),
 			applicationId: config.AUTH_APPLICATION_ID,
 		},
