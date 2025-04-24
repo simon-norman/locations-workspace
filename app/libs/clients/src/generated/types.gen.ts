@@ -38,7 +38,7 @@ export type GetLocationsByLocationIdResponses = {
 
 export type PatchCommandsStartData = {
     body: {
-        locationId: string;
+        sessionId: string;
         status: string;
     };
     path?: never;

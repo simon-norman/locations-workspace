@@ -128,6 +128,16 @@ exports.Prisma.LocationScalarFieldEnum = {
   address: 'address'
 };
 
+exports.Prisma.ChargingSessionScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  deleted: 'deleted',
+  deleted_at: 'deleted_at',
+  location_id: 'location_id',
+  status: 'status'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -145,7 +155,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  Location: 'Location'
+  Location: 'Location',
+  ChargingSession: 'ChargingSession'
 };
 
 /**

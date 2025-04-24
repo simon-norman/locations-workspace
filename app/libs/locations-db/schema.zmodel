@@ -25,6 +25,15 @@ abstract model Base {
 
 model Location extends Base {
     address String @length(1, 300)
+    charging_sessions ChargingSession[]
 
     @@map("locations")
+}
+
+model ChargingSession extends Base {
+    location_id String
+    location Location @relation(fields: [location_id], references: [id])
+    status String @length(1, 50)
+    
+    @@map("charging_sessions")
 }

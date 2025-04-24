@@ -21,6 +21,14 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * @@allow('create,update', true)
  */
 export type Location = $Result.DefaultSelection<Prisma.$LocationPayload>
+/**
+ * Model ChargingSession
+ * @@deny('read', deleted)
+ * @@deny('delete', !deleted)
+ * @@allow('read', !deleted)
+ * @@allow('create,update', true)
+ */
+export type ChargingSession = $Result.DefaultSelection<Prisma.$ChargingSessionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -153,6 +161,16 @@ export class PrismaClient<
     * ```
     */
   get location(): Prisma.LocationDelegate<ExtArgs>;
+
+  /**
+   * `prisma.chargingSession`: Exposes CRUD operations for the **ChargingSession** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChargingSessions
+    * const chargingSessions = await prisma.chargingSession.findMany()
+    * ```
+    */
+  get chargingSession(): Prisma.ChargingSessionDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -630,7 +648,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Location: 'Location'
+    Location: 'Location',
+    ChargingSession: 'ChargingSession'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -647,7 +666,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'location'
+      modelProps: 'location' | 'chargingSession'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -714,6 +733,72 @@ export namespace Prisma {
           count: {
             args: Prisma.LocationCountArgs<ExtArgs>,
             result: $Utils.Optional<LocationCountAggregateOutputType> | number
+          }
+        }
+      }
+      ChargingSession: {
+        payload: Prisma.$ChargingSessionPayload<ExtArgs>
+        fields: Prisma.ChargingSessionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChargingSessionFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ChargingSessionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChargingSessionFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ChargingSessionPayload>
+          }
+          findFirst: {
+            args: Prisma.ChargingSessionFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ChargingSessionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChargingSessionFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ChargingSessionPayload>
+          }
+          findMany: {
+            args: Prisma.ChargingSessionFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ChargingSessionPayload>[]
+          }
+          create: {
+            args: Prisma.ChargingSessionCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ChargingSessionPayload>
+          }
+          createMany: {
+            args: Prisma.ChargingSessionCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.ChargingSessionDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ChargingSessionPayload>
+          }
+          update: {
+            args: Prisma.ChargingSessionUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ChargingSessionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ChargingSessionDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChargingSessionUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.ChargingSessionUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$ChargingSessionPayload>
+          }
+          aggregate: {
+            args: Prisma.ChargingSessionAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateChargingSession>
+          }
+          groupBy: {
+            args: Prisma.ChargingSessionGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<ChargingSessionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChargingSessionCountArgs<ExtArgs>,
+            result: $Utils.Optional<ChargingSessionCountAggregateOutputType> | number
           }
         }
       }
@@ -870,6 +955,36 @@ export namespace Prisma {
    * Count Types
    */
 
+
+  /**
+   * Count Type LocationCountOutputType
+   */
+
+  export type LocationCountOutputType = {
+    charging_sessions: number
+  }
+
+  export type LocationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    charging_sessions?: boolean | LocationCountOutputTypeCountCharging_sessionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LocationCountOutputType
+     */
+    select?: LocationCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LocationCountOutputType without action
+   */
+  export type LocationCountOutputTypeCountCharging_sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChargingSessionWhereInput
+  }
 
 
   /**
@@ -1048,6 +1163,8 @@ export namespace Prisma {
     deleted?: boolean
     deleted_at?: boolean
     address?: boolean
+    charging_sessions?: boolean | Location$charging_sessionsArgs<ExtArgs>
+    _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["location"]>
 
   export type LocationSelectScalar = {
@@ -1060,10 +1177,17 @@ export namespace Prisma {
   }
 
 
+  export type LocationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    charging_sessions?: boolean | Location$charging_sessionsArgs<ExtArgs>
+    _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
 
   export type $LocationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Location"
-    objects: {}
+    objects: {
+      charging_sessions: Prisma.$ChargingSessionPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       created_at: Date
@@ -1439,6 +1563,7 @@ export namespace Prisma {
   export interface Prisma__LocationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    charging_sessions<T extends Location$charging_sessionsArgs<ExtArgs> = {}>(args?: Subset<T, Location$charging_sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChargingSessionPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1487,6 +1612,10 @@ export namespace Prisma {
      */
     select?: LocationSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
      * Filter, which Location to fetch.
      */
     where: LocationWhereUniqueInput
@@ -1501,6 +1630,10 @@ export namespace Prisma {
      */
     select?: LocationSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
      * Filter, which Location to fetch.
      */
     where: LocationWhereUniqueInput
@@ -1514,6 +1647,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Location
      */
     select?: LocationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
     /**
      * Filter, which Location to fetch.
      */
@@ -1559,6 +1696,10 @@ export namespace Prisma {
      */
     select?: LocationSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
      * Filter, which Location to fetch.
      */
     where?: LocationWhereInput
@@ -1603,6 +1744,10 @@ export namespace Prisma {
      */
     select?: LocationSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
      * Filter, which Locations to fetch.
      */
     where?: LocationWhereInput
@@ -1642,6 +1787,10 @@ export namespace Prisma {
      */
     select?: LocationSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
      * The data needed to create a Location.
      */
     data: XOR<LocationCreateInput, LocationUncheckedCreateInput>
@@ -1666,6 +1815,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Location
      */
     select?: LocationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
     /**
      * The data needed to update a Location.
      */
@@ -1699,6 +1852,10 @@ export namespace Prisma {
      */
     select?: LocationSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
      * The filter to search for the Location to update in case it exists.
      */
     where: LocationWhereUniqueInput
@@ -1721,6 +1878,10 @@ export namespace Prisma {
      */
     select?: LocationSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
      * Filter which Location to delete.
      */
     where: LocationWhereUniqueInput
@@ -1737,6 +1898,26 @@ export namespace Prisma {
   }
 
   /**
+   * Location.charging_sessions
+   */
+  export type Location$charging_sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
+    where?: ChargingSessionWhereInput
+    orderBy?: ChargingSessionOrderByWithRelationInput | ChargingSessionOrderByWithRelationInput[]
+    cursor?: ChargingSessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChargingSessionScalarFieldEnum | ChargingSessionScalarFieldEnum[]
+  }
+
+  /**
    * Location without action
    */
   export type LocationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1744,6 +1925,940 @@ export namespace Prisma {
      * Select specific fields to fetch from the Location
      */
     select?: LocationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ChargingSession
+   */
+
+  export type AggregateChargingSession = {
+    _count: ChargingSessionCountAggregateOutputType | null
+    _min: ChargingSessionMinAggregateOutputType | null
+    _max: ChargingSessionMaxAggregateOutputType | null
+  }
+
+  export type ChargingSessionMinAggregateOutputType = {
+    id: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    deleted: boolean | null
+    deleted_at: Date | null
+    location_id: string | null
+    status: string | null
+  }
+
+  export type ChargingSessionMaxAggregateOutputType = {
+    id: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    deleted: boolean | null
+    deleted_at: Date | null
+    location_id: string | null
+    status: string | null
+  }
+
+  export type ChargingSessionCountAggregateOutputType = {
+    id: number
+    created_at: number
+    updated_at: number
+    deleted: number
+    deleted_at: number
+    location_id: number
+    status: number
+    _all: number
+  }
+
+
+  export type ChargingSessionMinAggregateInputType = {
+    id?: true
+    created_at?: true
+    updated_at?: true
+    deleted?: true
+    deleted_at?: true
+    location_id?: true
+    status?: true
+  }
+
+  export type ChargingSessionMaxAggregateInputType = {
+    id?: true
+    created_at?: true
+    updated_at?: true
+    deleted?: true
+    deleted_at?: true
+    location_id?: true
+    status?: true
+  }
+
+  export type ChargingSessionCountAggregateInputType = {
+    id?: true
+    created_at?: true
+    updated_at?: true
+    deleted?: true
+    deleted_at?: true
+    location_id?: true
+    status?: true
+    _all?: true
+  }
+
+  export type ChargingSessionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChargingSession to aggregate.
+     */
+    where?: ChargingSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChargingSessions to fetch.
+     */
+    orderBy?: ChargingSessionOrderByWithRelationInput | ChargingSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChargingSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChargingSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChargingSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ChargingSessions
+    **/
+    _count?: true | ChargingSessionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChargingSessionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChargingSessionMaxAggregateInputType
+  }
+
+  export type GetChargingSessionAggregateType<T extends ChargingSessionAggregateArgs> = {
+        [P in keyof T & keyof AggregateChargingSession]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChargingSession[P]>
+      : GetScalarType<T[P], AggregateChargingSession[P]>
+  }
+
+
+
+
+  export type ChargingSessionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChargingSessionWhereInput
+    orderBy?: ChargingSessionOrderByWithAggregationInput | ChargingSessionOrderByWithAggregationInput[]
+    by: ChargingSessionScalarFieldEnum[] | ChargingSessionScalarFieldEnum
+    having?: ChargingSessionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChargingSessionCountAggregateInputType | true
+    _min?: ChargingSessionMinAggregateInputType
+    _max?: ChargingSessionMaxAggregateInputType
+  }
+
+  export type ChargingSessionGroupByOutputType = {
+    id: string
+    created_at: Date
+    updated_at: Date
+    deleted: boolean
+    deleted_at: Date | null
+    location_id: string
+    status: string
+    _count: ChargingSessionCountAggregateOutputType | null
+    _min: ChargingSessionMinAggregateOutputType | null
+    _max: ChargingSessionMaxAggregateOutputType | null
+  }
+
+  type GetChargingSessionGroupByPayload<T extends ChargingSessionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChargingSessionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChargingSessionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChargingSessionGroupByOutputType[P]>
+            : GetScalarType<T[P], ChargingSessionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChargingSessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    deleted?: boolean
+    deleted_at?: boolean
+    location_id?: boolean
+    status?: boolean
+    location?: boolean | LocationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["chargingSession"]>
+
+  export type ChargingSessionSelectScalar = {
+    id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    deleted?: boolean
+    deleted_at?: boolean
+    location_id?: boolean
+    status?: boolean
+  }
+
+
+  export type ChargingSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    location?: boolean | LocationDefaultArgs<ExtArgs>
+  }
+
+
+  export type $ChargingSessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ChargingSession"
+    objects: {
+      location: Prisma.$LocationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      created_at: Date
+      updated_at: Date
+      deleted: boolean
+      deleted_at: Date | null
+      location_id: string
+      /**
+       * @length(1, 50)
+       */
+      status: string
+    }, ExtArgs["result"]["chargingSession"]>
+    composites: {}
+  }
+
+
+  type ChargingSessionGetPayload<S extends boolean | null | undefined | ChargingSessionDefaultArgs> = $Result.GetResult<Prisma.$ChargingSessionPayload, S>
+
+  type ChargingSessionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ChargingSessionFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ChargingSessionCountAggregateInputType | true
+    }
+
+  export interface ChargingSessionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ChargingSession'], meta: { name: 'ChargingSession' } }
+    /**
+     * Find zero or one ChargingSession that matches the filter.
+     * @param {ChargingSessionFindUniqueArgs} args - Arguments to find a ChargingSession
+     * @example
+     * // Get one ChargingSession
+     * const chargingSession = await prisma.chargingSession.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends ChargingSessionFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, ChargingSessionFindUniqueArgs<ExtArgs>>
+    ): Prisma__ChargingSessionClient<$Result.GetResult<Prisma.$ChargingSessionPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one ChargingSession that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {ChargingSessionFindUniqueOrThrowArgs} args - Arguments to find a ChargingSession
+     * @example
+     * // Get one ChargingSession
+     * const chargingSession = await prisma.chargingSession.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ChargingSessionFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, ChargingSessionFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__ChargingSessionClient<$Result.GetResult<Prisma.$ChargingSessionPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first ChargingSession that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChargingSessionFindFirstArgs} args - Arguments to find a ChargingSession
+     * @example
+     * // Get one ChargingSession
+     * const chargingSession = await prisma.chargingSession.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends ChargingSessionFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, ChargingSessionFindFirstArgs<ExtArgs>>
+    ): Prisma__ChargingSessionClient<$Result.GetResult<Prisma.$ChargingSessionPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first ChargingSession that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChargingSessionFindFirstOrThrowArgs} args - Arguments to find a ChargingSession
+     * @example
+     * // Get one ChargingSession
+     * const chargingSession = await prisma.chargingSession.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ChargingSessionFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, ChargingSessionFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__ChargingSessionClient<$Result.GetResult<Prisma.$ChargingSessionPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more ChargingSessions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChargingSessionFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ChargingSessions
+     * const chargingSessions = await prisma.chargingSession.findMany()
+     * 
+     * // Get first 10 ChargingSessions
+     * const chargingSessions = await prisma.chargingSession.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const chargingSessionWithIdOnly = await prisma.chargingSession.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends ChargingSessionFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, ChargingSessionFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChargingSessionPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a ChargingSession.
+     * @param {ChargingSessionCreateArgs} args - Arguments to create a ChargingSession.
+     * @example
+     * // Create one ChargingSession
+     * const ChargingSession = await prisma.chargingSession.create({
+     *   data: {
+     *     // ... data to create a ChargingSession
+     *   }
+     * })
+     * 
+    **/
+    create<T extends ChargingSessionCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, ChargingSessionCreateArgs<ExtArgs>>
+    ): Prisma__ChargingSessionClient<$Result.GetResult<Prisma.$ChargingSessionPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many ChargingSessions.
+     *     @param {ChargingSessionCreateManyArgs} args - Arguments to create many ChargingSessions.
+     *     @example
+     *     // Create many ChargingSessions
+     *     const chargingSession = await prisma.chargingSession.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends ChargingSessionCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, ChargingSessionCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ChargingSession.
+     * @param {ChargingSessionDeleteArgs} args - Arguments to delete one ChargingSession.
+     * @example
+     * // Delete one ChargingSession
+     * const ChargingSession = await prisma.chargingSession.delete({
+     *   where: {
+     *     // ... filter to delete one ChargingSession
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends ChargingSessionDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, ChargingSessionDeleteArgs<ExtArgs>>
+    ): Prisma__ChargingSessionClient<$Result.GetResult<Prisma.$ChargingSessionPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one ChargingSession.
+     * @param {ChargingSessionUpdateArgs} args - Arguments to update one ChargingSession.
+     * @example
+     * // Update one ChargingSession
+     * const chargingSession = await prisma.chargingSession.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends ChargingSessionUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, ChargingSessionUpdateArgs<ExtArgs>>
+    ): Prisma__ChargingSessionClient<$Result.GetResult<Prisma.$ChargingSessionPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more ChargingSessions.
+     * @param {ChargingSessionDeleteManyArgs} args - Arguments to filter ChargingSessions to delete.
+     * @example
+     * // Delete a few ChargingSessions
+     * const { count } = await prisma.chargingSession.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends ChargingSessionDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, ChargingSessionDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChargingSessions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChargingSessionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ChargingSessions
+     * const chargingSession = await prisma.chargingSession.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends ChargingSessionUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, ChargingSessionUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ChargingSession.
+     * @param {ChargingSessionUpsertArgs} args - Arguments to update or create a ChargingSession.
+     * @example
+     * // Update or create a ChargingSession
+     * const chargingSession = await prisma.chargingSession.upsert({
+     *   create: {
+     *     // ... data to create a ChargingSession
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ChargingSession we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends ChargingSessionUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, ChargingSessionUpsertArgs<ExtArgs>>
+    ): Prisma__ChargingSessionClient<$Result.GetResult<Prisma.$ChargingSessionPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of ChargingSessions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChargingSessionCountArgs} args - Arguments to filter ChargingSessions to count.
+     * @example
+     * // Count the number of ChargingSessions
+     * const count = await prisma.chargingSession.count({
+     *   where: {
+     *     // ... the filter for the ChargingSessions we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChargingSessionCountArgs>(
+      args?: Subset<T, ChargingSessionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChargingSessionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ChargingSession.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChargingSessionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChargingSessionAggregateArgs>(args: Subset<T, ChargingSessionAggregateArgs>): Prisma.PrismaPromise<GetChargingSessionAggregateType<T>>
+
+    /**
+     * Group by ChargingSession.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChargingSessionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChargingSessionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChargingSessionGroupByArgs['orderBy'] }
+        : { orderBy?: ChargingSessionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChargingSessionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChargingSessionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ChargingSession model
+   */
+  readonly fields: ChargingSessionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ChargingSession.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChargingSessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    location<T extends LocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LocationDefaultArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the ChargingSession model
+   */ 
+  interface ChargingSessionFieldRefs {
+    readonly id: FieldRef<"ChargingSession", 'String'>
+    readonly created_at: FieldRef<"ChargingSession", 'DateTime'>
+    readonly updated_at: FieldRef<"ChargingSession", 'DateTime'>
+    readonly deleted: FieldRef<"ChargingSession", 'Boolean'>
+    readonly deleted_at: FieldRef<"ChargingSession", 'DateTime'>
+    readonly location_id: FieldRef<"ChargingSession", 'String'>
+    readonly status: FieldRef<"ChargingSession", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ChargingSession findUnique
+   */
+  export type ChargingSessionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which ChargingSession to fetch.
+     */
+    where: ChargingSessionWhereUniqueInput
+  }
+
+  /**
+   * ChargingSession findUniqueOrThrow
+   */
+  export type ChargingSessionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which ChargingSession to fetch.
+     */
+    where: ChargingSessionWhereUniqueInput
+  }
+
+  /**
+   * ChargingSession findFirst
+   */
+  export type ChargingSessionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which ChargingSession to fetch.
+     */
+    where?: ChargingSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChargingSessions to fetch.
+     */
+    orderBy?: ChargingSessionOrderByWithRelationInput | ChargingSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChargingSessions.
+     */
+    cursor?: ChargingSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChargingSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChargingSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChargingSessions.
+     */
+    distinct?: ChargingSessionScalarFieldEnum | ChargingSessionScalarFieldEnum[]
+  }
+
+  /**
+   * ChargingSession findFirstOrThrow
+   */
+  export type ChargingSessionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which ChargingSession to fetch.
+     */
+    where?: ChargingSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChargingSessions to fetch.
+     */
+    orderBy?: ChargingSessionOrderByWithRelationInput | ChargingSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChargingSessions.
+     */
+    cursor?: ChargingSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChargingSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChargingSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChargingSessions.
+     */
+    distinct?: ChargingSessionScalarFieldEnum | ChargingSessionScalarFieldEnum[]
+  }
+
+  /**
+   * ChargingSession findMany
+   */
+  export type ChargingSessionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which ChargingSessions to fetch.
+     */
+    where?: ChargingSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChargingSessions to fetch.
+     */
+    orderBy?: ChargingSessionOrderByWithRelationInput | ChargingSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ChargingSessions.
+     */
+    cursor?: ChargingSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChargingSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChargingSessions.
+     */
+    skip?: number
+    distinct?: ChargingSessionScalarFieldEnum | ChargingSessionScalarFieldEnum[]
+  }
+
+  /**
+   * ChargingSession create
+   */
+  export type ChargingSessionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ChargingSession.
+     */
+    data: XOR<ChargingSessionCreateInput, ChargingSessionUncheckedCreateInput>
+  }
+
+  /**
+   * ChargingSession createMany
+   */
+  export type ChargingSessionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ChargingSessions.
+     */
+    data: ChargingSessionCreateManyInput | ChargingSessionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChargingSession update
+   */
+  export type ChargingSessionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ChargingSession.
+     */
+    data: XOR<ChargingSessionUpdateInput, ChargingSessionUncheckedUpdateInput>
+    /**
+     * Choose, which ChargingSession to update.
+     */
+    where: ChargingSessionWhereUniqueInput
+  }
+
+  /**
+   * ChargingSession updateMany
+   */
+  export type ChargingSessionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ChargingSessions.
+     */
+    data: XOR<ChargingSessionUpdateManyMutationInput, ChargingSessionUncheckedUpdateManyInput>
+    /**
+     * Filter which ChargingSessions to update
+     */
+    where?: ChargingSessionWhereInput
+  }
+
+  /**
+   * ChargingSession upsert
+   */
+  export type ChargingSessionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ChargingSession to update in case it exists.
+     */
+    where: ChargingSessionWhereUniqueInput
+    /**
+     * In case the ChargingSession found by the `where` argument doesn't exist, create a new ChargingSession with this data.
+     */
+    create: XOR<ChargingSessionCreateInput, ChargingSessionUncheckedCreateInput>
+    /**
+     * In case the ChargingSession was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChargingSessionUpdateInput, ChargingSessionUncheckedUpdateInput>
+  }
+
+  /**
+   * ChargingSession delete
+   */
+  export type ChargingSessionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
+    /**
+     * Filter which ChargingSession to delete.
+     */
+    where: ChargingSessionWhereUniqueInput
+  }
+
+  /**
+   * ChargingSession deleteMany
+   */
+  export type ChargingSessionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChargingSessions to delete
+     */
+    where?: ChargingSessionWhereInput
+  }
+
+  /**
+   * ChargingSession without action
+   */
+  export type ChargingSessionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChargingSession
+     */
+    select?: ChargingSessionSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChargingSessionInclude<ExtArgs> | null
   }
 
 
@@ -1771,6 +2886,19 @@ export namespace Prisma {
   };
 
   export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
+
+
+  export const ChargingSessionScalarFieldEnum: {
+    id: 'id',
+    created_at: 'created_at',
+    updated_at: 'updated_at',
+    deleted: 'deleted',
+    deleted_at: 'deleted_at',
+    location_id: 'location_id',
+    status: 'status'
+  };
+
+  export type ChargingSessionScalarFieldEnum = (typeof ChargingSessionScalarFieldEnum)[keyof typeof ChargingSessionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1864,6 +2992,7 @@ export namespace Prisma {
     deleted?: BoolFilter<"Location"> | boolean
     deleted_at?: DateTimeNullableFilter<"Location"> | Date | string | null
     address?: StringFilter<"Location"> | string
+    charging_sessions?: ChargingSessionListRelationFilter
   }
 
   export type LocationOrderByWithRelationInput = {
@@ -1873,6 +3002,7 @@ export namespace Prisma {
     deleted?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
     address?: SortOrder
+    charging_sessions?: ChargingSessionOrderByRelationAggregateInput
   }
 
   export type LocationWhereUniqueInput = Prisma.AtLeast<{
@@ -1885,6 +3015,7 @@ export namespace Prisma {
     deleted?: BoolFilter<"Location"> | boolean
     deleted_at?: DateTimeNullableFilter<"Location"> | Date | string | null
     address?: StringFilter<"Location"> | string
+    charging_sessions?: ChargingSessionListRelationFilter
   }, "id">
 
   export type LocationOrderByWithAggregationInput = {
@@ -1911,6 +3042,71 @@ export namespace Prisma {
     address?: StringWithAggregatesFilter<"Location"> | string
   }
 
+  export type ChargingSessionWhereInput = {
+    AND?: ChargingSessionWhereInput | ChargingSessionWhereInput[]
+    OR?: ChargingSessionWhereInput[]
+    NOT?: ChargingSessionWhereInput | ChargingSessionWhereInput[]
+    id?: StringFilter<"ChargingSession"> | string
+    created_at?: DateTimeFilter<"ChargingSession"> | Date | string
+    updated_at?: DateTimeFilter<"ChargingSession"> | Date | string
+    deleted?: BoolFilter<"ChargingSession"> | boolean
+    deleted_at?: DateTimeNullableFilter<"ChargingSession"> | Date | string | null
+    location_id?: StringFilter<"ChargingSession"> | string
+    status?: StringFilter<"ChargingSession"> | string
+    location?: XOR<LocationRelationFilter, LocationWhereInput>
+  }
+
+  export type ChargingSessionOrderByWithRelationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted?: SortOrder
+    deleted_at?: SortOrderInput | SortOrder
+    location_id?: SortOrder
+    status?: SortOrder
+    location?: LocationOrderByWithRelationInput
+  }
+
+  export type ChargingSessionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChargingSessionWhereInput | ChargingSessionWhereInput[]
+    OR?: ChargingSessionWhereInput[]
+    NOT?: ChargingSessionWhereInput | ChargingSessionWhereInput[]
+    created_at?: DateTimeFilter<"ChargingSession"> | Date | string
+    updated_at?: DateTimeFilter<"ChargingSession"> | Date | string
+    deleted?: BoolFilter<"ChargingSession"> | boolean
+    deleted_at?: DateTimeNullableFilter<"ChargingSession"> | Date | string | null
+    location_id?: StringFilter<"ChargingSession"> | string
+    status?: StringFilter<"ChargingSession"> | string
+    location?: XOR<LocationRelationFilter, LocationWhereInput>
+  }, "id">
+
+  export type ChargingSessionOrderByWithAggregationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted?: SortOrder
+    deleted_at?: SortOrderInput | SortOrder
+    location_id?: SortOrder
+    status?: SortOrder
+    _count?: ChargingSessionCountOrderByAggregateInput
+    _max?: ChargingSessionMaxOrderByAggregateInput
+    _min?: ChargingSessionMinOrderByAggregateInput
+  }
+
+  export type ChargingSessionScalarWhereWithAggregatesInput = {
+    AND?: ChargingSessionScalarWhereWithAggregatesInput | ChargingSessionScalarWhereWithAggregatesInput[]
+    OR?: ChargingSessionScalarWhereWithAggregatesInput[]
+    NOT?: ChargingSessionScalarWhereWithAggregatesInput | ChargingSessionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ChargingSession"> | string
+    created_at?: DateTimeWithAggregatesFilter<"ChargingSession"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"ChargingSession"> | Date | string
+    deleted?: BoolWithAggregatesFilter<"ChargingSession"> | boolean
+    deleted_at?: DateTimeNullableWithAggregatesFilter<"ChargingSession"> | Date | string | null
+    location_id?: StringWithAggregatesFilter<"ChargingSession"> | string
+    status?: StringWithAggregatesFilter<"ChargingSession"> | string
+  }
+
   export type LocationCreateInput = {
     id?: string
     created_at?: Date | string
@@ -1918,6 +3114,7 @@ export namespace Prisma {
     deleted?: boolean
     deleted_at?: Date | string | null
     address: string
+    charging_sessions?: ChargingSessionCreateNestedManyWithoutLocationInput
   }
 
   export type LocationUncheckedCreateInput = {
@@ -1927,6 +3124,7 @@ export namespace Prisma {
     deleted?: boolean
     deleted_at?: Date | string | null
     address: string
+    charging_sessions?: ChargingSessionUncheckedCreateNestedManyWithoutLocationInput
   }
 
   export type LocationUpdateInput = {
@@ -1936,6 +3134,7 @@ export namespace Prisma {
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: StringFieldUpdateOperationsInput | string
+    charging_sessions?: ChargingSessionUpdateManyWithoutLocationNestedInput
   }
 
   export type LocationUncheckedUpdateInput = {
@@ -1945,6 +3144,7 @@ export namespace Prisma {
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: StringFieldUpdateOperationsInput | string
+    charging_sessions?: ChargingSessionUncheckedUpdateManyWithoutLocationNestedInput
   }
 
   export type LocationCreateManyInput = {
@@ -1972,6 +3172,75 @@ export namespace Prisma {
     deleted?: BoolFieldUpdateOperationsInput | boolean
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChargingSessionCreateInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted?: boolean
+    deleted_at?: Date | string | null
+    status: string
+    location: LocationCreateNestedOneWithoutCharging_sessionsInput
+  }
+
+  export type ChargingSessionUncheckedCreateInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted?: boolean
+    deleted_at?: Date | string | null
+    location_id: string
+    status: string
+  }
+
+  export type ChargingSessionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted?: BoolFieldUpdateOperationsInput | boolean
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    location?: LocationUpdateOneRequiredWithoutCharging_sessionsNestedInput
+  }
+
+  export type ChargingSessionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted?: BoolFieldUpdateOperationsInput | boolean
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location_id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChargingSessionCreateManyInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted?: boolean
+    deleted_at?: Date | string | null
+    location_id: string
+    status: string
+  }
+
+  export type ChargingSessionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted?: BoolFieldUpdateOperationsInput | boolean
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChargingSessionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted?: BoolFieldUpdateOperationsInput | boolean
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location_id?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2016,9 +3285,19 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type ChargingSessionListRelationFilter = {
+    every?: ChargingSessionWhereInput
+    some?: ChargingSessionWhereInput
+    none?: ChargingSessionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type ChargingSessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type LocationCountOrderByAggregateInput = {
@@ -2102,6 +3381,55 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type LocationRelationFilter = {
+    is?: LocationWhereInput
+    isNot?: LocationWhereInput
+  }
+
+  export type ChargingSessionCountOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted?: SortOrder
+    deleted_at?: SortOrder
+    location_id?: SortOrder
+    status?: SortOrder
+  }
+
+  export type ChargingSessionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted?: SortOrder
+    deleted_at?: SortOrder
+    location_id?: SortOrder
+    status?: SortOrder
+  }
+
+  export type ChargingSessionMinOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted?: SortOrder
+    deleted_at?: SortOrder
+    location_id?: SortOrder
+    status?: SortOrder
+  }
+
+  export type ChargingSessionCreateNestedManyWithoutLocationInput = {
+    create?: XOR<ChargingSessionCreateWithoutLocationInput, ChargingSessionUncheckedCreateWithoutLocationInput> | ChargingSessionCreateWithoutLocationInput[] | ChargingSessionUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: ChargingSessionCreateOrConnectWithoutLocationInput | ChargingSessionCreateOrConnectWithoutLocationInput[]
+    createMany?: ChargingSessionCreateManyLocationInputEnvelope
+    connect?: ChargingSessionWhereUniqueInput | ChargingSessionWhereUniqueInput[]
+  }
+
+  export type ChargingSessionUncheckedCreateNestedManyWithoutLocationInput = {
+    create?: XOR<ChargingSessionCreateWithoutLocationInput, ChargingSessionUncheckedCreateWithoutLocationInput> | ChargingSessionCreateWithoutLocationInput[] | ChargingSessionUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: ChargingSessionCreateOrConnectWithoutLocationInput | ChargingSessionCreateOrConnectWithoutLocationInput[]
+    createMany?: ChargingSessionCreateManyLocationInputEnvelope
+    connect?: ChargingSessionWhereUniqueInput | ChargingSessionWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -2116,6 +3444,48 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type ChargingSessionUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<ChargingSessionCreateWithoutLocationInput, ChargingSessionUncheckedCreateWithoutLocationInput> | ChargingSessionCreateWithoutLocationInput[] | ChargingSessionUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: ChargingSessionCreateOrConnectWithoutLocationInput | ChargingSessionCreateOrConnectWithoutLocationInput[]
+    upsert?: ChargingSessionUpsertWithWhereUniqueWithoutLocationInput | ChargingSessionUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: ChargingSessionCreateManyLocationInputEnvelope
+    set?: ChargingSessionWhereUniqueInput | ChargingSessionWhereUniqueInput[]
+    disconnect?: ChargingSessionWhereUniqueInput | ChargingSessionWhereUniqueInput[]
+    delete?: ChargingSessionWhereUniqueInput | ChargingSessionWhereUniqueInput[]
+    connect?: ChargingSessionWhereUniqueInput | ChargingSessionWhereUniqueInput[]
+    update?: ChargingSessionUpdateWithWhereUniqueWithoutLocationInput | ChargingSessionUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: ChargingSessionUpdateManyWithWhereWithoutLocationInput | ChargingSessionUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: ChargingSessionScalarWhereInput | ChargingSessionScalarWhereInput[]
+  }
+
+  export type ChargingSessionUncheckedUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<ChargingSessionCreateWithoutLocationInput, ChargingSessionUncheckedCreateWithoutLocationInput> | ChargingSessionCreateWithoutLocationInput[] | ChargingSessionUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: ChargingSessionCreateOrConnectWithoutLocationInput | ChargingSessionCreateOrConnectWithoutLocationInput[]
+    upsert?: ChargingSessionUpsertWithWhereUniqueWithoutLocationInput | ChargingSessionUpsertWithWhereUniqueWithoutLocationInput[]
+    createMany?: ChargingSessionCreateManyLocationInputEnvelope
+    set?: ChargingSessionWhereUniqueInput | ChargingSessionWhereUniqueInput[]
+    disconnect?: ChargingSessionWhereUniqueInput | ChargingSessionWhereUniqueInput[]
+    delete?: ChargingSessionWhereUniqueInput | ChargingSessionWhereUniqueInput[]
+    connect?: ChargingSessionWhereUniqueInput | ChargingSessionWhereUniqueInput[]
+    update?: ChargingSessionUpdateWithWhereUniqueWithoutLocationInput | ChargingSessionUpdateWithWhereUniqueWithoutLocationInput[]
+    updateMany?: ChargingSessionUpdateManyWithWhereWithoutLocationInput | ChargingSessionUpdateManyWithWhereWithoutLocationInput[]
+    deleteMany?: ChargingSessionScalarWhereInput | ChargingSessionScalarWhereInput[]
+  }
+
+  export type LocationCreateNestedOneWithoutCharging_sessionsInput = {
+    create?: XOR<LocationCreateWithoutCharging_sessionsInput, LocationUncheckedCreateWithoutCharging_sessionsInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutCharging_sessionsInput
+    connect?: LocationWhereUniqueInput
+  }
+
+  export type LocationUpdateOneRequiredWithoutCharging_sessionsNestedInput = {
+    create?: XOR<LocationCreateWithoutCharging_sessionsInput, LocationUncheckedCreateWithoutCharging_sessionsInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutCharging_sessionsInput
+    upsert?: LocationUpsertWithoutCharging_sessionsInput
+    connect?: LocationWhereUniqueInput
+    update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutCharging_sessionsInput, LocationUpdateWithoutCharging_sessionsInput>, LocationUncheckedUpdateWithoutCharging_sessionsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2234,15 +3604,168 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type ChargingSessionCreateWithoutLocationInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted?: boolean
+    deleted_at?: Date | string | null
+    status: string
+  }
+
+  export type ChargingSessionUncheckedCreateWithoutLocationInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted?: boolean
+    deleted_at?: Date | string | null
+    status: string
+  }
+
+  export type ChargingSessionCreateOrConnectWithoutLocationInput = {
+    where: ChargingSessionWhereUniqueInput
+    create: XOR<ChargingSessionCreateWithoutLocationInput, ChargingSessionUncheckedCreateWithoutLocationInput>
+  }
+
+  export type ChargingSessionCreateManyLocationInputEnvelope = {
+    data: ChargingSessionCreateManyLocationInput | ChargingSessionCreateManyLocationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ChargingSessionUpsertWithWhereUniqueWithoutLocationInput = {
+    where: ChargingSessionWhereUniqueInput
+    update: XOR<ChargingSessionUpdateWithoutLocationInput, ChargingSessionUncheckedUpdateWithoutLocationInput>
+    create: XOR<ChargingSessionCreateWithoutLocationInput, ChargingSessionUncheckedCreateWithoutLocationInput>
+  }
+
+  export type ChargingSessionUpdateWithWhereUniqueWithoutLocationInput = {
+    where: ChargingSessionWhereUniqueInput
+    data: XOR<ChargingSessionUpdateWithoutLocationInput, ChargingSessionUncheckedUpdateWithoutLocationInput>
+  }
+
+  export type ChargingSessionUpdateManyWithWhereWithoutLocationInput = {
+    where: ChargingSessionScalarWhereInput
+    data: XOR<ChargingSessionUpdateManyMutationInput, ChargingSessionUncheckedUpdateManyWithoutLocationInput>
+  }
+
+  export type ChargingSessionScalarWhereInput = {
+    AND?: ChargingSessionScalarWhereInput | ChargingSessionScalarWhereInput[]
+    OR?: ChargingSessionScalarWhereInput[]
+    NOT?: ChargingSessionScalarWhereInput | ChargingSessionScalarWhereInput[]
+    id?: StringFilter<"ChargingSession"> | string
+    created_at?: DateTimeFilter<"ChargingSession"> | Date | string
+    updated_at?: DateTimeFilter<"ChargingSession"> | Date | string
+    deleted?: BoolFilter<"ChargingSession"> | boolean
+    deleted_at?: DateTimeNullableFilter<"ChargingSession"> | Date | string | null
+    location_id?: StringFilter<"ChargingSession"> | string
+    status?: StringFilter<"ChargingSession"> | string
+  }
+
+  export type LocationCreateWithoutCharging_sessionsInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted?: boolean
+    deleted_at?: Date | string | null
+    address: string
+  }
+
+  export type LocationUncheckedCreateWithoutCharging_sessionsInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted?: boolean
+    deleted_at?: Date | string | null
+    address: string
+  }
+
+  export type LocationCreateOrConnectWithoutCharging_sessionsInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutCharging_sessionsInput, LocationUncheckedCreateWithoutCharging_sessionsInput>
+  }
+
+  export type LocationUpsertWithoutCharging_sessionsInput = {
+    update: XOR<LocationUpdateWithoutCharging_sessionsInput, LocationUncheckedUpdateWithoutCharging_sessionsInput>
+    create: XOR<LocationCreateWithoutCharging_sessionsInput, LocationUncheckedCreateWithoutCharging_sessionsInput>
+    where?: LocationWhereInput
+  }
+
+  export type LocationUpdateToOneWithWhereWithoutCharging_sessionsInput = {
+    where?: LocationWhereInput
+    data: XOR<LocationUpdateWithoutCharging_sessionsInput, LocationUncheckedUpdateWithoutCharging_sessionsInput>
+  }
+
+  export type LocationUpdateWithoutCharging_sessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted?: BoolFieldUpdateOperationsInput | boolean
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    address?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type LocationUncheckedUpdateWithoutCharging_sessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted?: BoolFieldUpdateOperationsInput | boolean
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    address?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChargingSessionCreateManyLocationInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted?: boolean
+    deleted_at?: Date | string | null
+    status: string
+  }
+
+  export type ChargingSessionUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted?: BoolFieldUpdateOperationsInput | boolean
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChargingSessionUncheckedUpdateWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted?: BoolFieldUpdateOperationsInput | boolean
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChargingSessionUncheckedUpdateManyWithoutLocationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted?: BoolFieldUpdateOperationsInput | boolean
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
 
 
   /**
    * Aliases for legacy arg types
    */
     /**
+     * @deprecated Use LocationCountOutputTypeDefaultArgs instead
+     */
+    export type LocationCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LocationCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use LocationDefaultArgs instead
      */
     export type LocationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LocationDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ChargingSessionDefaultArgs instead
+     */
+    export type ChargingSessionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ChargingSessionDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

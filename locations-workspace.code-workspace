@@ -43,7 +43,7 @@
 		},
 		{
 			"name": "locations-db",
-			"path": "app/libs/types"
+			"path": "app/libs/locations-db"
 		},
 		{
 			"name": "services",

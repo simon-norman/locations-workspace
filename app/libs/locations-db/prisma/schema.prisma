@@ -19,13 +19,32 @@ generator client {
 /// @@allow('read', !deleted)
 /// @@allow('create,update', true)
 model Location {
-  id         String    @id() @default(uuid())
-  created_at DateTime  @default(now()) @db.Timestamptz(6)
-  updated_at DateTime  @updatedAt() @db.Timestamptz(6)
-  deleted    Boolean   @default(false)
-  deleted_at DateTime? @db.Timestamptz(6)
+  id                String            @id() @default(uuid())
+  created_at        DateTime          @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime          @updatedAt() @db.Timestamptz(6)
+  deleted           Boolean           @default(false)
+  deleted_at        DateTime?         @db.Timestamptz(6)
   /// @length(1, 300)
-  address    String
+  address           String
+  charging_sessions ChargingSession[]
 
   @@map("locations")
+}
+
+/// @@deny('read', deleted)
+/// @@deny('delete', !deleted)
+/// @@allow('read', !deleted)
+/// @@allow('create,update', true)
+model ChargingSession {
+  id          String    @id() @default(uuid())
+  created_at  DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime  @updatedAt() @db.Timestamptz(6)
+  deleted     Boolean   @default(false)
+  deleted_at  DateTime? @db.Timestamptz(6)
+  location_id String
+  location    Location  @relation(fields: [location_id], references: [id])
+  /// @length(1, 50)
+  status      String
+
+  @@map("charging_sessions")
 }

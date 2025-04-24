@@ -55,6 +55,10 @@ migrate_local_locations_db:
 	$(call run_app_with_doppler,locations-db,pnpm exec prisma migrate dev)
 .PHONY: migrate_local_locations_db
 
+generate_empty_migration:
+	$(call run_app_with_doppler,locations-db,pnpm exec prisma migrate dev --create-only)
+.PHONY: generate_empty_migration
+
 check-service:
 	@echo "Checking if service is already running on port $(PORT)..."
 	@if curl -s http://localhost:$(PORT)/health > /dev/null 2>&1; then \

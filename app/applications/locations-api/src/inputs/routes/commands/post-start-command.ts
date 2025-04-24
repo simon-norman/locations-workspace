@@ -1,3 +1,4 @@
+import { locationsDb } from "@breeze32/locations-db";
 import {
 	type FastifyTypebox,
 	authMiddleWare,
@@ -25,6 +26,13 @@ export const postStartCommand = async (fastify: FastifyTypebox) => {
 				automatic_payment_methods: {
 					enabled: true,
 					allow_redirects: "never",
+				},
+			});
+
+			await locationsDb.chargingSession.create({
+				data: {
+					location_id: req.body.locationId,
+					status: "PENDING",
 				},
 			});
 

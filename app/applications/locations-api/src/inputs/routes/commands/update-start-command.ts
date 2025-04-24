@@ -1,3 +1,4 @@
+import { locationsDb } from "@breeze32/locations-db";
 import {
 	type FastifyTypebox,
 	defaultString,
@@ -5,7 +6,7 @@ import {
 import { Type as t } from "@sinclair/typebox";
 
 export const patchCommandBody = t.Object({
-	locationId: defaultString,
+	sessionId: defaultString,
 	status: defaultString,
 });
 
@@ -15,7 +16,14 @@ export const updateStartCommand = async (fastify: FastifyTypebox) => {
 			body: patchCommandBody,
 		},
 		handler: async (req) => {
-			console.log("BODY UPDATE START COMMAND", req.body);
+			await locationsDb.chargingSession.update({
+				where: {
+					id: req.body.sessionId,
+				},
+				data: {
+					status: "ACTIVE",
+				},
+			});
 		},
 	});
 };
