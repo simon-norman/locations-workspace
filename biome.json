@@ -6,6 +6,24 @@
   "formatter": {
     "enabled": true
   },
+  "json": {
+    "formatter": {
+      "indentStyle": "space",
+      "indentWidth": 2
+    }
+  },
+  "files": {
+    "ignore": [
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".next/**",
+      "coverage/**",
+      "**/vendor/**",
+      "**/prisma/**",
+      "**/test-results/**"
+    ]
+  },
   "linter": {
     "enabled": true,
     "rules": {

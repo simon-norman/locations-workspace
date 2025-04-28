@@ -15,6 +15,7 @@ export const postStartCommand = async (fastify: FastifyTypebox) => {
 	fastify.post("/start", {
 		schema: {
 			body: postCommandBody,
+			description: "Starts a charge session",
 		},
 		preHandler: [authMiddleWare(["locations-api:base"])],
 		handler: async (req) => {
@@ -29,18 +30,16 @@ export const postStartCommand = async (fastify: FastifyTypebox) => {
 				},
 			});
 
-			await locationsDb.chargingSession.create({
+			const session = await locationsDb.chargingSession.create({
 				data: {
 					location_id: req.body.locationId,
 					status: "PENDING",
 				},
 			});
 
-			await deps.cpo.startCharge(req.body.locationId);
+			await deps.cpo.startCharge(req.body.locationId, session.id);
 
-			return {
-				message: "Command started",
-			};
+			return session;
 		},
 	});
 };

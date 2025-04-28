@@ -44,9 +44,26 @@ publish:
 	pnpm publish --access public
 .PHONY: publish
 
+publish-beta:
+	tsup
+	-$(MAKE) push COMMIT=$(COMMIT)
+	pnpm version $(VERSION)
+	pnpm publish --access public --tag beta
+.PHONY: publish
+
+install-beta:
+	pnpm install $(PACKAGE)@beta
+.PHONY: install-beta
+
+check:
+	pnpm exec biome check .
+	pnpm exec npmPkgJsonLint -c ./.npmpackagejsonlintrc.json ./**/package.json ./**/**/package.json ./**/**/**/package.json ./**/**/**/**/package.json
+.PHONY: check
+
+
 run-local-app:
 	@cd $(ROOT_DIR)/app/applications/$(SERVICE) && \
-	$(call run_app_with_doppler,$(SERVICE),pnpm exec tsx watch ./src/index.ts)
+	$(call run_app_with_doppler,$(SERVICE),pnpm exec tsx watch --clear-screen=false ./src/index.ts)
 .PHONY: up-project
 
 migrate_local_locations_db:
